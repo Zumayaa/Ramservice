@@ -180,6 +180,23 @@ public class Ventana extends JFrame {
         bienvenido.setForeground(Color.decode("#005F04"));
         homePanel.add(bienvenido);
 
+        JButton logoutBTN = new JButton("Logout");
+        logoutBTN.setSize(100,20);
+        logoutBTN.setLocation(320,250);
+        homePanel.add(logoutBTN);
+
+        logoutBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "login";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
         JButton vehiculosBTN = new JButton("Vehículos");
         vehiculosBTN.setSize(100,20);
         vehiculosBTN.setLocation(130,250);
@@ -280,6 +297,22 @@ public class Ventana extends JFrame {
         bienvenido.setForeground(Color.decode("#005F04"));
         vehiculosPanel.add(bienvenido);
 
+        JButton homeBTN = new JButton("Regresar");
+        homeBTN.setSize(100,20);
+        homeBTN.setLocation(130,390);
+        vehiculosPanel.add(homeBTN);
+        homeBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "home";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
         return vehiculosPanel;
     }
 
@@ -299,6 +332,22 @@ public class Ventana extends JFrame {
         bienvenido.setLocation(130,10);
         bienvenido.setForeground(Color.decode("#005F04"));
         clientesPanel.add(bienvenido);
+
+        JButton homeBTN = new JButton("Regresar");
+        homeBTN.setSize(100,20);
+        homeBTN.setLocation(130,390);
+        clientesPanel.add(homeBTN);
+        homeBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "home";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
 
         return clientesPanel;
     }
@@ -320,6 +369,22 @@ public class Ventana extends JFrame {
         bienvenido.setForeground(Color.decode("#005F04"));
         rentasPanel.add(bienvenido);
 
+        JButton homeBTN = new JButton("Regresar");
+        homeBTN.setSize(100,20);
+        homeBTN.setLocation(130,390);
+        rentasPanel.add(homeBTN);
+        homeBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "home";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
         return rentasPanel;
     }
     public JPanel categorias(){
@@ -339,6 +404,22 @@ public class Ventana extends JFrame {
         bienvenido.setForeground(Color.decode("#005F04"));
         categoriasPanel.add(bienvenido);
 
+        JButton homeBTN = new JButton("Regresar");
+        homeBTN.setSize(100,20);
+        homeBTN.setLocation(130,390);
+        categoriasPanel.add(homeBTN);
+        homeBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "home";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
         return categoriasPanel;
     }
     public JPanel marcas(){
@@ -357,6 +438,22 @@ public class Ventana extends JFrame {
         bienvenido.setLocation(130,10);
         bienvenido.setForeground(Color.decode("#005F04"));
         marcasPanel.add(bienvenido);
+
+        JButton homeBTN = new JButton("Regresar");
+        homeBTN.setSize(100,20);
+        homeBTN.setLocation(130,390);
+        marcasPanel.add(homeBTN);
+        homeBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "home";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
 
         return marcasPanel;
     }
