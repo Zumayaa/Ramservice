@@ -1,8 +1,11 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 public class Ventana extends JFrame {
     public JPanel panel = null;
@@ -167,9 +170,6 @@ public class Ventana extends JFrame {
     public JPanel login(){
         anterior = actual;
         actual = "login";
-
-        //Font font = Font.createFont(Font.TRUETYPE_FONT, new File("fuentes/Lexend.ttf")).deriveFont(Font.PLAIN, 13);
-
         JPanel login = new JPanel();
         login.setSize(1000, 800);
         login.setLocation(0, 0);
@@ -180,24 +180,52 @@ public class Ventana extends JFrame {
         loginPanel.setSize(450, 800);
         loginPanel.setLocation(0, 0);
         loginPanel.setLayout(null);
-        loginPanel.setBackground(Color.decode("#95E799"));
+        loginPanel.setBackground(Color.white);
         login.add(loginPanel);
 
-        JLabel bienvenido = new JLabel("Biendosveni",JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
-        bienvenido.setSize(300,80);
+        JLabel bienvenido = new JLabel("Bienvenido",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,25));
+        bienvenido.setSize(160,80);
         bienvenido.setLocation(130,10);
-        bienvenido.setForeground(Color.decode("#005F04"));
+        bienvenido.setForeground(Color.black);
         loginPanel.add(bienvenido);
 
+        JLabel point = new JLabel(".",JLabel.CENTER);
+        point.setFont(new Font("Arial",Font.BOLD,25));
+        point.setSize(300,80);
+        point.setLocation(130,10);
+        point.setForeground(Color.decode("#38B6FF"));
+        loginPanel.add(point);
+
+        JLabel inicia = new JLabel("Inicia sesión",JLabel.CENTER);
+        inicia.setFont(new Font("Arial",Font.BOLD,35));
+        inicia.setSize(250,80);
+        inicia.setLocation(88,80);
+        inicia.setForeground(Color.black);
+        loginPanel.add(inicia);
+
+        JLabel emailText = new JLabel("Correo electrónico",JLabel.CENTER);
+        emailText.setFont(new Font("Arial",Font.BOLD,15));
+        emailText.setSize(250,80);
+        emailText.setLocation(20,170);
+        emailText.setForeground(Color.black);
+        loginPanel.add(emailText);
+
         JTextField correo = new JTextField();
-        correo.setSize(100,20);
-        correo.setLocation(130,150);
+        correo.setSize(300,36);
+        correo.setLocation(75,220);
         loginPanel.add(correo);
 
+        JLabel passwordText = new JLabel("Contraseña",JLabel.CENTER);
+        passwordText.setFont(new Font("Arial",Font.BOLD,15));
+        passwordText.setSize(250,80);
+        passwordText.setLocation(-7,270);
+        passwordText.setForeground(Color.black);
+        loginPanel.add(passwordText);
+
         JTextField password = new JTextField();
-        password.setSize(100,20);
-        password.setLocation(130,200);
+        password.setSize(300,36);
+        password.setLocation(75,320);
         loginPanel.add(password);
 
         JPanel loginIMG = new JPanel();
@@ -216,8 +244,11 @@ public class Ventana extends JFrame {
         loginIMG.add(imagen2);
 
         JButton loginBTN = new JButton("Entrar");
-        loginBTN.setSize(100,20);
-        loginBTN.setLocation(130,250);
+        loginBTN.setSize(300,36);
+        loginBTN.setLocation(75,400);
+        loginBTN.setFont(new Font("Arial", Font.BOLD,25));
+        loginBTN.setForeground(Color.white);
+        loginBTN.setBackground(Color.decode("#38B6FF"));
         loginPanel.add(loginBTN);
 
         loginBTN.addActionListener(new ActionListener() {
@@ -231,6 +262,14 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
+
+        JLabel imagen1 = new JLabel();
+        imagen1.setSize(350, 350);
+        ImageIcon imag1 = new ImageIcon("copy.png");
+        ImageIcon icono1 = new ImageIcon(imag1.getImage().getScaledInstance(imagen1.getWidth(), imagen1.getHeight(), Image.SCALE_DEFAULT));
+        imagen1.setIcon(icono1);
+        imagen1 .setLocation(33, 430);
+        loginPanel.add(imagen1);
 
     return login;
     }
