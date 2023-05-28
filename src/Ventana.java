@@ -66,6 +66,30 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+        if(actual.equals("consultarCliente")){
+            panel = consultarCliente();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("crearCliente")){
+            panel = crearCliente();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("editarCliente")){
+            panel = editarCliente();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
         if(actual.equals("rentas")){
             panel = rentas();
 
@@ -449,11 +473,161 @@ public class Ventana extends JFrame {
             }
         });
 
+        JButton consultarBTN = new JButton("Consultar clientes");
+        consultarBTN.setSize(100,20);
+        consultarBTN.setLocation(130,250);
+        clientesPanel.add(consultarBTN);
+        consultarBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "consultarCliente";
+                limpiarVentana();
 
+                repaint();
+                revalidate();
+            }
+        });
 
+        JButton crearBTN = new JButton("Crear clientes");
+        crearBTN.setSize(100,20);
+        crearBTN.setLocation(130,300);
+        clientesPanel.add(crearBTN);
+        crearBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "crearCliente";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        JButton editarBTN = new JButton("Editar clientes");
+        editarBTN.setSize(100,20);
+        editarBTN.setLocation(130,350);
+        clientesPanel.add(editarBTN);
+        editarBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "editarCliente";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
         return clientesPanel;
     }
+    public JPanel consultarCliente(){
+        anterior = actual;
+        actual = "consultarCliente";
 
+        JPanel consultarClientePNL = new JPanel();
+        consultarClientePNL.setSize(1000, 800);
+        consultarClientePNL.setLocation(0, 0);
+        consultarClientePNL.setLayout(null);
+        consultarClientePNL.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Consultar Clientes",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        consultarClientePNL.add(bienvenido);
+
+        JButton backBTN = new JButton("Regresar");
+        backBTN.setSize(100,20);
+        backBTN.setLocation(130,390);
+        consultarClientePNL.add(backBTN);
+        backBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "clientes";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return consultarClientePNL;
+    }
+    public JPanel crearCliente(){
+        anterior = actual;
+        actual = "crearCliente";
+
+        JPanel crearClientesPNL = new JPanel();
+        crearClientesPNL.setSize(1000, 800);
+        crearClientesPNL.setLocation(0, 0);
+        crearClientesPNL.setLayout(null);
+        crearClientesPNL.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Crear Cliente",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        crearClientesPNL.add(bienvenido);
+
+        JButton backBTN = new JButton("Regresar");
+        backBTN.setSize(100,20);
+        backBTN.setLocation(130,390);
+        crearClientesPNL.add(backBTN);
+        backBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "clientes";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return crearClientesPNL;
+    }
+
+    public JPanel editarCliente(){
+        anterior = actual;
+        actual = "editarCliente";
+
+        JPanel editarClientesPNL = new JPanel();
+        editarClientesPNL.setSize(1000, 800);
+        editarClientesPNL.setLocation(0, 0);
+        editarClientesPNL.setLayout(null);
+        editarClientesPNL.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Editar Cliente",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        editarClientesPNL.add(bienvenido);
+
+        JButton backBTN = new JButton("Regresar");
+        backBTN.setSize(100,20);
+        backBTN.setLocation(130,390);
+        editarClientesPNL.add(backBTN);
+        backBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "clientes";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return editarClientesPNL;
+    }
     public JPanel rentas(){
         anterior = actual;
         actual = "rentas";
