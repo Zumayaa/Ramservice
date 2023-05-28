@@ -74,6 +74,30 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+        if(actual.equals("consultarRenta")){
+            panel = consultarRentas();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("crearRenta")){
+            panel = crearRenta();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("editarRenta")){
+            panel = editarRenta();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
         if(actual.equals("categorias")){
             panel = categorias();
 
@@ -462,8 +486,161 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
+        JButton consultarBTN = new JButton("Consultar rentas");
+        consultarBTN.setSize(100,20);
+        consultarBTN.setLocation(130,250);
+        rentasPanel.add(consultarBTN);
+        consultarBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "consultarRenta";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        JButton crearBTN = new JButton("Crear renta");
+        crearBTN.setSize(100,20);
+        crearBTN.setLocation(130,300);
+        rentasPanel.add(crearBTN);
+        crearBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "crearRenta";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        JButton editarBTN = new JButton("Editar renta");
+        editarBTN.setSize(100,20);
+        editarBTN.setLocation(130,350);
+        rentasPanel.add(editarBTN);
+        editarBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "editarRenta";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
 
         return rentasPanel;
+    }
+    public JPanel consultarRentas(){
+        anterior = actual;
+        actual = "consultarRentas";
+
+        JPanel consultarCar = new JPanel();
+        consultarCar.setSize(1000, 800);
+        consultarCar.setLocation(0, 0);
+        consultarCar.setLayout(null);
+        consultarCar.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Consultar Rentas",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        consultarCar.add(bienvenido);
+
+        JButton backBTN = new JButton("Regresar");
+        backBTN.setSize(100,20);
+        backBTN.setLocation(130,390);
+        consultarCar.add(backBTN);
+        backBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "rentas";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return consultarCar;
+    }
+    public JPanel crearRenta(){
+        anterior = actual;
+        actual = "crearRenta";
+
+        JPanel crearRentaPNL = new JPanel();
+        crearRentaPNL.setSize(1000, 800);
+        crearRentaPNL.setLocation(0, 0);
+        crearRentaPNL.setLayout(null);
+        crearRentaPNL.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Crear Renta",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        crearRentaPNL.add(bienvenido);
+
+        JButton backBTN = new JButton("Regresar");
+        backBTN.setSize(100,20);
+        backBTN.setLocation(130,390);
+        crearRentaPNL.add(backBTN);
+        backBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "rentas";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return crearRentaPNL;
+    }
+
+    public JPanel editarRenta(){
+        anterior = actual;
+        actual = "editarRenta";
+
+        JPanel editarRentaPNL = new JPanel();
+        editarRentaPNL.setSize(1000, 800);
+        editarRentaPNL.setLocation(0, 0);
+        editarRentaPNL.setLayout(null);
+        editarRentaPNL.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Editar Renta",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        editarRentaPNL.add(bienvenido);
+
+        JButton backBTN = new JButton("Regresar");
+        backBTN.setSize(100,20);
+        backBTN.setLocation(130,390);
+        editarRentaPNL.add(backBTN);
+        backBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "rentas";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return editarRentaPNL;
     }
     public JPanel categorias(){
         anterior = actual;
