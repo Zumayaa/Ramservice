@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 public class Ventana extends JFrame {
@@ -37,6 +39,15 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+
+        if(actual.equals("home")){
+            panel = home();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
     }
 
     public JPanel login(){
@@ -58,12 +69,12 @@ public class Ventana extends JFrame {
         loginPanel.setBackground(Color.decode("#95E799"));
         login.add(loginPanel);
 
-        JLabel panel = new JLabel("Biendosveni",JLabel.CENTER);
-        panel.setFont(new Font("Arial",Font.BOLD,35));
-        panel.setSize(300,80);
-        panel.setLocation(130,10);
-        panel.setForeground(Color.decode("#005F04"));
-        loginPanel.add(panel);
+        JLabel bienvenido = new JLabel("Biendosveni",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        loginPanel.add(bienvenido);
 
         JTextField correo = new JTextField();
         correo.setSize(100,20);
@@ -74,11 +85,6 @@ public class Ventana extends JFrame {
         password.setSize(100,20);
         password.setLocation(130,200);
         loginPanel.add(password);
-
-        JButton loginBTN = new JButton("Entrar");
-        loginBTN.setSize(100,20);
-        loginBTN.setLocation(130,250);
-        loginPanel.add(loginBTN);
 
         JPanel loginIMG = new JPanel();
         loginIMG.setSize(550, 800);
@@ -95,6 +101,43 @@ public class Ventana extends JFrame {
         imagen2.setLocation(0, 0);
         loginIMG.add(imagen2);
 
+        JButton loginBTN = new JButton("Entrar");
+        loginBTN.setSize(100,20);
+        loginBTN.setLocation(130,250);
+        loginPanel.add(loginBTN);
+
+        loginBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "home";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
     return login;
+    }
+
+    public JPanel home(){
+        anterior = actual;
+        actual = "home";
+
+        JPanel homePanel = new JPanel();
+        homePanel.setSize(1000, 800);
+        homePanel.setLocation(0, 0);
+        homePanel.setLayout(null);
+        homePanel.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Home",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        homePanel.add(bienvenido);
+
+        return homePanel;
     }
 }
