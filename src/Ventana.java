@@ -4,6 +4,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
 
@@ -11,7 +12,8 @@ public class Ventana extends JFrame {
     public JPanel panel = null;
     private String anterior = "cargaPantalla";
     private String actual = "login";
-
+    private Border roundedBorder = new RoundBorder(16, 1, Color.GRAY);
+    ImageIcon logoEmpresa = new ImageIcon("company.png");
     public Ventana(){
 
         this.setVisible(true);
@@ -22,6 +24,7 @@ public class Ventana extends JFrame {
         this.getContentPane().setBackground(Color.decode("#FFFFFF"));
         this.setLayout(null);
         this.setResizable(false);
+        setIconImage(logoEmpresa.getImage());
 
         limpiarVentana();
 
@@ -170,6 +173,7 @@ public class Ventana extends JFrame {
     public JPanel login(){
         anterior = actual;
         actual = "login";
+
         JPanel login = new JPanel();
         login.setSize(1000, 800);
         login.setLocation(0, 0);
@@ -214,6 +218,7 @@ public class Ventana extends JFrame {
         JTextField correo = new JTextField();
         correo.setSize(300,36);
         correo.setLocation(75,220);
+        correo.setBorder(roundedBorder);
         loginPanel.add(correo);
 
         JLabel passwordText = new JLabel("Contraseña",JLabel.CENTER);
@@ -226,6 +231,7 @@ public class Ventana extends JFrame {
         JTextField password = new JTextField();
         password.setSize(300,36);
         password.setLocation(75,320);
+        password.setBorder(roundedBorder);
         loginPanel.add(password);
 
         JPanel loginIMG = new JPanel();
@@ -1025,4 +1031,29 @@ public class Ventana extends JFrame {
 
         return consultarCar;
     }
+    class RoundBorder implements Border {
+        private int radius;
+        private int grosor;
+        private Color color;
+
+        public RoundBorder(int radius, int thickness, Color color) {
+            this.radius = radius;
+            this.grosor = thickness;
+            this.color = color;
+        }
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setStroke(new BasicStroke(grosor));
+            g2.setColor(color);
+            g2.draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, radius, radius));
+        }
+        public Insets getBorderInsets(Component c) {
+            int value = radius / 2 + grosor / 2;
+            return new Insets(value, value, value, value);
+        }
+        public boolean isBorderOpaque() {
+            return true;
+        }
+    }
 }
+
