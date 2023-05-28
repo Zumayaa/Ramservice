@@ -48,6 +48,48 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+
+        if(actual.equals("vehiculos")){
+            panel = vehiculos();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+
+        if(actual.equals("clientes")){
+            panel = clientes();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("rentas")){
+            panel = rentas();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("categorias")){
+            panel = categorias();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("marcas")){
+            panel = marcas();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
     }
 
     public JPanel login(){
@@ -138,6 +180,184 @@ public class Ventana extends JFrame {
         bienvenido.setForeground(Color.decode("#005F04"));
         homePanel.add(bienvenido);
 
+        JButton vehiculosBTN = new JButton("Vehículos");
+        vehiculosBTN.setSize(100,20);
+        vehiculosBTN.setLocation(130,250);
+        homePanel.add(vehiculosBTN);
+
+        vehiculosBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "vehiculos";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        JButton clientesBTN = new JButton("Clientes");
+        clientesBTN.setSize(100,20);
+        clientesBTN.setLocation(130,290);
+        homePanel.add(clientesBTN);
+        clientesBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "clientes";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        JButton rentasBTN = new JButton("Rentas");
+        rentasBTN.setSize(100,20);
+        rentasBTN.setLocation(130,320);
+        homePanel.add(rentasBTN);
+        rentasBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "rentas";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        JButton categoriasBTN = new JButton("Categorias");
+        categoriasBTN.setSize(100,20);
+        categoriasBTN.setLocation(130,360);
+        homePanel.add(categoriasBTN);
+        categoriasBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "categorias";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        JButton marcasBTN = new JButton("Marcas");
+        marcasBTN.setSize(100,20);
+        marcasBTN.setLocation(130,390);
+        homePanel.add(marcasBTN);
+        marcasBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "marcas";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
         return homePanel;
+    }
+
+    public JPanel vehiculos(){
+        anterior = actual;
+        actual = "vehiculos";
+
+        JPanel vehiculosPanel = new JPanel();
+        vehiculosPanel.setSize(1000, 800);
+        vehiculosPanel.setLocation(0, 0);
+        vehiculosPanel.setLayout(null);
+        vehiculosPanel.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("vehiculos",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        vehiculosPanel.add(bienvenido);
+
+        return vehiculosPanel;
+    }
+
+    public JPanel clientes(){
+        anterior = actual;
+        actual = "clientes";
+
+        JPanel clientesPanel = new JPanel();
+        clientesPanel.setSize(1000, 800);
+        clientesPanel.setLocation(0, 0);
+        clientesPanel.setLayout(null);
+        clientesPanel.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Clientes",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        clientesPanel.add(bienvenido);
+
+        return clientesPanel;
+    }
+
+    public JPanel rentas(){
+        anterior = actual;
+        actual = "rentas";
+
+        JPanel rentasPanel = new JPanel();
+        rentasPanel.setSize(1000, 800);
+        rentasPanel.setLocation(0, 0);
+        rentasPanel.setLayout(null);
+        rentasPanel.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Rentas",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        rentasPanel.add(bienvenido);
+
+        return rentasPanel;
+    }
+    public JPanel categorias(){
+        anterior = actual;
+        actual = "categorias";
+
+        JPanel categoriasPanel = new JPanel();
+        categoriasPanel.setSize(1000, 800);
+        categoriasPanel.setLocation(0, 0);
+        categoriasPanel.setLayout(null);
+        categoriasPanel.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Categorias",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        categoriasPanel.add(bienvenido);
+
+        return categoriasPanel;
+    }
+    public JPanel marcas(){
+        anterior = actual;
+        actual = "marcas";
+
+        JPanel marcasPanel = new JPanel();
+        marcasPanel.setSize(1000, 800);
+        marcasPanel.setLocation(0, 0);
+        marcasPanel.setLayout(null);
+        marcasPanel.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Marcas",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        marcasPanel.add(bienvenido);
+
+        return marcasPanel;
     }
 }
