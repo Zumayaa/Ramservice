@@ -90,6 +90,30 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+        if(actual.equals("consultarVehiculo")){
+            panel = consultarVehiculo();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("consultarCategorias")){
+            panel = consultarCategorias();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("consultarMarcas")){
+            panel = consultarMarcas();
+
+            this.add(panel);
+
+            this.repaint();
+            this.revalidate();
+        }
     }
 
     public JPanel login(){
@@ -313,7 +337,59 @@ public class Ventana extends JFrame {
             }
         });
 
+        JButton consultaBTN = new JButton("Consultar");
+        consultaBTN.setSize(100,20);
+        consultaBTN.setLocation(260,390);
+        vehiculosPanel.add(consultaBTN);
+        consultaBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "consultarVehiculo";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
         return vehiculosPanel;
+    }
+
+    public JPanel consultarVehiculo(){
+        anterior = actual;
+        actual = "consultarVehiculo";
+
+        JPanel consultarCar = new JPanel();
+        consultarCar.setSize(1000, 800);
+        consultarCar.setLocation(0, 0);
+        consultarCar.setLayout(null);
+        consultarCar.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Consultar Vehiculos",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        consultarCar.add(bienvenido);
+
+        JButton backBTN = new JButton("Regresar");
+        backBTN.setSize(100,20);
+        backBTN.setLocation(130,390);
+        consultarCar.add(backBTN);
+        backBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "vehiculos";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return consultarCar;
     }
 
     public JPanel clientes(){
@@ -348,6 +424,8 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
+
+
 
         return clientesPanel;
     }
@@ -420,7 +498,57 @@ public class Ventana extends JFrame {
             }
         });
 
+        JButton consultaBTN = new JButton("Consultar");
+        consultaBTN.setSize(100,20);
+        consultaBTN.setLocation(260,390);
+        categoriasPanel.add(consultaBTN);
+        consultaBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "consultarCategorias";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
         return categoriasPanel;
+    }
+    public JPanel consultarCategorias(){
+        anterior = actual;
+        actual = "consultarCategorias";
+
+        JPanel consultarCar = new JPanel();
+        consultarCar.setSize(1000, 800);
+        consultarCar.setLocation(0, 0);
+        consultarCar.setLayout(null);
+        consultarCar.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Consultar Categorias",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        consultarCar.add(bienvenido);
+
+        JButton backBTN = new JButton("Regresar");
+        backBTN.setSize(100,20);
+        backBTN.setLocation(130,390);
+        consultarCar.add(backBTN);
+        backBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "categorias";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return consultarCar;
     }
     public JPanel marcas(){
         anterior = actual;
@@ -455,6 +583,56 @@ public class Ventana extends JFrame {
             }
         });
 
+        JButton consultaBTN = new JButton("Consultar");
+        consultaBTN.setSize(100,20);
+        consultaBTN.setLocation(260,390);
+        marcasPanel.add(consultaBTN);
+        consultaBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "consultarMarcas";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
         return marcasPanel;
+    }
+    public JPanel consultarMarcas(){
+        anterior = actual;
+        actual = "consultarMarcas";
+
+        JPanel consultarCar = new JPanel();
+        consultarCar.setSize(1000, 800);
+        consultarCar.setLocation(0, 0);
+        consultarCar.setLayout(null);
+        consultarCar.setBackground(Color.decode("#FFFFFF"));
+
+        JLabel bienvenido = new JLabel("Consultar Marcas",JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial",Font.BOLD,35));
+        bienvenido.setSize(300,80);
+        bienvenido.setLocation(130,10);
+        bienvenido.setForeground(Color.decode("#005F04"));
+        consultarCar.add(bienvenido);
+
+        JButton backBTN = new JButton("Regresar");
+        backBTN.setSize(100,20);
+        backBTN.setLocation(130,390);
+        consultarCar.add(backBTN);
+        backBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "marcas";
+                limpiarVentana();
+
+                repaint();
+                revalidate();
+            }
+        });
+
+        return consultarCar;
     }
 }
