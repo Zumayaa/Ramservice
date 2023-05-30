@@ -296,7 +296,7 @@ public class Ventana extends JFrame {
         }
         if (actual.equals("categorias")) {
 
-            panelActualLbl.setText("Categorias");
+            panelActualLbl.setText("Categorías");
 
             panel = categorias();
 
@@ -2659,7 +2659,12 @@ public class Ventana extends JFrame {
         JButton btnNewButton = new JButton("Consultar");
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual = "consultarMarcas";
+                limpiarVentana();
 
+                revalidate();
+                repaint();
             }
         });
         btnNewButton.setFocusPainted(false);
@@ -2676,7 +2681,6 @@ public class Ventana extends JFrame {
         lblNewLabel_2.setBounds(109, 110, 226, 140);
         marcasPanel.add(lblNewLabel_2);
 
-        getContentPane().add(marcasPanel);
 
         JLabel lblNewLabel = new JLabel("");
         lblNewLabel.setOpaque(true);
@@ -2724,36 +2728,90 @@ public class Ventana extends JFrame {
         anterior = actual;
         actual = "consultarMarcas";
 
-        JPanel consultarCar = new JPanel();
-        consultarCar.setSize(1000, 800);
-        consultarCar.setLocation(0, 0);
-        consultarCar.setLayout(null);
-        consultarCar.setBackground(Color.decode("#FFFFFF"));
+        JPanel consultarMarcas = new JPanel();
+        consultarMarcas.setRequestFocusEnabled(false);
+        consultarMarcas.setForeground(Color.BLACK);
+        consultarMarcas.setSize(1000, 681);
+        consultarMarcas.setLocation(0, 80);
+        consultarMarcas.setLayout(null);
+        consultarMarcas.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Consultar Marcas", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        consultarCar.add(bienvenido);
+        JButton lblNewLabel_3 = new JButton("");
+        lblNewLabel_3.setBorderPainted(false);
+        lblNewLabel_3.setRequestFocusEnabled(false);
+        lblNewLabel_3.setFocusPainted(false);
+        lblNewLabel_3.setContentAreaFilled(false);
+        lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_3.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
+        lblNewLabel_3.setBounds(652, 424, 271, 92);
+        consultarMarcas.add(lblNewLabel_3);
 
-        JButton backBTN = new JButton("Regresar");
-        backBTN.setSize(100, 20);
-        backBTN.setLocation(130, 390);
-        consultarCar.add(backBTN);
-        backBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "marcas";
-                limpiarVentana();
+        JTextField textField_1 = new JTextField();
+        textField_1.setHorizontalAlignment(SwingConstants.LEFT);
+        textField_1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        textField_1.setBorder(null);
+        textField_1.setColumns(10);
+        textField_1.setBackground(SystemColor.menu);
+        textField_1.setBounds(670, 173, 236, 219);
+        consultarMarcas.add(textField_1);
 
-                repaint();
-                revalidate();
-            }
-        });
+        JTextField textField = new JTextField();
+        textField.setBorder(null);
+        textField.setBackground(SystemColor.menu);
+        textField.setBounds(670, 84, 236, 29);
+        consultarMarcas.add(textField);
+        textField.setColumns(10);
 
-        return consultarCar;
+        JLabel lblNewLabel_2_2 = new JLabel("Descripción");
+        lblNewLabel_2_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2_2.setBounds(670, 144, 154, 23);
+        consultarMarcas.add(lblNewLabel_2_2);
+
+        JLabel lblNewLabel_2 = new JLabel("Nombre de marca");
+        lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2.setBounds(670, 59, 154, 23);
+        consultarMarcas.add(lblNewLabel_2);
+
+        JTextArea txtrLosSuvsDeportivos = new JTextArea();
+        txtrLosSuvsDeportivos.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed\r\ndo eiusmod tempor incididunt ut labore et dolore magna \r\naliqua. Ut enim ad minim veniam, quis nostrud exercitation\r\n ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\nDuis aute irure dolor in reprehenderit in voluptate velit esse \r\ncillum dolore eu fugiat nulla pariatur.");
+        txtrLosSuvsDeportivos.setOpaque(false);
+        txtrLosSuvsDeportivos.setForeground(Color.BLACK);
+        txtrLosSuvsDeportivos.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        txtrLosSuvsDeportivos.setBounds(59, 469, 497, 152);
+        consultarMarcas.add(txtrLosSuvsDeportivos);
+
+        JLabel lblNewLabel_2_1 = new JLabel("");
+        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/logomercedes.png"));
+        lblNewLabel_2_1.setBounds(79, 107, 456, 298);
+        consultarMarcas.add(lblNewLabel_2_1);
+
+
+        JButton btnEliminar_1 = new JButton("Editar");
+        btnEliminar_1.setForeground(Color.WHITE);
+        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnEliminar_1.setFocusPainted(false);
+        btnEliminar_1.setBorderPainted(false);
+        btnEliminar_1.setBackground(Color.decode("#38B6FF"));
+        btnEliminar_1.setBounds(657, 547, 260, 53);
+        consultarMarcas.add(btnEliminar_1);
+
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel_1.setOpaque(true);
+        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1.setBackground(SystemColor.controlShadow);
+        lblNewLabel_1.setBounds(632, 24, 307, 597);
+        consultarMarcas.add(lblNewLabel_1);
+
+        JLabel lblNewLabel = new JLabel("Mercedes-Benz");
+        lblNewLabel.setForeground(Color.BLACK);
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBounds(166, 24, 282, 58);
+        consultarMarcas.add(lblNewLabel);
+
+        return consultarMarcas;
     }
 
     class RoundBorder implements Border {
