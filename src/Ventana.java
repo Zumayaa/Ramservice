@@ -906,19 +906,19 @@ public class Ventana extends JFrame {
         consultarVehi.add(textField_3);
 
         JLabel lblNewLabel_4_3 = new JLabel("");
-        lblNewLabel_4_3.setIcon(new ImageIcon(Ventana.class.getResource("/img/gasg.png")));
+        lblNewLabel_4_3.setIcon(new ImageIcon("src/img/gasg.png"));
         lblNewLabel_4_3.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel_4_3.setBounds(401, 409, 58, 38);
         consultarVehi.add(lblNewLabel_4_3);
 
         JLabel lblNewLabel_4_2 = new JLabel("");
-        lblNewLabel_4_2.setIcon(new ImageIcon(Ventana.class.getResource("/img/calendarg.png")));
+        lblNewLabel_4_2.setIcon(new ImageIcon("src/img/calendarg.png"));
         lblNewLabel_4_2.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel_4_2.setBounds(276, 409, 58, 38);
         consultarVehi.add(lblNewLabel_4_2);
 
         JLabel lblNewLabel_4_1 = new JLabel("");
-        lblNewLabel_4_1.setIcon(new ImageIcon(Ventana.class.getResource("/img/gearg.png")));
+        lblNewLabel_4_1.setIcon(new ImageIcon("src/img/gearg.png"));
         lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel_4_1.setBounds(135, 409, 58, 38);
         consultarVehi.add(lblNewLabel_4_1);
@@ -991,7 +991,7 @@ public class Ventana extends JFrame {
         lblNewLabel_3.setFocusPainted(false);
         lblNewLabel_3.setContentAreaFilled(false);
         lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_3.setIcon(new ImageIcon(Ventana.class.getResource("/img/Group 56 (1).png")));
+        lblNewLabel_3.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
         lblNewLabel_3.setBounds(652, 424, 271, 92);
         consultarVehi.add(lblNewLabel_3);
 
@@ -1058,7 +1058,7 @@ public class Ventana extends JFrame {
         consultarVehi.add(lblNewLabel_1_1);
 
         JLabel lblNewLabel_4 = new JLabel("");
-        lblNewLabel_4.setIcon(new ImageIcon(Ventana.class.getResource("/img/Vectorg.png")));
+        lblNewLabel_4.setIcon(new ImageIcon("src/img/Vectorg.png"));
         lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel_4.setBounds(7, 409, 58, 38);
         consultarVehi.add(lblNewLabel_4);
@@ -1097,7 +1097,7 @@ public class Ventana extends JFrame {
 
         JLabel lblNewLabel_2_1 = new JLabel("");
         lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_2_1.setIcon(new ImageIcon(Ventana.class.getResource("/img/carrograndeazul.png")));
+        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/carrograndeazul.png"));
         lblNewLabel_2_1.setBounds(22, 100, 552, 298);
         consultarVehi.add(lblNewLabel_2_1);
 
