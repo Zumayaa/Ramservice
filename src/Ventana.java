@@ -1162,26 +1162,26 @@ public class Ventana extends JFrame {
         historialClienteSeleccionadoPanel.setBackground(Color.decode("#FFFFFF"));
 
         int xLbl = 100;
-        JLabel idClienteLbl = new JLabel("Id cliente: ");
-        idClienteLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        JLabel idClienteLbl = new JLabel("Id cliente: 1");
+        idClienteLbl.setFont(new Font("Arial", Font.BOLD, 24));
         idClienteLbl.setSize(300,50);
-        idClienteLbl.setLocation(xLbl,100);
+        idClienteLbl.setLocation(xLbl+20,50);
 
-        JLabel nombreLbl = new JLabel("Nombre: ");
-        nombreLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        JLabel nombreLbl = new JLabel("Nombre: Luis");
+        nombreLbl.setFont(new Font("Arial", Font.BOLD, 24));
         nombreLbl.setSize(300,50);
-        nombreLbl.setLocation(xLbl,150);
-        xLbl += 600;
+        nombreLbl.setLocation(xLbl+20,130);
+        xLbl += 400;
 
-        JLabel correoLbl = new JLabel("Correo:");
-        correoLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        JLabel correoLbl = new JLabel("Email: luis@gmail.com");
+        correoLbl.setFont(new Font("Arial", Font.BOLD, 24));
         correoLbl.setSize(300,50);
-        correoLbl.setLocation(xLbl,100);
+        correoLbl.setLocation(xLbl,50);
 
-        JLabel telefonoLbl = new JLabel("Teléfono: ");
-        telefonoLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        JLabel telefonoLbl = new JLabel("Teléfono: 61212345");
+        telefonoLbl.setFont(new Font("Arial", Font.BOLD, 24));
         telefonoLbl.setSize(300,50);
-        telefonoLbl.setLocation(xLbl,150);
+        telefonoLbl.setLocation(xLbl,130);
 
         String[] columnasTablaClientes = {
                 "<html><div style='text-align: center;'>Id<br>renta</div></html>",
@@ -2296,7 +2296,7 @@ public class Ventana extends JFrame {
 
         JLabel ccvLbl = new JLabel("CVV");
         ccvLbl.setLocation(x,y);
-        ccvLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        ccvLbl.setFont(new Font("Arial", Font.BOLD, 16));
         ccvLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(ccvLbl);
 
@@ -2312,7 +2312,7 @@ public class Ventana extends JFrame {
         y = 100;
         JLabel costoEstimadoLbl = new JLabel("Costo estimado", JLabel.CENTER);
         costoEstimadoLbl.setLocation(x,y);
-        costoEstimadoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        costoEstimadoLbl.setFont(new Font("Arial", Font.BOLD, 16));
         costoEstimadoLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(costoEstimadoLbl);
 
@@ -2370,7 +2370,7 @@ public class Ventana extends JFrame {
         eliminarRentaPNL.setBackground(Color.decode("#FFFFFF"));
 
         JLabel descripcionLbl = new JLabel("ID de renta a eliminar");
-        descripcionLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        descripcionLbl.setFont(new Font("Arial", Font.BOLD, 24));
         descripcionLbl.setSize(300,50);
         descripcionLbl.setLocation(400,50);
 
