@@ -886,36 +886,222 @@ public class Ventana extends JFrame {
         anterior = actual;
         actual = "consultarVehiculo";
 
-        JPanel consultarCar = new JPanel();
-        consultarCar.setSize(1000, 800);
-        consultarCar.setLocation(0, 0);
-        consultarCar.setLayout(null);
-        consultarCar.setBackground(Color.decode("#FFFFFF"));
+        JPanel consultarVehi = new JPanel();
+        consultarVehi.setFont(new Font("Tahoma", Font.BOLD, 11));
+        consultarVehi.setRequestFocusEnabled(false);
+        consultarVehi.setForeground(Color.BLACK);
+        consultarVehi.setSize(1000, 681);
+        consultarVehi.setLocation(0, 80);
+        consultarVehi.setLayout(null);
+        consultarVehi.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Consultar Vehiculos", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        consultarCar.add(bienvenido);
+        JTextField textField_3 = new JTextField();
+        textField_3.setOpaque(false);
+        textField_3.setHorizontalAlignment(SwingConstants.LEFT);
+        textField_3.setFont(new Font("Tahoma", Font.BOLD, 13));
+        textField_3.setColumns(10);
+        textField_3.setBorder(null);
+        textField_3.setBackground(SystemColor.menu);
+        textField_3.setBounds(813, 83, 93, 29);
+        consultarVehi.add(textField_3);
 
-        JButton backBTN = new JButton("Regresar");
-        backBTN.setSize(100, 20);
-        backBTN.setLocation(130, 390);
-        consultarCar.add(backBTN);
-        backBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "vehiculos";
-                limpiarVentana();
+        JLabel lblNewLabel_4_3 = new JLabel("");
+        lblNewLabel_4_3.setIcon(new ImageIcon(Ventana.class.getResource("/img/gasg.png")));
+        lblNewLabel_4_3.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_3.setBounds(401, 409, 58, 38);
+        consultarVehi.add(lblNewLabel_4_3);
 
-                repaint();
-                revalidate();
-            }
-        });
+        JLabel lblNewLabel_4_2 = new JLabel("");
+        lblNewLabel_4_2.setIcon(new ImageIcon(Ventana.class.getResource("/img/calendarg.png")));
+        lblNewLabel_4_2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_2.setBounds(276, 409, 58, 38);
+        consultarVehi.add(lblNewLabel_4_2);
 
-        return consultarCar;
+        JLabel lblNewLabel_4_1 = new JLabel("");
+        lblNewLabel_4_1.setIcon(new ImageIcon(Ventana.class.getResource("/img/gearg.png")));
+        lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_1.setBounds(135, 409, 58, 38);
+        consultarVehi.add(lblNewLabel_4_1);
+
+        JLabel lblNewLabel_2_3_1 = new JLabel("Transmisión");
+        lblNewLabel_2_3_1.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblNewLabel_2_3_1.setForeground(Color.BLACK);
+        lblNewLabel_2_3_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2_3_1.setBounds(787, 148, 119, 23);
+        consultarVehi.add(lblNewLabel_2_3_1);
+
+        JComboBox comboBox_2 = new JComboBox();
+        comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Gasolina"}));
+        comboBox_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+        comboBox_2.setBounds(670, 331, 236, 29);
+        consultarVehi.add(comboBox_2);
+
+        JTextField textField_1 = new JTextField();
+        textField_1.setColumns(10);
+        textField_1.setBorder(null);
+        textField_1.setBackground(SystemColor.menu);
+        textField_1.setBounds(670, 257, 236, 29);
+        consultarVehi.add(textField_1);
+
+        JLabel lblNewLabel_2_2_2 = new JLabel("Combustible");
+        lblNewLabel_2_2_2.setForeground(Color.BLACK);
+        lblNewLabel_2_2_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2_2_2.setBounds(670, 308, 154, 23);
+        consultarVehi.add(lblNewLabel_2_2_2);
+
+        JLabel lblNewLabel_2_2_1 = new JLabel("Año");
+        lblNewLabel_2_2_1.setForeground(Color.BLACK);
+        lblNewLabel_2_2_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2_2_1.setBounds(670, 235, 154, 23);
+        consultarVehi.add(lblNewLabel_2_2_1);
+
+        JComboBox comboBox_1 = new JComboBox();
+        comboBox_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+        comboBox_1.setBounds(806, 175, 100, 29);
+        consultarVehi.add(comboBox_1);
+
+        JComboBox comboBox = new JComboBox();
+        comboBox.setForeground(Color.BLACK);
+        comboBox.setFont(new Font("Tahoma", Font.BOLD, 14));
+        comboBox.setModel(new DefaultComboBoxModel(new String[] {"BMW"}));
+        comboBox.setBounds(670, 175, 100, 29);
+        consultarVehi.add(comboBox);
+
+        JTextField textField_2 = new JTextField();
+        textField_2.setEditable(false);
+        textField_2.setHorizontalAlignment(SwingConstants.LEFT);
+        textField_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+        textField_2.setText("$");
+        textField_2.setColumns(10);
+        textField_2.setBorder(null);
+        textField_2.setBackground(SystemColor.menu);
+        textField_2.setBounds(806, 83, 100, 29);
+        consultarVehi.add(textField_2);
+
+        JLabel lblNewLabel_2_3 = new JLabel("Costo por día");
+        lblNewLabel_2_3.setForeground(Color.BLACK);
+        lblNewLabel_2_3.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblNewLabel_2_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2_3.setBounds(787, 59, 119, 23);
+        consultarVehi.add(lblNewLabel_2_3);
+
+        JButton lblNewLabel_3 = new JButton("");
+        lblNewLabel_3.setBorderPainted(false);
+        lblNewLabel_3.setRequestFocusEnabled(false);
+        lblNewLabel_3.setFocusPainted(false);
+        lblNewLabel_3.setContentAreaFilled(false);
+        lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_3.setIcon(new ImageIcon(Ventana.class.getResource("/img/Group 56 (1).png")));
+        lblNewLabel_3.setBounds(652, 424, 271, 92);
+        consultarVehi.add(lblNewLabel_3);
+
+        JTextField textField = new JTextField();
+        textField.setBorder(null);
+        textField.setBackground(SystemColor.menu);
+        textField.setBounds(670, 84, 100, 29);
+        consultarVehi.add(textField);
+        textField.setColumns(10);
+
+        JLabel lblNewLabel_2_2 = new JLabel("Categoría");
+        lblNewLabel_2_2.setForeground(Color.BLACK);
+        lblNewLabel_2_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2_2.setBounds(670, 148, 154, 23);
+        consultarVehi.add(lblNewLabel_2_2);
+
+        JLabel lblNewLabel_2 = new JLabel("Modelo");
+        lblNewLabel_2.setForeground(Color.BLACK);
+        lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2.setBounds(670, 59, 154, 23);
+        consultarVehi.add(lblNewLabel_2);
+
+        JTextArea txtrLosSuvsDeportivos = new JTextArea();
+        txtrLosSuvsDeportivos.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed\r\ndo eiusmod tempor incididunt ut labore et dolore magna \r\naliqua. Ut enim ad minim veniam, quis nostrud exercitation\r\n ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\nDuis aute irure dolor in reprehenderit in voluptate velit esse \r\ncillum dolore eu fugiat nulla pariatur.");
+        txtrLosSuvsDeportivos.setOpaque(false);
+        txtrLosSuvsDeportivos.setForeground(Color.BLACK);
+        txtrLosSuvsDeportivos.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        txtrLosSuvsDeportivos.setBounds(24, 471, 487, 164);
+        consultarVehi.add(txtrLosSuvsDeportivos);
+
+
+
+        JButton btnEliminar_1 = new JButton("Editar");
+        btnEliminar_1.setForeground(Color.WHITE);
+        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnEliminar_1.setFocusPainted(false);
+        btnEliminar_1.setBorderPainted(false);
+        btnEliminar_1.setBackground(Color.decode("#38B6FF"));
+        btnEliminar_1.setBounds(657, 547, 260, 53);
+        consultarVehi.add(btnEliminar_1);
+
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setHorizontalTextPosition(SwingConstants.CENTER);
+        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel_1.setOpaque(true);
+        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1.setBackground(SystemColor.controlShadow);
+        lblNewLabel_1.setBounds(632, 24, 307, 597);
+        consultarVehi.add(lblNewLabel_1);
+
+        JLabel lblNewLabel = new JLabel("BMW Rey X");
+        lblNewLabel.setForeground(Color.BLACK);
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBounds(166, 24, 282, 58);
+        consultarVehi.add(lblNewLabel);
+
+        JLabel lblNewLabel_1_1 = new JLabel("");
+        lblNewLabel_1_1.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel_1_1.setOpaque(true);
+        lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1_1.setBackground(SystemColor.controlShadow);
+        lblNewLabel_1_1.setBounds(17, 467, 517, 154);
+        consultarVehi.add(lblNewLabel_1_1);
+
+        JLabel lblNewLabel_4 = new JLabel("");
+        lblNewLabel_4.setIcon(new ImageIcon(Ventana.class.getResource("/img/Vectorg.png")));
+        lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4.setBounds(7, 409, 58, 38);
+        consultarVehi.add(lblNewLabel_4);
+
+        JLabel lblNewLabel_2_2_1_1 = new JLabel("Coupé");
+        lblNewLabel_2_2_1_1.setForeground(Color.BLACK);
+        lblNewLabel_2_2_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+        lblNewLabel_2_2_1_1.setBounds(60, 409, 76, 38);
+        consultarVehi.add(lblNewLabel_2_2_1_1);
+
+        JLabel lblNewLabel_2_2_1_1_1 = new JLabel("Estándar");
+        lblNewLabel_2_2_1_1_1.setForeground(Color.BLACK);
+        lblNewLabel_2_2_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+        lblNewLabel_2_2_1_1_1.setBounds(185, 409, 93, 38);
+        consultarVehi.add(lblNewLabel_2_2_1_1_1);
+
+        JLabel lblNewLabel_2_2_1_1_2 = new JLabel("2021");
+        lblNewLabel_2_2_1_1_2.setForeground(Color.BLACK);
+        lblNewLabel_2_2_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 18));
+        lblNewLabel_2_2_1_1_2.setBounds(329, 409, 76, 38);
+        consultarVehi.add(lblNewLabel_2_2_1_1_2);
+
+        JLabel lblNewLabel_2_2_1_1_3 = new JLabel("Gasolina");
+        lblNewLabel_2_2_1_1_3.setForeground(Color.BLACK);
+        lblNewLabel_2_2_1_1_3.setFont(new Font("Tahoma", Font.BOLD, 18));
+        lblNewLabel_2_2_1_1_3.setBounds(455, 409, 100, 38);
+        consultarVehi.add(lblNewLabel_2_2_1_1_3);
+
+        JLabel lblNewLabel_5 = new JLabel("$204 / día");
+        lblNewLabel_5.setForeground(new Color(0, 128, 0));
+        lblNewLabel_5.setBackground(Color.GREEN);
+        lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 18));
+        lblNewLabel_5.setBounds(195, 77, 216, 37);
+        consultarVehi.add(lblNewLabel_5);
+
+        JLabel lblNewLabel_2_1 = new JLabel("");
+        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_2_1.setIcon(new ImageIcon(Ventana.class.getResource("/img/carrograndeazul.png")));
+        lblNewLabel_2_1.setBounds(22, 100, 552, 298);
+        consultarVehi.add(lblNewLabel_2_1);
+
+        return consultarVehi;
     }
 
     public JPanel clientes() {
