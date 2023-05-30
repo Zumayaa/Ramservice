@@ -1079,17 +1079,17 @@ public class Ventana extends JFrame {
 
         JLabel descripcionEditarCliente = new JLabel("ID del cliente a consultar");
         descripcionEditarCliente.setSize(400,100);
-        descripcionEditarCliente.setLocation(400,30);
-        descripcionEditarCliente.setFont(new Font("Arial", Font.PLAIN, 24));
+        descripcionEditarCliente.setLocation(370,20);
+        descripcionEditarCliente.setFont(new Font("Arial", Font.BOLD, 24));
         consultarClientePNL.add(descripcionEditarCliente);
 
         JComboBox idClientesCB = new JComboBox();
-        idClientesCB.setSize(230,50);
+        idClientesCB.setSize(230,30);
         idClientesCB.setLocation(400,100);
 
         JButton consultarHistorialClienteBtn = new JButton();
         consultarHistorialClienteBtn.setSize(226,44);
-        consultarHistorialClienteBtn.setLocation(400, 150);
+        consultarHistorialClienteBtn.setLocation(400, 145);
         ImageIcon consultarHistorialIcon = new ImageIcon("src/img/consultarHistorialClienteIcon.png");
         consultarHistorialClienteBtn.setIcon(consultarHistorialIcon);
         consultarHistorialClienteBtn.addActionListener(new ActionListener() {
@@ -1133,9 +1133,9 @@ public class Ventana extends JFrame {
 
         int xLbl = 100;
         JLabel autoLbl = new JLabel("Auto seleccionado: ");
-        autoLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        autoLbl.setFont(new Font("Arial", Font.BOLD, 24));
         autoLbl.setSize(300,50);
-        autoLbl.setLocation(xLbl,100);
+        autoLbl.setLocation(xLbl+10,100);
 
         String[] columnasTablaClientes = {
                 "<html><div style='text-align: center;'>Id<br>renta</div></html>",
@@ -1234,7 +1234,7 @@ public class Ventana extends JFrame {
         int y = 50;
         JLabel nombresLbl = new JLabel("Nombres");
         nombresLbl.setLocation(x,y);
-        nombresLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        nombresLbl.setFont(new Font("Arial", Font.BOLD, 16));
         nombresLbl.setSize(200,40);
         crearClientesPNL.add(nombresLbl);
         y += 50;
@@ -1247,7 +1247,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel ApellidosLbl = new JLabel("Apellidos");
         ApellidosLbl.setLocation(x,y);
-        ApellidosLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        ApellidosLbl.setFont(new Font("Arial", Font.BOLD, 16));
         ApellidosLbl.setSize(200,40);
         crearClientesPNL.add(ApellidosLbl);
         y += 50;
@@ -1261,7 +1261,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel telefonoLbl = new JLabel("Teléfono");
         telefonoLbl.setLocation(x,y);
-        telefonoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        telefonoLbl.setFont(new Font("Arial", Font.BOLD, 16));
         telefonoLbl.setSize(200,40);
         crearClientesPNL.add(telefonoLbl);
         y += 50;
@@ -1274,7 +1274,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel correoLbl = new JLabel("Correo electronico");
         correoLbl.setLocation(x,y);
-        correoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        correoLbl.setFont(new Font("Arial", Font.BOLD, 16));
         correoLbl.setSize(200,40);
         crearClientesPNL.add(correoLbl);
         y += 50;
@@ -1289,7 +1289,7 @@ public class Ventana extends JFrame {
 
         JLabel passwordLbl = new JLabel("Contraseña");
         passwordLbl.setLocation(x,y);
-        passwordLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        passwordLbl.setFont(new Font("Arial", Font.BOLD, 16));
         passwordLbl.setSize(200,40);
         crearClientesPNL.add(passwordLbl);
         y += 50;
@@ -1304,7 +1304,7 @@ public class Ventana extends JFrame {
 
         JLabel passwordConfLbl = new JLabel("Repetir contraseña");
         passwordConfLbl.setLocation(x,y);
-        passwordConfLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        passwordConfLbl.setFont(new Font("Arial", Font.BOLD, 16));
         passwordConfLbl.setSize(200,40);
         crearClientesPNL.add(passwordConfLbl);
         y += 50;
@@ -1316,9 +1316,9 @@ public class Ventana extends JFrame {
 
 
         y += 50;
-        JLabel numTarjetaLbl = new JLabel("Numero tarjeta");
+        JLabel numTarjetaLbl = new JLabel("Número de tarjeta");
         numTarjetaLbl.setLocation(x,y);
-        numTarjetaLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        numTarjetaLbl.setFont(new Font("Arial", Font.BOLD, 16));
         numTarjetaLbl.setSize(200,40);
         crearClientesPNL.add(numTarjetaLbl);
         y += 50;
@@ -1331,7 +1331,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
         fechaCadLbl.setLocation(x,y);
-        fechaCadLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        fechaCadLbl.setFont(new Font("Arial", Font.BOLD, 16));
         fechaCadLbl.setSize(200,40);
         crearClientesPNL.add(fechaCadLbl);
         y += 50;
@@ -1343,9 +1343,9 @@ public class Ventana extends JFrame {
 
         y += 50;
 
-        JLabel ccvLbl = new JLabel("CCV");
+        JLabel ccvLbl = new JLabel("CVV");
         ccvLbl.setLocation(x,y);
-        ccvLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        ccvLbl.setFont(new Font("Arial", Font.BOLD, 16));
         ccvLbl.setSize(200,40);
         crearClientesPNL.add(ccvLbl);
 
@@ -1416,18 +1416,18 @@ public class Ventana extends JFrame {
 
         JLabel descripcionEditarCliente = new JLabel("ID del cliente a editar");
         descripcionEditarCliente.setSize(400,100);
-        descripcionEditarCliente.setLocation(400,30);
-        descripcionEditarCliente.setFont(new Font("Arial", Font.PLAIN, 24));
+        descripcionEditarCliente.setLocation(395,20);
+        descripcionEditarCliente.setFont(new Font("Arial", Font.BOLD, 24));
         editarClientesPNL.add(descripcionEditarCliente);
 
         JComboBox idClientesCB = new JComboBox();
         idClientesCB.setSize(226,40);
-        idClientesCB.setLocation(400,100);
+        idClientesCB.setLocation(400,90);
         editarClientesPNL.add(idClientesCB);
 
         JButton editarClienteBtn = new JButton();
         editarClienteBtn.setSize(226,31);
-        editarClienteBtn.setLocation(400, 150);
+        editarClienteBtn.setLocation(400, 140);
         ImageIcon editarClienteBotonIcon = new ImageIcon("src/img/editarClienteBoton.png");
         editarClienteBtn.setIcon(editarClienteBotonIcon);
         editarClientesPNL.add(editarClienteBtn);
@@ -1472,7 +1472,7 @@ public class Ventana extends JFrame {
         int y = 50;
         JLabel nombresLbl = new JLabel("Nombres");
         nombresLbl.setLocation(x,y);
-        nombresLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        nombresLbl.setFont(new Font("Arial", Font.BOLD, 16));
         nombresLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(nombresLbl);
         y += 50;
@@ -1485,7 +1485,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel ApellidosLbl = new JLabel("Apellidos");
         ApellidosLbl.setLocation(x,y);
-        ApellidosLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        ApellidosLbl.setFont(new Font("Arial", Font.BOLD, 16));
         ApellidosLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(ApellidosLbl);
         y += 50;
@@ -1499,7 +1499,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel telefonoLbl = new JLabel("Teléfono");
         telefonoLbl.setLocation(x,y);
-        telefonoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        telefonoLbl.setFont(new Font("Arial", Font.BOLD, 16));
         telefonoLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(telefonoLbl);
         y += 50;
@@ -1510,9 +1510,9 @@ public class Ventana extends JFrame {
         editarClienteSeleccionadoPNL.add(telefonoTF);
 
         y += 50;
-        JLabel correoLbl = new JLabel("Correo electronico");
+        JLabel correoLbl = new JLabel("Correo electrónico");
         correoLbl.setLocation(x,y);
-        correoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        correoLbl.setFont(new Font("Arial", Font.BOLD, 16));
         correoLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(correoLbl);
         y += 50;
@@ -1527,7 +1527,7 @@ public class Ventana extends JFrame {
 
         JLabel passwordLbl = new JLabel("Contraseña");
         passwordLbl.setLocation(x,y);
-        passwordLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        passwordLbl.setFont(new Font("Arial", Font.BOLD, 16));
         passwordLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(passwordLbl);
         y += 50;
@@ -1542,7 +1542,7 @@ public class Ventana extends JFrame {
 
         JLabel passwordConfLbl = new JLabel("Repetir contraseña");
         passwordConfLbl.setLocation(x,y);
-        passwordConfLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        passwordConfLbl.setFont(new Font("Arial", Font.BOLD, 16));
         passwordConfLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(passwordConfLbl);
         y += 50;
@@ -1554,9 +1554,9 @@ public class Ventana extends JFrame {
 
 
         y += 50;
-        JLabel numTarjetaLbl = new JLabel("Numero tarjeta");
+        JLabel numTarjetaLbl = new JLabel("Número de tarjeta");
         numTarjetaLbl.setLocation(x,y);
-        numTarjetaLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        numTarjetaLbl.setFont(new Font("Arial", Font.BOLD, 16));
         numTarjetaLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(numTarjetaLbl);
         y += 50;
@@ -1567,9 +1567,9 @@ public class Ventana extends JFrame {
         editarClienteSeleccionadoPNL.add(numTarjetaTF);
 
         y += 50;
-        JLabel fechaCadLbl = new JLabel("Fecha caducidad");
+        JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
         fechaCadLbl.setLocation(x,y);
-        fechaCadLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        fechaCadLbl.setFont(new Font("Arial", Font.BOLD, 16));
         fechaCadLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(fechaCadLbl);
         y += 50;
@@ -1581,9 +1581,9 @@ public class Ventana extends JFrame {
 
         y += 50;
 
-        JLabel ccvLbl = new JLabel("CCV");
+        JLabel ccvLbl = new JLabel("CVV");
         ccvLbl.setLocation(x,y);
-        ccvLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        ccvLbl.setFont(new Font("Arial", Font.BOLD, 16));
         ccvLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(ccvLbl);
 
@@ -1637,9 +1637,9 @@ public class Ventana extends JFrame {
         eliminarPanel.setLayout(null);
         eliminarPanel.setBackground(Color.decode("#FFFFFF"));
         JLabel descripcionLbl = new JLabel("ID de cliente a eliminar");
-        descripcionLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        descripcionLbl.setFont(new Font("Arial", Font.BOLD, 24));
         descripcionLbl.setSize(300,50);
-        descripcionLbl.setLocation(400,50);
+        descripcionLbl.setLocation(380,50);
 
         JComboBox idClientesCB = new JComboBox();
         idClientesCB.setSize(226,40);
@@ -1813,9 +1813,9 @@ public class Ventana extends JFrame {
         consultarCarPNL.setBackground(Color.decode("#FFFFFF"));
 
         JLabel bienvenido = new JLabel("Automovil a consultar");
-        bienvenido.setFont(new Font("Arial", Font.PLAIN, 24));
+        bienvenido.setFont(new Font("Arial", Font.BOLD, 24));
         bienvenido.setSize(300, 80);
-        bienvenido.setLocation(400, 50);
+        bienvenido.setLocation(385, 40);
         consultarCarPNL.add(bienvenido);
 
 
@@ -1882,7 +1882,7 @@ public class Ventana extends JFrame {
         int y = 100;
         JLabel carroLbl = new JLabel("Carro a rentar");
         carroLbl.setLocation(x,y);
-        carroLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        carroLbl.setFont(new Font("Arial", Font.BOLD, 16));
         carroLbl.setSize(200,40);
         crearRentaPNL.add(carroLbl);
         y += 50;
@@ -1895,7 +1895,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel fechaInicioLbl = new JLabel("Fecha de inicio");
         fechaInicioLbl.setLocation(x,y);
-        fechaInicioLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        fechaInicioLbl.setFont(new Font("Arial", Font.BOLD, 16));
         fechaInicioLbl.setSize(200,40);
         crearRentaPNL.add(fechaInicioLbl);
         y += 50;
@@ -1909,7 +1909,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel fechaDeDevolucionLbl = new JLabel("Fecha de devolución");
         fechaDeDevolucionLbl.setLocation(x,y);
-        fechaDeDevolucionLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        fechaDeDevolucionLbl.setFont(new Font("Arial", Font.BOLD, 16));
         fechaDeDevolucionLbl.setSize(200,40);
         crearRentaPNL.add(fechaDeDevolucionLbl);
         y += 50;
@@ -1922,7 +1922,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel idClienteLbl = new JLabel("Id Cliente");
         idClienteLbl.setLocation(x,y);
-        idClienteLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        idClienteLbl.setFont(new Font("Arial", Font.BOLD, 16));
         idClienteLbl.setSize(200,40);
         crearRentaPNL.add(idClienteLbl);
         y += 50;
@@ -1937,7 +1937,7 @@ public class Ventana extends JFrame {
 
         JLabel nombresLbl = new JLabel("Nombres");
         nombresLbl.setLocation(x,y);
-        nombresLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        nombresLbl.setFont(new Font("Arial", Font.BOLD, 16));
         nombresLbl.setSize(200,40);
         crearRentaPNL.add(nombresLbl);
         y += 50;
@@ -1952,7 +1952,7 @@ public class Ventana extends JFrame {
 
         JLabel apellidosLbl = new JLabel("Apellidos");
         apellidosLbl.setLocation(x,y);
-        apellidosLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        apellidosLbl.setFont(new Font("Arial", Font.BOLD, 16));
         apellidosLbl.setSize(200,40);
         crearRentaPNL.add(apellidosLbl);
         y += 50;
@@ -1966,7 +1966,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel telefonoLbl = new JLabel("Número telefónico");
         telefonoLbl.setLocation(x,y);
-        telefonoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        telefonoLbl.setFont(new Font("Arial", Font.BOLD, 16));
         telefonoLbl.setSize(200,40);
         crearRentaPNL.add(telefonoLbl);
         y += 50;
@@ -1977,9 +1977,9 @@ public class Ventana extends JFrame {
         crearRentaPNL.add(telefonoTF);
 
         y += 50;
-        JLabel numTarjetaLbl = new JLabel("Número tarjeta");
+        JLabel numTarjetaLbl = new JLabel("Número de tarjeta");
         numTarjetaLbl.setLocation(x,y);
-        numTarjetaLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        numTarjetaLbl.setFont(new Font("Arial", Font.BOLD, 16));
         numTarjetaLbl.setSize(200,40);
         crearRentaPNL.add(numTarjetaLbl);
         y += 50;
@@ -1990,9 +1990,9 @@ public class Ventana extends JFrame {
         crearRentaPNL.add(numTarjetaTF);
 
         y += 50;
-        JLabel fechaCadLbl = new JLabel("Fecha caducación");
+        JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
         fechaCadLbl.setLocation(x,y);
-        fechaCadLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        fechaCadLbl.setFont(new Font("Arial", Font.BOLD, 16));
         fechaCadLbl.setSize(200,40);
         crearRentaPNL.add(fechaCadLbl);
         y += 50;
@@ -2004,9 +2004,9 @@ public class Ventana extends JFrame {
 
         y += 50;
 
-        JLabel ccvLbl = new JLabel("CCV");
+        JLabel ccvLbl = new JLabel("CVV");
         ccvLbl.setLocation(x,y);
-        ccvLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        ccvLbl.setFont(new Font("Arial", Font.BOLD, 16));
         ccvLbl.setSize(200,40);
         crearRentaPNL.add(ccvLbl);
 
@@ -2022,7 +2022,7 @@ public class Ventana extends JFrame {
         y = 100;
         JLabel costoEstimadoLbl = new JLabel("Costo estimado", JLabel.CENTER);
         costoEstimadoLbl.setLocation(x,y);
-        costoEstimadoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        costoEstimadoLbl.setFont(new Font("Arial", Font.BOLD, 16));
         costoEstimadoLbl.setSize(200,40);
         crearRentaPNL.add(costoEstimadoLbl);
 
@@ -2098,9 +2098,9 @@ public class Ventana extends JFrame {
         editarRentaPNL.setBackground(Color.decode("#FFFFFF"));
 
         JLabel bienvenido = new JLabel("ID renta a editar");
-        bienvenido.setFont(new Font("Arial", Font.PLAIN, 24));
+        bienvenido.setFont(new Font("Arial", Font.BOLD, 24));
         bienvenido.setSize(300, 80);
-        bienvenido.setLocation(400, 30);
+        bienvenido.setLocation(415, 30);
         editarRentaPNL.add(bienvenido);
 
         JComboBox idRentasCB = new JComboBox();
@@ -2173,7 +2173,7 @@ public class Ventana extends JFrame {
         int y = 100;
         JLabel carroLbl = new JLabel("Carro a rentar");
         carroLbl.setLocation(x,y);
-        carroLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        carroLbl.setFont(new Font("Arial", Font.BOLD, 16));
         carroLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(carroLbl);
         y += 50;
@@ -2186,7 +2186,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel fechaInicioLbl = new JLabel("Fecha de inicio");
         fechaInicioLbl.setLocation(x,y);
-        fechaInicioLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        fechaInicioLbl.setFont(new Font("Arial", Font.BOLD, 16));
         fechaInicioLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(fechaInicioLbl);
         y += 50;
@@ -2200,7 +2200,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel fechaDeDevolucionLbl = new JLabel("Fecha de devolución");
         fechaDeDevolucionLbl.setLocation(x,y);
-        fechaDeDevolucionLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        fechaDeDevolucionLbl.setFont(new Font("Arial", Font.BOLD, 16));
         fechaDeDevolucionLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(fechaDeDevolucionLbl);
         y += 50;
@@ -2213,7 +2213,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel idClienteLbl = new JLabel("Id Cliente");
         idClienteLbl.setLocation(x,y);
-        idClienteLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        idClienteLbl.setFont(new Font("Arial", Font.BOLD, 16));
         idClienteLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(idClienteLbl);
         y += 50;
@@ -2228,7 +2228,7 @@ public class Ventana extends JFrame {
 
         JLabel nombresLbl = new JLabel("Nombres");
         nombresLbl.setLocation(x,y);
-        nombresLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        nombresLbl.setFont(new Font("Arial", Font.BOLD, 16));
         nombresLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(nombresLbl);
         y += 50;
@@ -2242,7 +2242,7 @@ public class Ventana extends JFrame {
 
         JLabel apellidosLbl = new JLabel("Apellidos");
         apellidosLbl.setLocation(x,y);
-        apellidosLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        apellidosLbl.setFont(new Font("Arial", Font.BOLD, 16));
         apellidosLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(apellidosLbl);
         y += 50;
@@ -2256,7 +2256,7 @@ public class Ventana extends JFrame {
         y += 50;
         JLabel telefonoLbl = new JLabel("Número telefónico");
         telefonoLbl.setLocation(x,y);
-        telefonoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        telefonoLbl.setFont(new Font("Arial", Font.BOLD, 16));
         telefonoLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(telefonoLbl);
         y += 50;
@@ -2267,9 +2267,9 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.add(telefonoTF);
 
         y += 50;
-        JLabel numTarjetaLbl = new JLabel("Número tarjeta");
+        JLabel numTarjetaLbl = new JLabel("Número de tarjeta");
         numTarjetaLbl.setLocation(x,y);
-        numTarjetaLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        numTarjetaLbl.setFont(new Font("Arial", Font.BOLD, 16));
         numTarjetaLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(numTarjetaLbl);
         y += 50;
@@ -2280,9 +2280,9 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.add(numTarjetaTF);
 
         y += 50;
-        JLabel fechaCadLbl = new JLabel("Fecha cad");
+        JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
         fechaCadLbl.setLocation(x,y);
-        fechaCadLbl.setFont(new Font("Arial", Font.PLAIN, 16));
+        fechaCadLbl.setFont(new Font("Arial", Font.BOLD, 16));
         fechaCadLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(fechaCadLbl);
         y += 50;
@@ -2294,7 +2294,7 @@ public class Ventana extends JFrame {
 
         y += 50;
 
-        JLabel ccvLbl = new JLabel("CCV");
+        JLabel ccvLbl = new JLabel("CVV");
         ccvLbl.setLocation(x,y);
         ccvLbl.setFont(new Font("Arial", Font.PLAIN, 16));
         ccvLbl.setSize(200,40);
