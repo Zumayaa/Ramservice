@@ -1,10 +1,13 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
 
 public class Ventana extends JFrame {
     public JPanel panel = null;
@@ -12,10 +15,12 @@ public class Ventana extends JFrame {
     private String actual = "login";
     private JLabel panelActualLbl = new JLabel(actual, JLabel.CENTER);
     private Border roundedBorder = new RoundBorder(16, 1, Color.GRAY);
+    ArrayList<String> historialPaneles = new ArrayList<>();
+    int pasenUbi = historialPaneles.size()-1;
 
     JPanel menuSuperiorPanel = new JPanel();
 
-    ImageIcon logoEmpresa = new ImageIcon("company.png");
+    ImageIcon logoEmpresa = new ImageIcon("src/img/company.png");
 
     public Ventana() {
 
@@ -30,15 +35,14 @@ public class Ventana extends JFrame {
         setIconImage(logoEmpresa.getImage());
         System.out.println("actual: " + actual + " anterior: " + anterior);
 
-        ImageIcon logoRamsesIcon = new ImageIcon("logoRamservice.png");
+        ImageIcon logoRamsesIcon = new ImageIcon("src/img/logoRamservice.png");
         JLabel logoRamsesLbl = new JLabel();
         logoRamsesLbl.setIcon(logoRamsesIcon);
         logoRamsesLbl.setSize(logoRamsesIcon.getIconWidth(),logoRamsesIcon.getIconHeight());
         logoRamsesLbl.setLocation(0,-50);
-        panelActualLbl.setSize(300, 80);
+        panelActualLbl.setSize(800, 80);
         panelActualLbl.setLocation(180, 0);
-        panelActualLbl.setForeground(Color.blue);
-        panelActualLbl.setFont(new Font("Arial", Font.BOLD, 35));
+        panelActualLbl.setFont(new Font("Lexend-Regular.ttf", Font.PLAIN, 35));
         menuSuperiorPanel = new JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -53,16 +57,22 @@ public class Ventana extends JFrame {
             }
         };
 
-        JButton regresarBtn = new JButton("<--");
+        JButton regresarBtn = new JButton();
         regresarBtn.setLocation(940,panelActualLbl.getY()+20);
-        regresarBtn.setSize(50,40);
+        regresarBtn.setSize(40,40);
+        ImageIcon regresarBotonIcon = new ImageIcon("src/img/botonRegresarIcon.png");
+        regresarBtn.setIcon(regresarBotonIcon);
         regresarBtn.setVisible(true);
         regresarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String tmp = anterior;
-                anterior = actual;
-                actual = tmp;
+                if (historialPaneles.size() != 0){
+                    pasenUbi = historialPaneles.size()-1;
+                    String tmp = historialPaneles.get(pasenUbi-1);
+                    anterior = historialPaneles.get(pasenUbi);
+                    actual = tmp;
+                    pasenUbi--;
+                }
                 System.out.println(actual);
                 limpiarVentana();
 
@@ -71,7 +81,7 @@ public class Ventana extends JFrame {
             }
         });
         menuSuperiorPanel.setPreferredSize(new Dimension(1000,80));
-        menuSuperiorPanel.setBackground(Color.orange);
+        menuSuperiorPanel.setBackground(Color.WHITE);
         menuSuperiorPanel.add(panelActualLbl);
         menuSuperiorPanel.add(logoRamsesLbl);
         menuSuperiorPanel.add(regresarBtn);
@@ -90,8 +100,8 @@ public class Ventana extends JFrame {
     }
 
     public void limpiarVentana() {
-        panelActualLbl.setText(actual);
-
+        historialPaneles.add(actual);
+        pasenUbi = historialPaneles.size()-1;
         if (panel != null) {
             this.remove(panel);
         }
@@ -106,6 +116,9 @@ public class Ventana extends JFrame {
         }
 
         if (actual.equals("home")) {
+
+            panelActualLbl.setText("Home");
+
             panel = home();
 
             this.add(panel,BorderLayout.CENTER);
@@ -115,6 +128,9 @@ public class Ventana extends JFrame {
         }
 
         if (actual.equals("vehiculos")) {
+
+            panelActualLbl.setText("Vehículos");
+
             panel = vehiculos();
 
             this.add(panel,BorderLayout.CENTER);
@@ -124,6 +140,9 @@ public class Ventana extends JFrame {
         }
 
         if (actual.equals("clientes")) {
+
+            panelActualLbl.setText("Clientes");
+
             panel = clientes();
 
             this.add(panel,BorderLayout.CENTER);
@@ -132,6 +151,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("consultarCliente")) {
+
+            panelActualLbl.setText("Consultar cliente");
+
             panel = consultarCliente();
 
             this.add(panel,BorderLayout.CENTER);
@@ -139,7 +161,21 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+        if (actual.equals("consultarHistorialClienteSeleccionado")) {
+
+            panelActualLbl.setText("Consultar historial del cliente");
+
+            panel = historialClienteSeleccionado();
+
+            this.add(panel,BorderLayout.CENTER);
+
+            this.repaint();
+            this.revalidate();
+        }
         if (actual.equals("crearCliente")) {
+
+            panelActualLbl.setText("Crear cliente");
+
             panel = crearCliente();
 
             this.add(panel,BorderLayout.CENTER);
@@ -148,6 +184,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("editarCliente")) {
+
+            panelActualLbl.setText("Editar cliente");
+
             panel = editarCliente();
 
             this.add(panel,BorderLayout.CENTER);
@@ -156,6 +195,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("editarClienteSeleccionado")) {
+
+            panelActualLbl.setText("Editar cliente seleccionado");
+
             panel = editarClienteSeleccionado();
 
             this.add(panel,BorderLayout.CENTER);
@@ -165,6 +207,9 @@ public class Ventana extends JFrame {
         }
 
         if (actual.equals("eliminarCliente")) {
+
+            panelActualLbl.setText("Eliminar cuenta");
+
             panel = eliminarCliente();
 
             this.add(panel,BorderLayout.CENTER);
@@ -174,6 +219,9 @@ public class Ventana extends JFrame {
         }
 
         if (actual.equals("rentas")) {
+
+            panelActualLbl.setText("Rentas");
+
             panel = rentas();
 
             this.add(panel,BorderLayout.CENTER);
@@ -182,6 +230,8 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("consultarRenta")) {
+            panelActualLbl.setText("Consultar rentas");
+
             panel = consultarRentas();
 
             this.add(panel,BorderLayout.CENTER);
@@ -189,7 +239,21 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+        if (actual.equals("consultarAutomovilSeleccionado")){
+            panelActualLbl.setText("Historial de auto seleccionado");
+
+            panel = historialDeAutoSeleccionado();
+
+            this.add(panel,BorderLayout.CENTER);
+
+            this.repaint();
+            this.revalidate();
+
+        }
         if (actual.equals("crearRenta")) {
+
+            panelActualLbl.setText("Crear renta");
+
             panel = crearRenta();
 
             this.add(panel,BorderLayout.CENTER);
@@ -198,6 +262,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("editarRenta")) {
+
+            panelActualLbl.setText("Editar renta");
+
             panel = editarRenta();
 
             this.add(panel,BorderLayout.CENTER);
@@ -206,6 +273,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("editarRentaSeleccionada")){
+
+            panelActualLbl.setText("Editar renta seleccionada");
+
             panel = editarRentaSeleccionada();
 
             this.add(panel,BorderLayout.CENTER);
@@ -214,6 +284,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("eliminarRenta")){
+
+            panelActualLbl.setText("Eliminar renta");
+
             panel = eliminarRenta();
 
             this.add(panel,BorderLayout.CENTER);
@@ -222,6 +295,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("categorias")) {
+
+            panelActualLbl.setText("Categorias");
+
             panel = categorias();
 
             this.add(panel,BorderLayout.CENTER);
@@ -230,6 +306,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("marcas")) {
+
+            panelActualLbl.setText("Marcas");
+
             panel = marcas();
 
             this.add(panel,BorderLayout.CENTER);
@@ -238,6 +317,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("consultarVehiculo")) {
+
+            panelActualLbl.setText("Consultar vehículo");
+
             panel = consultarVehiculo();
 
             this.add(panel,BorderLayout.CENTER);
@@ -246,6 +328,9 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("consultarCategorias")) {
+
+            panelActualLbl.setText("Consultar categorías");
+
             panel = consultarCategorias();
 
             this.add(panel,BorderLayout.CENTER);
@@ -254,16 +339,10 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
         if (actual.equals("consultarMarcas")) {
+
+            panelActualLbl.setText("Consultar marcas");
+
             panel = consultarMarcas();
-
-            this.add(panel,BorderLayout.CENTER);
-
-            this.repaint();
-            this.revalidate();
-        }
-
-        if (actual.equals("consultarHistorialClienteSeleccionado")) {
-            panel = historialClienteSeleccionado();
 
             this.add(panel,BorderLayout.CENTER);
 
@@ -399,7 +478,7 @@ public class Ventana extends JFrame {
 
         JLabel imagen2 = new JLabel();
         imagen2.setSize(550, 800);
-        ImageIcon imag2 = new ImageIcon("car.png");
+        ImageIcon imag2 = new ImageIcon("src/img/car.png");
         ImageIcon icono2 = new ImageIcon(imag2.getImage().getScaledInstance(imagen2.getWidth(), imagen2.getHeight(), Image.SCALE_DEFAULT));
         imagen2.setIcon(icono2);
         imagen2.setLocation(0, 0);
@@ -428,7 +507,7 @@ public class Ventana extends JFrame {
 
         JLabel imagen1 = new JLabel();
         imagen1.setSize(350, 350);
-        ImageIcon imag1 = new ImageIcon("copy.png");
+        ImageIcon imag1 = new ImageIcon("src/img/copy.png");
         ImageIcon icono1 = new ImageIcon(imag1.getImage().getScaledInstance(imagen1.getWidth(), imagen1.getHeight(), Image.SCALE_DEFAULT));
         imagen1.setIcon(icono1);
         imagen1.setLocation(33, 430);
@@ -440,7 +519,6 @@ public class Ventana extends JFrame {
     public JPanel home() {
 
         menuSuperiorPanel.setVisible(true);
-        panelActualLbl.setText("home");
         anterior = actual;
         actual = "home";
         JPanel homePanel = new JPanel();
@@ -559,7 +637,6 @@ public class Ventana extends JFrame {
     public JPanel vehiculos() {
         anterior = actual;
         actual = "vehiculos";
-        panelActualLbl.setText("vehiculos");
 
         JPanel vehiculosPanel = new JPanel();
         vehiculosPanel.setSize(1000, 800);
@@ -660,12 +737,6 @@ public class Ventana extends JFrame {
         clientesPanel.setLayout(null);
         clientesPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Clientes", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        clientesPanel.add(bienvenido);
 
         JButton homeBTN = new JButton("Regresar");
         homeBTN.setSize(100, 20);
@@ -683,9 +754,16 @@ public class Ventana extends JFrame {
             }
         });
 
-        JButton consultarBTN = new JButton("Consultar clientes");
+        JButton consultarBTN = new JButton();
+        consultarBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
+        consultarBTN.setHorizontalTextPosition(SwingConstants.CENTER);
+        consultarBTN.setFont(new Font("Arial", Font.BOLD, 14));
         consultarBTN.setSize(widthBtn, heightBtn);
         consultarBTN.setLocation(xBtn, yBtn);
+        consultarBTN.setOpaque(true);
+        consultarBTN.setBackground(Color.decode("#D9D9D9"));
+        ImageIcon consultarIcon = new ImageIcon("src/img/consultarIcono.png");
+        consultarBTN.setIcon(consultarIcon);
         clientesPanel.add(consultarBTN);
         consultarBTN.addActionListener(new ActionListener() {
             @Override
@@ -699,9 +777,16 @@ public class Ventana extends JFrame {
             }
         });
         xBtn += 150;
-        JButton crearBTN = new JButton("Crear clientes");
+        JButton crearBTN = new JButton(); // para poner separadito el texto y que se centre ya en sus cosas neta no peude estar asi haciendo nada puesque se ponga las pilas
+        crearBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
+        crearBTN.setHorizontalTextPosition(SwingConstants.CENTER);
+        crearBTN.setFont(new Font("Arial", Font.BOLD, 14));
         crearBTN.setSize(widthBtn, heightBtn);
         crearBTN.setLocation(xBtn, yBtn);
+        crearBTN.setOpaque(true);
+        crearBTN.setBackground(Color.decode("#D9D9D9"));
+        ImageIcon crearIcon = new ImageIcon("src/img/crearIcono.png");
+        crearBTN.setIcon(crearIcon);
         clientesPanel.add(crearBTN);
         crearBTN.addActionListener(new ActionListener() {
             @Override
@@ -716,9 +801,16 @@ public class Ventana extends JFrame {
         });
 
         xBtn += 150;
-        JButton editarBTN = new JButton("Editar clientes");
+        JButton editarBTN = new JButton(); // para poner separadito el texto y que se centre ya en sus cosas neta no peude estar asi haciendo nada puesque se ponga las pilas
+        editarBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
+        editarBTN.setHorizontalTextPosition(SwingConstants.CENTER);
+        editarBTN.setFont(new Font("Arial", Font.BOLD, 14));
         editarBTN.setSize(widthBtn, heightBtn);
         editarBTN.setLocation(xBtn, yBtn);
+        editarBTN.setOpaque(true);
+        editarBTN.setBackground(Color.decode("#D9D9D9"));
+        ImageIcon editarIcon = new ImageIcon("src/img/editarIcono.png");
+        editarBTN.setIcon(editarIcon);
         clientesPanel.add(editarBTN);
         editarBTN.addActionListener(new ActionListener() {
             @Override
@@ -733,9 +825,16 @@ public class Ventana extends JFrame {
         });
         xBtn += 150;
 
-        JButton borrarBTN = new JButton("Eliminar clientes");
+        JButton borrarBTN = new JButton(); // para poner separadito el texto y que se centre ya en sus cosas neta no peude estar asi haciendo nada puesque se ponga las pilas
+        borrarBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
+        borrarBTN.setHorizontalTextPosition(SwingConstants.CENTER);
+        borrarBTN.setFont(new Font("Arial", Font.BOLD, 14));
         borrarBTN.setSize(widthBtn, heightBtn);
         borrarBTN.setLocation(xBtn, yBtn);
+        borrarBTN.setOpaque(true);
+        borrarBTN.setBackground(Color.decode("#D9D9D9"));
+        ImageIcon borrarIcon = new ImageIcon("src/img/eliminarIcono.png");
+        borrarBTN.setIcon(borrarIcon);
         clientesPanel.add(borrarBTN);
         borrarBTN.addActionListener(new ActionListener() {
             @Override
@@ -748,36 +847,24 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
+        String[] columnasTablaClientes = {"<html><div style='text-align: center;'>Id<br>clientes</div></html>", "<html> <div style = 'text-align : center;'>Nombre</div></html>", "<html> <div style = 'text-align : center;'>Apellido</div></html>", "<html> <div style = 'text-align : center;'>Correo</div></html>", "<html> <div style = 'text-align : center;'>Telefóno</div></html>", "<html> <div style = 'text-align : center;'>Tarjeta<br>crédito</div></html>", "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
 
-        String[] columnasTablaClientes = {"Id cliente", "Nombre", "Apellido", "Correo", "Teléfono", "Tarjeta de crédito", "Estado de cuenta"};
-        Object [][]datos = new Object[9][columnasTablaClientes.length];
-        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setPreferredSize(new Dimension(500,500));
-        sp.setSize(525,500);
-        sp.setLocation(250,400);
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes,10);
+        //sp.setPreferredSize(new Dimension(500,500));
+        sp.setSize(700,500);
+        sp.setLocation(165,400);
         sp.setVisible(true);
         clientesPanel.add(sp);
         return clientesPanel;
     }
 
     public JPanel consultarCliente() {
-        anterior = actual;
-        actual = "consultarCliente";
 
         JPanel consultarClientePNL = new JPanel();
         consultarClientePNL.setSize(1000, 800);
         consultarClientePNL.setLocation(0, 0);
         consultarClientePNL.setLayout(null);
         consultarClientePNL.setBackground(Color.decode("#FFFFFF"));
-
-        JLabel bienvenido = new JLabel("Consultar Clientes", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        consultarClientePNL.add(bienvenido);
 
         JButton backBTN = new JButton("Regresar");
         backBTN.setSize(100, 20);
@@ -794,13 +881,22 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
+
+        JLabel descripcionEditarCliente = new JLabel("ID del cliente a consultar");
+        descripcionEditarCliente.setSize(400,100);
+        descripcionEditarCliente.setLocation(400,30);
+        descripcionEditarCliente.setFont(new Font("Arial", Font.PLAIN, 24));
+        consultarClientePNL.add(descripcionEditarCliente);
+
         JComboBox idClientesCB = new JComboBox();
-        idClientesCB.setSize(150,40);
+        idClientesCB.setSize(230,50);
         idClientesCB.setLocation(400,100);
 
-        JButton consultarHistorialClienteBtn = new JButton("Consultar historial de cliente: ");
-        consultarHistorialClienteBtn.setSize(150,50);
-        consultarHistorialClienteBtn.setLocation(400, 200);
+        JButton consultarHistorialClienteBtn = new JButton();
+        consultarHistorialClienteBtn.setSize(226,44);
+        consultarHistorialClienteBtn.setLocation(400, 150);
+        ImageIcon consultarHistorialIcon = new ImageIcon("src/img/consultarHistorialClienteIcon.png");
+        consultarHistorialClienteBtn.setIcon(consultarHistorialIcon);
         consultarHistorialClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -813,14 +909,17 @@ public class Ventana extends JFrame {
             }
         });
 
-        String[] columnasTablaClientes = {"Id cliente", "Nombre", "Apellido", "Correo", "Teléfono", "Tarjeta de crédito", "Estado de cuenta"};
-        Object [][]datos = new Object[9][columnasTablaClientes.length];
-        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setPreferredSize(new Dimension(500,500));
-        sp.setSize(525,500);
-        sp.setLocation(250,400);
+
+        String[] columnasTablaClientes = {"<html><div style='text-align: center;'>Id<br>clientes</div></html>",
+                "<html> <div style = 'text-align : center;'>Nombre</div></html>",
+                "<html> <div style = 'text-align : center;'>Apellido</div></html>",
+                "<html> <div style = 'text-align : center;'>Correo</div></html>",
+                "<html> <div style = 'text-align : center;'>Telefóno</div></html>",
+                "<html> <div style = 'text-align : center;'>Tarjeta<br>crédito</div></html>",
+                "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes,18);//sp.setPreferredSize(new Dimension(500,500));
+        sp.setSize(700,500);
+        sp.setLocation(175,200);
         sp.setVisible(true);
 
         consultarClientePNL.add(idClientesCB);
@@ -829,6 +928,37 @@ public class Ventana extends JFrame {
         return consultarClientePNL;
     }
 
+
+    public JPanel historialDeAutoSeleccionado(){
+        JPanel historialClienteSeleccionadoPanel = new JPanel();
+        historialClienteSeleccionadoPanel.setSize(1000, 800);
+        historialClienteSeleccionadoPanel.setLocation(0, 0);
+        historialClienteSeleccionadoPanel.setLayout(null);
+        historialClienteSeleccionadoPanel.setBackground(Color.decode("#FFFFFF"));
+
+        int xLbl = 100;
+        JLabel autoLbl = new JLabel("Auto seleccionado: ");
+        autoLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        autoLbl.setSize(300,50);
+        autoLbl.setLocation(xLbl,100);
+
+        String[] columnasTablaClientes = {
+                "<html><div style='text-align: center;'>Id<br>renta</div></html>",
+                "<html> <div style = 'text-align : center;'>Cliente</div></html>",
+                "<html> <div style = 'text-align : center;'>Fecha<br> de renta</div></html>",
+                "<html> <div style = 'text-align : center;'>Fecha<br> de devolución</div></html>",
+                "<html> <div style = 'text-align : center;'>Costo</div></html>",
+                "<html> <div style = 'text-align : center;'>Método de<br>pago</div></html>",
+                "<html> <div style = 'text-align : center;'>Observaciones</div></html>"};
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes,18);
+        sp.setSize(800,500);
+        sp.setLocation(100,200);
+        sp.setVisible(true);
+        historialClienteSeleccionadoPanel.add(autoLbl);
+        historialClienteSeleccionadoPanel.add(sp);
+
+        return  historialClienteSeleccionadoPanel;
+    }
     public JPanel historialClienteSeleccionado(){
         JPanel historialClienteSeleccionadoPanel = new JPanel();
         historialClienteSeleccionadoPanel.setSize(1000, 800);
@@ -836,49 +966,42 @@ public class Ventana extends JFrame {
         historialClienteSeleccionadoPanel.setLayout(null);
         historialClienteSeleccionadoPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Historial de renta del cliente ", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        historialClienteSeleccionadoPanel.add(bienvenido);
-        int xLbl = 125;
+        int xLbl = 100;
         JLabel idClienteLbl = new JLabel("Id cliente: ");
+        idClienteLbl.setFont(new Font("Arial", Font.PLAIN, 24));
         idClienteLbl.setSize(300,50);
         idClienteLbl.setLocation(xLbl,100);
-        xLbl += 150;
 
         JLabel nombreLbl = new JLabel("Nombre: ");
+        nombreLbl.setFont(new Font("Arial", Font.PLAIN, 24));
         nombreLbl.setSize(300,50);
-        nombreLbl.setLocation(xLbl,100);
-        xLbl += 150;
-
-        JLabel apellidosLbl = new JLabel("Apellidos: ");
-        apellidosLbl.setSize(300,50);
-        apellidosLbl.setLocation(xLbl,100);
-        xLbl += 150;
+        nombreLbl.setLocation(xLbl,150);
+        xLbl += 600;
 
         JLabel correoLbl = new JLabel("Correo:");
+        correoLbl.setFont(new Font("Arial", Font.PLAIN, 24));
         correoLbl.setSize(300,50);
         correoLbl.setLocation(xLbl,100);
-        xLbl += 150;
 
         JLabel telefonoLbl = new JLabel("Teléfono: ");
+        telefonoLbl.setFont(new Font("Arial", Font.PLAIN, 24));
         telefonoLbl.setSize(300,50);
-        telefonoLbl.setLocation(xLbl,100);
+        telefonoLbl.setLocation(xLbl,150);
 
-        String[] columnasTablaClientes = {"Id renta", "Cliente", "Automóvil", "Fecha de renta", "Fecha de devolución", "Costo", "Método de pago", "Observaciones"};
-        Object [][]datos = new Object[9][columnasTablaClientes.length];
-        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setPreferredSize(new Dimension(600,500));
-        sp.setSize(600,500);
-        sp.setLocation(200,200);
+        String[] columnasTablaClientes = {
+                "<html><div style='text-align: center;'>Id<br>renta</div></html>",
+                "<html> <div style = 'text-align : center;'>Cliente</div></html>",
+                "<html> <div style = 'text-align : center;'>Fecha<br> de renta</div></html>",
+                "<html> <div style = 'text-align : center;'>Fecha<br> de devolución</div></html>",
+                "<html> <div style = 'text-align : center;'>Costo</div></html>",
+                "<html> <div style = 'text-align : center;'>Método de<br>pago</div></html>",
+                "<html> <div style = 'text-align : center;'>Observaciones</div></html>"};
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes,18);
+        sp.setSize(800,500);
+        sp.setLocation(100,200);
         sp.setVisible(true);
         historialClienteSeleccionadoPanel.add(idClienteLbl);
         historialClienteSeleccionadoPanel.add(nombreLbl);
-        historialClienteSeleccionadoPanel.add(apellidosLbl);
         historialClienteSeleccionadoPanel.add(correoLbl);
         historialClienteSeleccionadoPanel.add(telefonoLbl);
         historialClienteSeleccionadoPanel.add(sp);
@@ -893,13 +1016,6 @@ public class Ventana extends JFrame {
         crearClientesPNL.setLocation(0, 0);
         crearClientesPNL.setLayout(null);
         crearClientesPNL.setBackground(Color.decode("#FFFFFF"));
-
-        JLabel bienvenido = new JLabel("Crear Cliente", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        crearClientesPNL.add(bienvenido);
 
         JButton backBTN = new JButton("Regresar");
         backBTN.setSize(100, 20);
@@ -918,8 +1034,9 @@ public class Ventana extends JFrame {
             }
         });
 
+
         int x = 200;
-        int y = 150;
+        int y = 50;
         JLabel nombresLbl = new JLabel("Nombres");
         nombresLbl.setLocation(x,y);
         nombresLbl.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -973,7 +1090,7 @@ public class Ventana extends JFrame {
         crearClientesPNL.add(correoTF);
 
         x = x*3;
-        y = 150;
+        y = 50;
 
         JLabel passwordLbl = new JLabel("Contraseña");
         passwordLbl.setLocation(x,y);
@@ -1004,7 +1121,7 @@ public class Ventana extends JFrame {
 
 
         y += 50;
-        JLabel numTarjetaLbl = new JLabel("Num tarj");
+        JLabel numTarjetaLbl = new JLabel("Numero tarjeta");
         numTarjetaLbl.setLocation(x,y);
         numTarjetaLbl.setFont(new Font("Arial", Font.PLAIN, 16));
         numTarjetaLbl.setSize(200,40);
@@ -1017,7 +1134,7 @@ public class Ventana extends JFrame {
         crearClientesPNL.add(numTarjetaTF);
 
         y += 50;
-        JLabel fechaCadLbl = new JLabel("Fecha cad");
+        JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
         fechaCadLbl.setLocation(x,y);
         fechaCadLbl.setFont(new Font("Arial", Font.PLAIN, 16));
         fechaCadLbl.setSize(200,40);
@@ -1045,11 +1162,12 @@ public class Ventana extends JFrame {
         ccvTF.setSize(100,30);
         crearClientesPNL.add(ccvTF);
 
-        JButton cancelarBtn = new JButton("Cancelar");
-        cancelarBtn.setOpaque(true);
-        cancelarBtn.setBackground(Color.red);
-        cancelarBtn.setSize(200,30);
-        cancelarBtn.setLocation(200,y+75);
+
+        JButton cancelarBtn = new JButton();
+        cancelarBtn.setSize(230,35);
+        cancelarBtn.setLocation(250,y+125);
+        ImageIcon cancelarIcon = new ImageIcon("src/img/cancelarBoton.png");
+        cancelarBtn.setIcon(cancelarIcon);
         System.out.println("anterior: " + anterior);
         cancelarBtn.addActionListener(new ActionListener() {
             @Override
@@ -1066,32 +1184,24 @@ public class Ventana extends JFrame {
         });
         crearClientesPNL.add(cancelarBtn);
 
-        JButton guardarBtn = new JButton("Dar de alta cliente");
-        guardarBtn.setOpaque(true);
-        guardarBtn.setBackground(Color.blue);
-        guardarBtn.setSize(200,30);
-        guardarBtn.setLocation(500,y+75);
+        JButton guardarBtn = new JButton();
+        guardarBtn.setSize(230,35);
+        guardarBtn.setLocation(525,y+125);
+        ImageIcon guardarIcon = new ImageIcon("src/img/crearCuentaBoton.png");
+        guardarBtn.setIcon(guardarIcon);
         crearClientesPNL.add(guardarBtn);
 
         return crearClientesPNL;
     }
 
     public JPanel editarCliente() {
-        anterior = actual;
-        actual = "editarCliente";
+
 
         JPanel editarClientesPNL = new JPanel();
         editarClientesPNL.setSize(1000, 800);
         editarClientesPNL.setLocation(0, 0);
         editarClientesPNL.setLayout(null);
         editarClientesPNL.setBackground(Color.decode("#FFFFFF"));
-
-        JLabel bienvenido = new JLabel("Editar Cliente", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        editarClientesPNL.add(bienvenido);
 
         JButton backBTN = new JButton("Regresar");
         backBTN.setSize(100, 20);
@@ -1109,14 +1219,24 @@ public class Ventana extends JFrame {
             }
         });
 
-        JComboBox idClientesCB = new JComboBox();
-        idClientesCB.setSize(150,40);
-        idClientesCB.setLocation(400,100);
+        JLabel descripcionEditarCliente = new JLabel("ID del cliente a editar");
+        descripcionEditarCliente.setSize(400,100);
+        descripcionEditarCliente.setLocation(400,30);
+        descripcionEditarCliente.setFont(new Font("Arial", Font.PLAIN, 24));
+        editarClientesPNL.add(descripcionEditarCliente);
 
-        JButton consultarHistorialClienteBtn = new JButton("Editar cliente: ");
-        consultarHistorialClienteBtn.setSize(150,50);
-        consultarHistorialClienteBtn.setLocation(400, 200);
-        consultarHistorialClienteBtn.addActionListener(new ActionListener() {
+        JComboBox idClientesCB = new JComboBox();
+        idClientesCB.setSize(226,40);
+        idClientesCB.setLocation(400,100);
+        editarClientesPNL.add(idClientesCB);
+
+        JButton editarClienteBtn = new JButton();
+        editarClienteBtn.setSize(226,31);
+        editarClienteBtn.setLocation(400, 150);
+        ImageIcon editarClienteBotonIcon = new ImageIcon("src/img/editarClienteBoton.png");
+        editarClienteBtn.setIcon(editarClienteBotonIcon);
+        editarClientesPNL.add(editarClienteBtn);
+        editarClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
@@ -1128,19 +1248,20 @@ public class Ventana extends JFrame {
             }
         });
 
-        String[] columnasTablaClientes = {"Id cliente", "Nombre", "Apellido", "Correo", "Teléfono", "Tarjeta de crédito", "Estado de cuenta"};
-        Object [][]datos = new Object[9][columnasTablaClientes.length];
-        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setPreferredSize(new Dimension(500,500));
-        sp.setSize(525,500);
-        sp.setLocation(250,400);
-        sp.setVisible(true);
 
-        editarClientesPNL.add(idClientesCB);
+        String[] columnasTablaClientes = {"<html><div style='text-align: center;'>Id<br>clientes</div></html>",
+                "<html> <div style = 'text-align : center;'>Nombre</div></html>",
+                "<html> <div style = 'text-align : center;'>Apellido</div></html>",
+                "<html> <div style = 'text-align : center;'>Correo</div></html>",
+                "<html> <div style = 'text-align : center;'>Telefóno</div></html>",
+                "<html> <div style = 'text-align : center;'>Tarjeta<br>crédito</div></html>",
+                "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes, 18);
+        sp.setPreferredSize(new Dimension(500,500));
+        sp.setSize(800,500);
+        sp.setLocation(100,200);
+        sp.setVisible(true);
         editarClientesPNL.add(sp);
-        editarClientesPNL.add(consultarHistorialClienteBtn);
 
         return editarClientesPNL;
     }
@@ -1152,15 +1273,8 @@ public class Ventana extends JFrame {
         editarClienteSeleccionadoPNL.setLayout(null);
         editarClienteSeleccionadoPNL.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Editar Cliente seleccionado", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        editarClienteSeleccionadoPNL.add(bienvenido);
-
         int x = 200;
-        int y = 150;
+        int y = 50;
         JLabel nombresLbl = new JLabel("Nombres");
         nombresLbl.setLocation(x,y);
         nombresLbl.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -1214,7 +1328,7 @@ public class Ventana extends JFrame {
         editarClienteSeleccionadoPNL.add(correoTF);
 
         x = x*3;
-        y = 150;
+        y = 50;
 
         JLabel passwordLbl = new JLabel("Contraseña");
         passwordLbl.setLocation(x,y);
@@ -1245,7 +1359,7 @@ public class Ventana extends JFrame {
 
 
         y += 50;
-        JLabel numTarjetaLbl = new JLabel("Num tarj");
+        JLabel numTarjetaLbl = new JLabel("Numero tarjeta");
         numTarjetaLbl.setLocation(x,y);
         numTarjetaLbl.setFont(new Font("Arial", Font.PLAIN, 16));
         numTarjetaLbl.setSize(200,40);
@@ -1258,7 +1372,7 @@ public class Ventana extends JFrame {
         editarClienteSeleccionadoPNL.add(numTarjetaTF);
 
         y += 50;
-        JLabel fechaCadLbl = new JLabel("Fecha cad");
+        JLabel fechaCadLbl = new JLabel("Fecha caducidad");
         fechaCadLbl.setLocation(x,y);
         fechaCadLbl.setFont(new Font("Arial", Font.PLAIN, 16));
         fechaCadLbl.setSize(200,40);
@@ -1286,11 +1400,11 @@ public class Ventana extends JFrame {
         ccvTF.setSize(100,30);
         editarClienteSeleccionadoPNL.add(ccvTF);
 
-        JButton cancelarBtn = new JButton("Cancelar");
-        cancelarBtn.setOpaque(true);
-        cancelarBtn.setBackground(Color.red);
-        cancelarBtn.setSize(200,30);
-        cancelarBtn.setLocation(200,y+75);
+        JButton cancelarBtn = new JButton();
+        cancelarBtn.setSize(230,35);
+        cancelarBtn.setLocation(250,y+125);
+        ImageIcon cancelarIcon = new ImageIcon("src/img/cancelarBoton.png");
+        cancelarBtn.setIcon(cancelarIcon);
         System.out.println("anterior: " + anterior);
         cancelarBtn.addActionListener(new ActionListener() {
             @Override
@@ -1307,17 +1421,18 @@ public class Ventana extends JFrame {
         });
         editarClienteSeleccionadoPNL.add(cancelarBtn);
 
-        JButton guardarBtn = new JButton("Guardar cambios");
-        guardarBtn.setOpaque(true);
-        guardarBtn.setBackground(Color.blue);
-        guardarBtn.setSize(200,30);
-        guardarBtn.setLocation(500,y+75);
+        JButton guardarBtn = new JButton();
+        guardarBtn.setSize(230,35);
+        guardarBtn.setLocation(525,y+125);
+        ImageIcon guardarIcon = new ImageIcon("src/img/guardarCambiosBoton.png");
+        guardarBtn.setIcon(guardarIcon);
         editarClienteSeleccionadoPNL.add(guardarBtn);
-
-
 
         return editarClienteSeleccionadoPNL;
     }
+    /*
+    * usar un arraylist que se vaya recorriendo mientras presiones el boton de regresar,
+    *  si presionas un panel, el puntero va hacia el extremo del arraylist, es decir, el ultimo panel actual*/
 
     public JPanel eliminarCliente(){
 
@@ -1326,37 +1441,37 @@ public class Ventana extends JFrame {
         eliminarPanel.setLocation(0, 0);
         eliminarPanel.setLayout(null);
         eliminarPanel.setBackground(Color.decode("#FFFFFF"));
-
-        JLabel bienvenido = new JLabel("Rentas", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        eliminarPanel.add(bienvenido);
+        JLabel descripcionLbl = new JLabel("ID de cliente a eliminar");
+        descripcionLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        descripcionLbl.setSize(300,50);
+        descripcionLbl.setLocation(400,50);
 
         JComboBox idClientesCB = new JComboBox();
-        idClientesCB.setSize(150,40);
+        idClientesCB.setSize(226,40);
         idClientesCB.setLocation(400,100);
 
-        JButton eliminarClienteBtn = new JButton("Eliminar cliente: ");
-        eliminarClienteBtn.setOpaque(true);
-        eliminarClienteBtn.setBackground(Color.red);
-        eliminarClienteBtn.setSize(150,50);
-        eliminarClienteBtn.setLocation(400, 200);
+        JButton eliminarClienteBtn = new JButton();
+        eliminarClienteBtn.setSize(226,31);
+        eliminarClienteBtn.setLocation(400, 150);
+        ImageIcon eliminarIcon = new ImageIcon("src/img/eliminarClienteBoton.png");
+        eliminarClienteBtn.setIcon(eliminarIcon);
+        String[] columnasTablaClientes = {"<html> <div style = 'text-align : center;'>Id <br> cliente</div></html>"
+                , "<html> <div style = 'text-align : center;'>Nombre</div></html>",
+                "<html> <div style = 'text-align : center;'>Apellidos</div></html>",
+                "<html> <div style = 'text-align : center;'>Correo</div></html>",
+                "<html> <div style = 'text-align : center;'>Teléfono</div></html>",
+                "<html> <div style = 'text-align : center;'>Tarjeta de <br> credito</div></html>",
+                "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
 
-        String[] columnasTablaClientes = {"Id cliente", "Nombre", "Apellido", "Correo", "Teléfono", "Tarjeta de crédito", "Estado de cuenta"};
-        Object [][]datos = new Object[9][columnasTablaClientes.length];
-        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setPreferredSize(new Dimension(500,500));
-        sp.setSize(525,500);
-        sp.setLocation(250,400);
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes, 18);
+        sp.setSize(800,500);
+        sp.setLocation(100,200);
         sp.setVisible(true);
 
         eliminarPanel.add(idClientesCB);
         eliminarPanel.add(sp);
         eliminarPanel.add(eliminarClienteBtn);
+        eliminarPanel.add(descripcionLbl);
 
 
         return eliminarPanel;
@@ -1376,13 +1491,6 @@ public class Ventana extends JFrame {
         rentasPanel.setLayout(null);
         rentasPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Rentas", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        rentasPanel.add(bienvenido);
-
         JButton homeBTN = new JButton("Regresar");
         homeBTN.setSize(100, 20);
         homeBTN.setLocation(130, 390);
@@ -1398,9 +1506,16 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
-        JButton consultarBTN = new JButton("Consultar rentas");
+        JButton consultarBTN = new JButton();
+        consultarBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
+        consultarBTN.setHorizontalTextPosition(SwingConstants.CENTER);
+        consultarBTN.setFont(new Font("Arial", Font.BOLD, 14));
         consultarBTN.setSize(widthBtn, heightBtn);
         consultarBTN.setLocation(xBtn, yBtn);
+        consultarBTN.setOpaque(true);
+        consultarBTN.setBackground(Color.decode("#D9D9D9"));
+        ImageIcon consultarIcon = new ImageIcon("src/img/consultarIcono.png");
+        consultarBTN.setIcon(consultarIcon);
         rentasPanel.add(consultarBTN);
         consultarBTN.addActionListener(new ActionListener() {
             @Override
@@ -1413,12 +1528,17 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
-
         xBtn += 150;
-
-        JButton crearBTN = new JButton("Crear renta");
+        JButton crearBTN = new JButton(); // para poner separadito el texto y que se centre ya en sus cosas neta no peude estar asi haciendo nada puesque se ponga las pilas
+        crearBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
+        crearBTN.setHorizontalTextPosition(SwingConstants.CENTER);
+        crearBTN.setFont(new Font("Arial", Font.BOLD, 14));
         crearBTN.setSize(widthBtn, heightBtn);
         crearBTN.setLocation(xBtn, yBtn);
+        crearBTN.setOpaque(true);
+        crearBTN.setBackground(Color.decode("#D9D9D9"));
+        ImageIcon crearIcon = new ImageIcon("src/img/crearIcono.png");
+        crearBTN.setIcon(crearIcon);
         rentasPanel.add(crearBTN);
         crearBTN.addActionListener(new ActionListener() {
             @Override
@@ -1433,10 +1553,16 @@ public class Ventana extends JFrame {
         });
 
         xBtn += 150;
-
-        JButton editarBTN = new JButton("Editar renta");
+        JButton editarBTN = new JButton(); // para poner separadito el texto y que se centre ya en sus cosas neta no peude estar asi haciendo nada puesque se ponga las pilas
+        editarBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
+        editarBTN.setHorizontalTextPosition(SwingConstants.CENTER);
+        editarBTN.setFont(new Font("Arial", Font.BOLD, 14));
         editarBTN.setSize(widthBtn, heightBtn);
         editarBTN.setLocation(xBtn, yBtn);
+        editarBTN.setOpaque(true);
+        editarBTN.setBackground(Color.decode("#D9D9D9"));
+        ImageIcon editarIcon = new ImageIcon("src/img/editarIcono.png");
+        editarBTN.setIcon(editarIcon);
         rentasPanel.add(editarBTN);
         editarBTN.addActionListener(new ActionListener() {
             @Override
@@ -1449,18 +1575,23 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
-
-
         xBtn += 150;
 
-        JButton eliminarBTN = new JButton("Eliminar renta");
-        eliminarBTN.setSize(widthBtn, heightBtn);
-        eliminarBTN.setLocation(xBtn, yBtn);
-        rentasPanel.add(eliminarBTN);
-        eliminarBTN.addActionListener(new ActionListener() {
+        JButton borrarBTN = new JButton(); // para poner separadito el texto y que se centre ya en sus cosas neta no peude estar asi haciendo nada puesque se ponga las pilas
+        borrarBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
+        borrarBTN.setHorizontalTextPosition(SwingConstants.CENTER);
+        borrarBTN.setFont(new Font("Arial", Font.BOLD, 14));
+        borrarBTN.setSize(widthBtn, heightBtn);
+        borrarBTN.setLocation(xBtn, yBtn);
+        borrarBTN.setOpaque(true);
+        borrarBTN.setBackground(Color.decode("#D9D9D9"));
+        ImageIcon borrarIcon = new ImageIcon("src/img/eliminarIcono.png");
+        borrarBTN.setIcon(borrarIcon);
+        rentasPanel.add(borrarBTN);
+        borrarBTN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
+                anterior = actual; //creo q nomas cambiando el actual jala mejor o no se xd
                 actual = "eliminarRenta";
                 limpiarVentana();
 
@@ -1468,14 +1599,11 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
-        String[] columnasTablaClientes = {"Id renta", "Cliente", "Automóvil", "Fecha de renta", "Fecha de devolución", "Costo", "Método de pago", "Observaciones"};
-        Object [][]datos = new Object[9][columnasTablaClientes.length];
-        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setPreferredSize(new Dimension(600,500));
-        sp.setSize(600,500);
-        sp.setLocation(200,500);
+        String[] columnasTablaClientes = {"<html><div style='text-align: center;'>Id<br>renta</div></html>", "<html><div style='text-align: center;'>Cliente</div></html>", "<html><div style='text-align: center;'>Automóvil</div></html>", "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>", "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>", "<html><div style='text-align: center;'>Costo</div></html>", "<html><div style='text-align: center;'>Método de<br>pago</div></html>", "<html><div style='text-align: center;'>Observaciones</div></html>"};
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes,10);
+        //sp.setPreferredSize(new Dimension(500,500));
+        sp.setSize(700,500);
+        sp.setLocation(165,400);
         sp.setVisible(true);
         rentasPanel.add(sp);
         return rentasPanel;
@@ -1489,43 +1617,40 @@ public class Ventana extends JFrame {
         consultarCarPNL.setLayout(null);
         consultarCarPNL.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Consultar Rentas", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
+        JLabel bienvenido = new JLabel("Automovil a consultar");
+        bienvenido.setFont(new Font("Arial", Font.PLAIN, 24));
         bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
+        bienvenido.setLocation(400, 50);
         consultarCarPNL.add(bienvenido);
 
 
         JComboBox idClientesCB = new JComboBox();
-        idClientesCB.setSize(150,40);
+        idClientesCB.setSize(226,40);
         idClientesCB.setLocation(400,100);
         consultarCarPNL.add(idClientesCB);
 
-        JButton consultarHistorialClienteBtn = new JButton("Consultar historial de cliente: ");
-        consultarHistorialClienteBtn.setSize(150,50);
-        consultarHistorialClienteBtn.setLocation(400, 200);
+        JButton consultarHistorialClienteBtn = new JButton();
+        consultarHistorialClienteBtn.setSize(226,44);
+        consultarHistorialClienteBtn.setLocation(400, 150);
+        ImageIcon consultarHistorialIcon = new ImageIcon("src/img/consultarHistorialClienteIcon.png");
+        consultarHistorialClienteBtn.setIcon(consultarHistorialIcon);
         consultarCarPNL.add(consultarHistorialClienteBtn);
         consultarHistorialClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
-                actual = "consultarHistorialClienteSeleccionado";
+                actual = "consultarAutomovilSeleccionado";
                 limpiarVentana();
 
                 repaint();
                 revalidate();
             }
         });
-
-        String[] columnasTablaClientes = {"Id renta", "Cliente", "Automóvil", "Fecha de renta", "Fecha de devolución", "Costo", "Método de pago", "Observaciones"};
-        Object [][]datos = new Object[9][columnasTablaClientes.length];
-        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setPreferredSize(new Dimension(600,500));
-        sp.setSize(600,500);
-        sp.setLocation(200,500);
+        // <html><div style='text-align: center;'>Id<br>clientes</div></html>
+        String[] columnasTablaClientes = {"<html><div style='text-align: center;'>Id<br>renta</div></html>", "<html><div style='text-align: center;'>Cliente</div></html>", "<html><div style='text-align: center;'>Automóvil</div></html>", "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>", "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>", "<html><div style='text-align: center;'>Costo</div></html>", "<html><div style='text-align: center;'>Método de<br>pago</div></html>", "<html><div style='text-align: center;'>Observaciones</div></html>"};
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes,18);
+        sp.setSize(800,500);
+        sp.setLocation(100,225);
         sp.setVisible(true);
         consultarCarPNL.add(sp);
 
@@ -1557,13 +1682,6 @@ public class Ventana extends JFrame {
         crearRentaPNL.setLocation(0, 0);
         crearRentaPNL.setLayout(null);
         crearRentaPNL.setBackground(Color.decode("#FFFFFF"));
-
-        JLabel bienvenido = new JLabel("Crear Renta", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        crearRentaPNL.add(bienvenido);
 
         int x = 100;
         int y = 100;
@@ -1677,7 +1795,7 @@ public class Ventana extends JFrame {
         crearRentaPNL.add(numTarjetaTF);
 
         y += 50;
-        JLabel fechaCadLbl = new JLabel("Fecha cad");
+        JLabel fechaCadLbl = new JLabel("Fecha caducación");
         fechaCadLbl.setLocation(x,y);
         fechaCadLbl.setFont(new Font("Arial", Font.PLAIN, 16));
         fechaCadLbl.setSize(200,40);
@@ -1707,7 +1825,7 @@ public class Ventana extends JFrame {
 
         x += 200;
         y = 100;
-        JLabel costoEstimadoLbl = new JLabel("Costo estimado");
+        JLabel costoEstimadoLbl = new JLabel("Costo estimado", JLabel.CENTER);
         costoEstimadoLbl.setLocation(x,y);
         costoEstimadoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
         costoEstimadoLbl.setSize(200,40);
@@ -1715,28 +1833,32 @@ public class Ventana extends JFrame {
 
         y += 50;
 
-        JTextArea costoEstimadoTA = new JTextArea();
-        costoEstimadoTA.setBackground(Color.pink);
-        costoEstimadoTA.setLocation(x,y);
-        costoEstimadoTA.setFont(new Font("Arial", Font.PLAIN, 16));
-        costoEstimadoTA.setSize(200,200);
-        crearRentaPNL.add(costoEstimadoTA);
+        JLabel costoEstimadoVisualLbl = new JLabel();
+        costoEstimadoVisualLbl.setHorizontalAlignment(JLabel.CENTER);
+        costoEstimadoVisualLbl.setBackground(Color.pink);
+        costoEstimadoVisualLbl.setLocation(x+15,y);
+        costoEstimadoVisualLbl.setSize(193,102);
+        ImageIcon facturaIcon = new ImageIcon("src/img/rentaFacturaIcon.png");
+        costoEstimadoVisualLbl.setIcon(facturaIcon);
+        crearRentaPNL.add(costoEstimadoVisualLbl);
 
-        y += costoEstimadoTA.getHeight();
+        y += costoEstimadoVisualLbl.getHeight()+10;
 
-        JButton crearRentaBtn = new JButton("Crear renta");
-        crearRentaBtn.setOpaque(true);
-        crearRentaBtn.setBackground(Color.blue);
-        crearRentaBtn.setSize(200,30);
+        JButton crearRentaBtn = new JButton();
+        crearRentaBtn.setSize(226,31);
         crearRentaBtn.setLocation(x,y);
+        ImageIcon crearRentaIcon = new ImageIcon("src/img/crearRentaBoton.png");
+        crearRentaBtn.setIcon(crearRentaIcon);
         crearRentaPNL.add(crearRentaBtn);
 
         y += 50;
-        JButton cancelarBtn = new JButton("Cancelar");
-        cancelarBtn.setOpaque(true);
-        cancelarBtn.setBackground(Color.red);
-        cancelarBtn.setSize(200,30);
+
+        JButton cancelarBtn = new JButton();
+        cancelarBtn.setSize(226,31);
         cancelarBtn.setLocation(x,y);
+        ImageIcon cancelarIcon = new ImageIcon("src/img/cancelarBoton.png");
+        cancelarBtn.setIcon(cancelarIcon);
+        crearRentaPNL.add(cancelarBtn);
         cancelarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1780,20 +1902,21 @@ public class Ventana extends JFrame {
         editarRentaPNL.setLayout(null);
         editarRentaPNL.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Editar Renta", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
+        JLabel bienvenido = new JLabel("ID renta a editar");
+        bienvenido.setFont(new Font("Arial", Font.PLAIN, 24));
         bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
+        bienvenido.setLocation(400, 30);
         editarRentaPNL.add(bienvenido);
 
         JComboBox idRentasCB = new JComboBox();
-        idRentasCB.setSize(150,40);
+        idRentasCB.setSize(226,40);
         idRentasCB.setLocation(400,100);
 
-        JButton editarRentaBtn = new JButton("Editar renta: ");
-        editarRentaBtn.setSize(150,50);
-        editarRentaBtn.setLocation(400, 200);
+        JButton editarRentaBtn = new JButton();
+        editarRentaBtn.setSize(226,31);
+        editarRentaBtn.setLocation(400, 150);
+        ImageIcon editarIcon = new ImageIcon("src/img/editarRentaBoton.png");
+        editarRentaBtn.setIcon(editarIcon);
         editarRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1806,14 +1929,18 @@ public class Ventana extends JFrame {
             }
         });
 
-        String[] columnasTablaClientes = {"Id cliente", "Nombre", "Apellido", "Correo", "Teléfono", "Tarjeta de crédito", "Estado de cuenta"};
-        Object [][]datos = new Object[9][columnasTablaClientes.length];
-        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setPreferredSize(new Dimension(500,500));
-        sp.setSize(525,500);
-        sp.setLocation(250,400);
+
+        String[] columnasTablaClientes = {
+                "<html><div style='text-align: center;'>Id<br>clientes</div></html>",
+                "<html> <div style = 'text-align : center;'>Nombre</div></html>",
+                "<html> <div style = 'text-align : center;'>Apellido</div></html>",
+                "<html> <div style = 'text-align : center;'>Correo</div></html>",
+                "<html> <div style = 'text-align : center;'>Telefóno</div></html>",
+                "<html> <div style = 'text-align : center;'>Tarjeta<br>crédito</div></html>",
+                "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes,18);
+        sp.setSize(800,500);
+        sp.setLocation(100,200);
         sp.setVisible(true);
 
         editarRentaPNL.add(idRentasCB);
@@ -1846,13 +1973,6 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.setLocation(0, 0);
         editarRentaSeleccionadaPNL.setLayout(null);
         editarRentaSeleccionadaPNL.setBackground(Color.decode("#FFFFFF"));
-
-        JLabel bienvenido = new JLabel("Editar Renta", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        editarRentaSeleccionadaPNL.add(bienvenido);
 
         int x = 100;
         int y = 100;
@@ -1995,7 +2115,7 @@ public class Ventana extends JFrame {
 
         x += 200;
         y = 100;
-        JLabel costoEstimadoLbl = new JLabel("Costo estimado");
+        JLabel costoEstimadoLbl = new JLabel("Costo estimado", JLabel.CENTER);
         costoEstimadoLbl.setLocation(x,y);
         costoEstimadoLbl.setFont(new Font("Arial", Font.PLAIN, 16));
         costoEstimadoLbl.setSize(200,40);
@@ -2003,28 +2123,32 @@ public class Ventana extends JFrame {
 
         y += 50;
 
-        JTextArea costoEstimadoTA = new JTextArea();
-        costoEstimadoTA.setBackground(Color.pink);
-        costoEstimadoTA.setLocation(x,y);
-        costoEstimadoTA.setFont(new Font("Arial", Font.PLAIN, 16));
-        costoEstimadoTA.setSize(200,200);
-        editarRentaSeleccionadaPNL.add(costoEstimadoTA);
+        JLabel costoEstimadoVisualLbl = new JLabel();
+        costoEstimadoVisualLbl.setHorizontalAlignment(JLabel.CENTER);
+        costoEstimadoVisualLbl.setBackground(Color.pink);
+        costoEstimadoVisualLbl.setLocation(x+15,y);
+        costoEstimadoVisualLbl.setSize(193,102);
+        ImageIcon facturaIcon = new ImageIcon("src/img/rentaFacturaIcon.png");
+        costoEstimadoVisualLbl.setIcon(facturaIcon);
+        editarRentaSeleccionadaPNL.add(costoEstimadoVisualLbl);
 
-        y += costoEstimadoTA.getHeight();
+        y += costoEstimadoVisualLbl.getHeight()+10;
 
-        JButton crearRentaBtn = new JButton("Guardar cambios");
-        crearRentaBtn.setOpaque(true);
-        crearRentaBtn.setBackground(Color.blue);
-        crearRentaBtn.setSize(200,30);
-        crearRentaBtn.setLocation(x,y);
-        editarRentaSeleccionadaPNL.add(crearRentaBtn);
+        JButton guardarBtn = new JButton();
+        guardarBtn.setSize(226,31);
+        guardarBtn.setLocation(x,y);
+        ImageIcon crearRentaIcon = new ImageIcon("src/img/guardarCambiosBoton.png");
+        guardarBtn.setIcon(crearRentaIcon);
+        editarRentaSeleccionadaPNL.add(guardarBtn);
 
         y += 50;
-        JButton cancelarBtn = new JButton("Cancelar");
-        cancelarBtn.setOpaque(true);
-        cancelarBtn.setBackground(Color.red);
-        cancelarBtn.setSize(200,30);
+
+        JButton cancelarBtn = new JButton();
+        cancelarBtn.setSize(226,31);
         cancelarBtn.setLocation(x,y);
+        ImageIcon cancelarIcon = new ImageIcon("src/img/cancelarBoton.png");
+        cancelarBtn.setIcon(cancelarIcon);
+        editarRentaSeleccionadaPNL.add(cancelarBtn);
         cancelarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -2050,26 +2174,28 @@ public class Ventana extends JFrame {
         eliminarRentaPNL.setLayout(null);
         eliminarRentaPNL.setBackground(Color.decode("#FFFFFF"));
 
+        JLabel descripcionLbl = new JLabel("ID de renta a eliminar");
+        descripcionLbl.setFont(new Font("Arial", Font.PLAIN, 24));
+        descripcionLbl.setSize(300,50);
+        descripcionLbl.setLocation(400,50);
+
         JComboBox idRentasCB = new JComboBox();
-        idRentasCB.setSize(150,40);
+        idRentasCB.setSize(226,40);
         idRentasCB.setLocation(400,100);
 
-        JButton eliminarRentaBtn = new JButton("Eliminar renta: ");
-        eliminarRentaBtn.setSize(150,50);
-        eliminarRentaBtn.setLocation(400, 200);
-        eliminarRentaBtn.setOpaque(true);
-        eliminarRentaBtn.setBackground(Color.red);
+        JButton eliminarRentaBtn = new JButton();
+        eliminarRentaBtn.setSize(226,31);
+        eliminarRentaBtn.setLocation(400, 150);
+        ImageIcon eliminarIcon = new ImageIcon("src/img/eliminarClienteBoton.png");
+        eliminarRentaBtn.setIcon(eliminarIcon);
 
-        String[] columnasTablaClientes = {"Id cliente", "Nombre", "Apellido", "Correo", "Teléfono", "Tarjeta de crédito", "Estado de cuenta"};
-        Object [][]datos = new Object[9][columnasTablaClientes.length];
-        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setPreferredSize(new Dimension(500,500));
-        sp.setSize(525,500);
-        sp.setLocation(250,400);
+        String[] columnasTablaClientes = {"<html><div style='text-align: center;'>Id<br>renta</div></html>", "<html><div style='text-align: center;'>Cliente</div></html>", "<html><div style='text-align: center;'>Automóvil</div></html>", "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>", "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>", "<html><div style='text-align: center;'>Costo</div></html>", "<html><div style='text-align: center;'>Método de<br>pago</div></html>", "<html><div style='text-align: center;'>Observaciones</div></html>"};
+        JScrollPane sp = scrollPaneDefault(columnasTablaClientes,18);
+        sp.setSize(800,500);
+        sp.setLocation(100,200);
         sp.setVisible(true);
 
+        eliminarRentaPNL.add(descripcionLbl);
         eliminarRentaPNL.add(idRentasCB);
         eliminarRentaPNL.add(sp);
         eliminarRentaPNL.add(eliminarRentaBtn);
@@ -2276,6 +2402,44 @@ public class Ventana extends JFrame {
         public boolean isBorderOpaque() {
             return true;
         }
+    }
+    DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            table.setRowHeight(row,25);
+            if (row % 2 == 0) {
+                component.setBackground(Color.decode("#C3E6F5"));
+            } else {
+                // Restablecer el color de fondo para las demás filas
+                component.setBackground(Color.decode("#E2E7F4"));
+            }
+
+            return component;
+        }
+    };
+    public JScrollPane scrollPaneDefault(String[] columnasTablaClientes, int filas){
+        Object [][]datos = new Object[filas][columnasTablaClientes.length];
+        DefaultTableModel dtm = new DefaultTableModel(datos,columnasTablaClientes);
+        JTable tablaClientes = new JTable(dtm);
+        JTableHeader header = tablaClientes.getTableHeader();
+        header.setBackground(Color.decode("#38B6FF"));
+        header.setPreferredSize(new Dimension(700,40));
+        header.setFont(new Font("Arial", Font.PLAIN, 15));
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) header.getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        UIManager.put("TableHeader.cellBorder", BorderFactory.createMatteBorder(0, 1, 0, 1, Color.WHITE));
+        headerRenderer.setOpaque(false);
+        for (int i = 0; i < tablaClientes.getColumnCount(); i++) {
+            tablaClientes.getColumnModel().getColumn(i).setPreferredWidth(75);
+            tablaClientes.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+        JScrollPane sp = new JScrollPane(tablaClientes);
+        //sp.setPreferredSize(new Dimension(500,500));
+        sp.setSize(700,500);
+        sp.setLocation(165,400);
+        sp.setVisible(true);
+        return sp;
     }
 }
 
