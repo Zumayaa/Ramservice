@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Ventana extends JFrame {
     public JPanel panel = null;
     private String anterior = "cargaPantalla";
-    private String actual = "home";
+    private String actual = "login";
     private JLabel panelActualLbl = new JLabel(actual, JLabel.CENTER);
     private Border roundedBorder = new RoundBorder(16, 1, Color.GRAY);
     ArrayList<String> historialPaneles = new ArrayList<>();
@@ -1798,21 +1798,6 @@ public class Ventana extends JFrame {
         rentasPanel.setLayout(null);
         rentasPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JButton homeBTN = new JButton("Regresar");
-        homeBTN.setSize(100, 20);
-        homeBTN.setLocation(130, 390);
-        rentasPanel.add(homeBTN);
-        homeBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "home";
-                limpiarVentana();
-
-                repaint();
-                revalidate();
-            }
-        });
         JButton consultarBTN = new JButton();
         consultarBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
         consultarBTN.setHorizontalTextPosition(SwingConstants.CENTER);
