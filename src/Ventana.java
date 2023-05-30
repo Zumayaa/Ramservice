@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Ventana extends JFrame {
     public JPanel panel = null;
     private String anterior = "cargaPantalla";
-    private String actual = "login";
+    private String actual = "home";
     private JLabel panelActualLbl = new JLabel(actual, JLabel.CENTER);
     private Border roundedBorder = new RoundBorder(16, 1, Color.GRAY);
     ArrayList<String> historialPaneles = new ArrayList<>();
@@ -527,16 +527,26 @@ public class Ventana extends JFrame {
         homePanel.setLayout(null);
         homePanel.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Home", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
+        JLabel bienvenido = new JLabel("Bienvenido, ", JLabel.CENTER);
+        bienvenido.setFont(new Font("Arial", Font.BOLD, 25));
         bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
+        bienvenido.setLocation(230, 600);
+        bienvenido.setForeground(Color.black);
         homePanel.add(bienvenido);
 
-        JButton logoutBTN = new JButton("Logout");
-        logoutBTN.setSize(100, 20);
-        logoutBTN.setLocation(320, 250);
+        //Cuando se hagan las validaciones, este texto será personalizado
+        JLabel admin = new JLabel("Administrador.", JLabel.CENTER);
+        admin.setFont(new Font("Arial", Font.BOLD, 25));
+        admin.setSize(300, 80);
+        admin.setLocation(397, 600);
+        admin.setForeground(Color.decode("#38B6FF"));
+        homePanel.add(admin);
+
+        JButton logoutBTN = new JButton();
+        logoutBTN.setSize(100, 25);
+        logoutBTN.setLocation(250, 50);
+        ImageIcon logoutBTNIMG = new ImageIcon("src/img/logout.png");
+        logoutBTN.setIcon(logoutBTNIMG);
         homePanel.add(logoutBTN);
 
         logoutBTN.addActionListener(new ActionListener() {
@@ -551,9 +561,11 @@ public class Ventana extends JFrame {
             }
         });
 
-        JButton vehiculosBTN = new JButton("Vehículos");
-        vehiculosBTN.setSize(100, 20);
-        vehiculosBTN.setLocation(130, 250);
+        JButton vehiculosBTN = new JButton();
+        vehiculosBTN.setSize(173, 390);
+        vehiculosBTN.setLocation(50, 100);
+        ImageIcon vehiculosBTNIMG = new ImageIcon("src/img/vehiculos-home.png");
+        vehiculosBTN.setIcon(vehiculosBTNIMG);
         homePanel.add(vehiculosBTN);
 
         vehiculosBTN.addActionListener(new ActionListener() {
@@ -569,8 +581,10 @@ public class Ventana extends JFrame {
         });
 
         JButton clientesBTN = new JButton("Clientes");
-        clientesBTN.setSize(100, 20);
-        clientesBTN.setLocation(130, 290);
+        clientesBTN.setSize(160, 390);
+        clientesBTN.setLocation(240, 100);
+        ImageIcon clientesBTNIMG = new ImageIcon("src/img/clientes-home.png");
+        clientesBTN.setIcon(clientesBTNIMG);
         homePanel.add(clientesBTN);
         clientesBTN.addActionListener(new ActionListener() {
             @Override
@@ -585,8 +599,10 @@ public class Ventana extends JFrame {
         });
 
         JButton rentasBTN = new JButton("Rentas");
-        rentasBTN.setSize(100, 20);
-        rentasBTN.setLocation(130, 320);
+        rentasBTN.setSize(160, 390);
+        rentasBTN.setLocation(415, 100);
+        ImageIcon rentasBTNIMG = new ImageIcon("src/img/rentas-home.png");
+        rentasBTN.setIcon(rentasBTNIMG);
         homePanel.add(rentasBTN);
         rentasBTN.addActionListener(new ActionListener() {
             @Override
@@ -601,8 +617,10 @@ public class Ventana extends JFrame {
         });
 
         JButton categoriasBTN = new JButton("Categorias");
-        categoriasBTN.setSize(100, 20);
-        categoriasBTN.setLocation(130, 360);
+        categoriasBTN.setSize(160, 390);
+        categoriasBTN.setLocation(590, 100);
+        ImageIcon categoriasBTNIMG = new ImageIcon("src/img/categorias-home.png");
+        categoriasBTN.setIcon(categoriasBTNIMG);
         homePanel.add(categoriasBTN);
         categoriasBTN.addActionListener(new ActionListener() {
             @Override
@@ -617,8 +635,10 @@ public class Ventana extends JFrame {
         });
 
         JButton marcasBTN = new JButton("Marcas");
-        marcasBTN.setSize(100, 20);
-        marcasBTN.setLocation(130, 390);
+        marcasBTN.setSize(160, 390);
+        marcasBTN.setLocation(770, 100);
+        ImageIcon marcasBTNIMG = new ImageIcon("src/img/marcas-home.png");
+        marcasBTN.setIcon(marcasBTNIMG);
         homePanel.add(marcasBTN);
         marcasBTN.addActionListener(new ActionListener() {
             @Override
