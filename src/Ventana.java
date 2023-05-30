@@ -2452,6 +2452,12 @@ public class Ventana extends JFrame {
         JButton btnNewButton = new JButton("Consultar");
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                anterior = actual;
+                actual ="consultarCategorias";
+                limpiarVentana();
+
+                revalidate();
+                repaint();
 
             }
         });
@@ -2522,33 +2528,84 @@ public class Ventana extends JFrame {
         actual = "consultarCategorias";
 
         JPanel consultarCar = new JPanel();
-        consultarCar.setSize(1000, 800);
-        consultarCar.setLocation(0, 0);
+        consultarCar.setForeground(Color.BLACK);
+        consultarCar.setSize(1000, 681);
+        consultarCar.setLocation(0, 80);
         consultarCar.setLayout(null);
         consultarCar.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Consultar Categorias", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        consultarCar.add(bienvenido);
+        JButton lblNewLabel_3 = new JButton("");
+        lblNewLabel_3.setBorderPainted(false);
+        lblNewLabel_3.setContentAreaFilled(false);
+        lblNewLabel_3.setFocusPainted(false);
+        lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_3.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
+        lblNewLabel_3.setBounds(652, 424, 271, 92);
+        consultarCar.add(lblNewLabel_3);
 
-        JButton backBTN = new JButton("Regresar");
-        backBTN.setSize(100, 20);
-        backBTN.setLocation(130, 390);
-        consultarCar.add(backBTN);
-        backBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "categorias";
-                limpiarVentana();
+        JTextField textField_1 = new JTextField();
+        textField_1.setBorder(null);
+        textField_1.setColumns(10);
+        textField_1.setBackground(SystemColor.menu);
+        textField_1.setBounds(670, 173, 236, 219);
+        consultarCar.add(textField_1);
 
-                repaint();
-                revalidate();
-            }
-        });
+        JTextField textField = new JTextField();
+        textField.setBorder(null);
+        textField.setBackground(SystemColor.menu);
+        textField.setBounds(670, 84, 236, 29);
+        consultarCar.add(textField);
+        textField.setColumns(10);
+
+        JLabel lblNewLabel_2_2 = new JLabel("Descripción");
+        lblNewLabel_2_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2_2.setBounds(670, 144, 154, 23);
+        consultarCar.add(lblNewLabel_2_2);
+
+        JLabel lblNewLabel_2 = new JLabel("Nombre de categoría");
+        lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblNewLabel_2.setBounds(670, 59, 154, 23);
+        consultarCar.add(lblNewLabel_2);
+
+        JTextArea txtrLosSuvsDeportivos = new JTextArea();
+        txtrLosSuvsDeportivos.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed\r\ndo eiusmod tempor incididunt ut labore et dolore magna \r\naliqua. Ut enim ad minim veniam, quis nostrud exercitation\r\n ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\nDuis aute irure dolor in reprehenderit in voluptate velit esse \r\ncillum dolore eu fugiat nulla pariatur.");
+        txtrLosSuvsDeportivos.setOpaque(false);
+        txtrLosSuvsDeportivos.setForeground(Color.BLACK);
+        txtrLosSuvsDeportivos.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        txtrLosSuvsDeportivos.setBounds(47, 469, 497, 152);
+        consultarCar.add(txtrLosSuvsDeportivos);
+
+        JLabel lblNewLabel_2_1 = new JLabel("");
+
+        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/image 15.png"));
+        lblNewLabel_2_1.setBounds(68, 134, 449, 269);
+        consultarCar.add(lblNewLabel_2_1);
+
+        getContentPane().add(consultarCar);
+
+        JButton btnEliminar_1 = new JButton("Editar");
+        btnEliminar_1.setForeground(Color.WHITE);
+        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnEliminar_1.setFocusPainted(false);
+        btnEliminar_1.setBorderPainted(false);
+        btnEliminar_1.setBackground(Color.decode("#38B6FF"));
+        btnEliminar_1.setBounds(657, 547, 260, 53);
+        consultarCar.add(btnEliminar_1);
+
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel_1.setOpaque(true);
+        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1.setBackground(SystemColor.controlShadow);
+        lblNewLabel_1.setBounds(632, 24, 307, 597);
+        consultarCar.add(lblNewLabel_1);
+
+        JLabel lblNewLabel = new JLabel("Sedanes de lujo");
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBounds(170, 24, 282, 58);
+        consultarCar.add(lblNewLabel);
 
         return consultarCar;
     }
@@ -2558,49 +2615,108 @@ public class Ventana extends JFrame {
         actual = "marcas";
 
         JPanel marcasPanel = new JPanel();
+        marcasPanel.setForeground(Color.BLACK);
         marcasPanel.setSize(1000, 800);
-        marcasPanel.setLocation(0, 0);
+        marcasPanel.setLocation(0, 80);
         marcasPanel.setLayout(null);
         marcasPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Marcas", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        marcasPanel.add(bienvenido);
+        JTextArea txtrLosSuvsDeportivos = new JTextArea();
+        txtrLosSuvsDeportivos.setText("Mercedes-Benz es una \r\nmarca de automóviles \r\nconocida por su lujo, calidad \r\ny elegancia. Sus vehículos \r\n,ofrecen un alto nivel de confort\r\ntecnología avanzada y un diseño\r\n sofisticado");
+        txtrLosSuvsDeportivos.setOpaque(false);
+        txtrLosSuvsDeportivos.setForeground(Color.BLACK);
+        txtrLosSuvsDeportivos.setFont(new Font("Tahoma", Font.BOLD, 18));
+        txtrLosSuvsDeportivos.setEditable(false);
+        txtrLosSuvsDeportivos.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        txtrLosSuvsDeportivos.setBounds(341, 424, 307, 162);
+        marcasPanel.add(txtrLosSuvsDeportivos);
 
-        JButton homeBTN = new JButton("Regresar");
-        homeBTN.setSize(100, 20);
-        homeBTN.setLocation(130, 390);
-        marcasPanel.add(homeBTN);
-        homeBTN.addActionListener(new ActionListener() {
-            @Override
+        JTextArea txtrEstaCategoraIncluye = new JTextArea();
+        txtrEstaCategoraIncluye.setForeground(Color.BLACK);
+        txtrEstaCategoraIncluye.setOpaque(false);
+        txtrEstaCategoraIncluye.setEditable(false);
+        txtrEstaCategoraIncluye.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        txtrEstaCategoraIncluye.setFont(new Font("Tahoma", Font.BOLD, 18));
+        txtrEstaCategoraIncluye.setText("BMW es una marca de \r\nautomóviles de prestigio\r\nque se destaca por su \r\nrendimiento y estilo. Sus\r\n vehículos combinan la \r\ndeportividad con el lujo y \r\nla elegancia");
+        txtrEstaCategoraIncluye.setBounds(345, 110, 291, 162);
+        marcasPanel.add(txtrEstaCategoraIncluye);
+
+        JLabel lblNewLabel_2_1 = new JLabel("");
+        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/image 11 (1).png"));
+        lblNewLabel_2_1.setBounds(109, 424, 226, 140);
+        marcasPanel.add(lblNewLabel_2_1);
+
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnEliminar.setFocusPainted(false);
+        btnEliminar.setBorderPainted(false);
+        btnEliminar.setBackground(Color.decode("#BF0000"));
+        btnEliminar.setBounds(658, 206, 226, 53);
+        marcasPanel.add(btnEliminar);
+
+        JButton btnNewButton = new JButton("Consultar");
+        btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "home";
-                limpiarVentana();
 
-                repaint();
-                revalidate();
             }
         });
+        btnNewButton.setFocusPainted(false);
+        btnNewButton.setForeground(Color.WHITE);
+        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnNewButton.setBorderPainted(false);
+        btnNewButton.setBackground(Color.BLACK);
+        btnNewButton.setBounds(658, 116, 226, 55);
+        marcasPanel.add(btnNewButton);
 
-        JButton consultaBTN = new JButton("Consultar");
-        consultaBTN.setSize(100, 20);
-        consultaBTN.setLocation(260, 390);
-        marcasPanel.add(consultaBTN);
-        consultaBTN.addActionListener(new ActionListener() {
-            @Override
+        JLabel lblNewLabel_2 = new JLabel("");
+        lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_2.setIcon(new ImageIcon("src/img/13.png"));
+        lblNewLabel_2.setBounds(109, 110, 226, 140);
+        marcasPanel.add(lblNewLabel_2);
+
+        getContentPane().add(marcasPanel);
+
+        JLabel lblNewLabel = new JLabel("");
+        lblNewLabel.setOpaque(true);
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBackground(Color.LIGHT_GRAY);
+        lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel.setBounds(84, 75, 826, 232);
+        marcasPanel.add(lblNewLabel);
+
+        JButton btnEliminar_1 = new JButton("Eliminar");
+        btnEliminar_1.setForeground(Color.WHITE);
+        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnEliminar_1.setFocusPainted(false);
+        btnEliminar_1.setBorderPainted(false);
+        btnEliminar_1.setBackground(new Color(191, 0, 0));
+        btnEliminar_1.setBounds(658, 520, 226, 53);
+        marcasPanel.add(btnEliminar_1);
+
+        JButton btnNewButton_1 = new JButton("Consultar");
+        btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "consultarMarcas";
-                limpiarVentana();
 
-                repaint();
-                revalidate();
             }
         });
+        btnNewButton_1.setForeground(Color.WHITE);
+        btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnNewButton_1.setFocusPainted(false);
+        btnNewButton_1.setBorderPainted(false);
+        btnNewButton_1.setBackground(Color.BLACK);
+        btnNewButton_1.setBounds(658, 430, 226, 55);
+        marcasPanel.add(btnNewButton_1);
+
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel_1.setOpaque(true);
+        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
+        lblNewLabel_1.setBounds(84, 389, 826, 232);
+        marcasPanel.add(lblNewLabel_1);
+
         return marcasPanel;
     }
 
