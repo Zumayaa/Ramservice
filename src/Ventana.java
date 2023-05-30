@@ -664,44 +664,219 @@ public class Ventana extends JFrame {
         vehiculosPanel.setLayout(null);
         vehiculosPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("vehiculos", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        vehiculosPanel.add(bienvenido);
 
-        JButton homeBTN = new JButton("Regresar");
-        homeBTN.setSize(100, 20);
-        homeBTN.setLocation(130, 390);
-        vehiculosPanel.add(homeBTN);
-        homeBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "home";
-                limpiarVentana();
 
-                repaint();
-                revalidate();
-            }
-        });
+        JLabel lblNewLabel_3_2_1_1 = new JLabel("");
+        lblNewLabel_3_2_1_1.setIcon(new ImageIcon("src/img/Vector.png"));
+        lblNewLabel_3_2_1_1.setBounds(377, 399, 48, 53);
+        vehiculosPanel.add(lblNewLabel_3_2_1_1);
 
-        JButton consultaBTN = new JButton("Consultar");
-        consultaBTN.setSize(100, 20);
-        consultaBTN.setLocation(260, 390);
-        vehiculosPanel.add(consultaBTN);
-        consultaBTN.addActionListener(new ActionListener() {
-            @Override
+        JLabel lblNewLabel_3_2_2 = new JLabel("");
+        lblNewLabel_3_2_2.setIcon(new ImageIcon("src/img/Local gas station.png"));
+        lblNewLabel_3_2_2.setHorizontalTextPosition(SwingConstants.LEFT);
+        lblNewLabel_3_2_2.setBounds(377, 552, 35, 53);
+        vehiculosPanel.add(lblNewLabel_3_2_2);
+
+        JLabel lblNewLabel_4_2 = new JLabel("BMW TQM JOP");
+        lblNewLabel_4_2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_2.setForeground(Color.BLACK);
+        lblNewLabel_4_2.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_2.setBounds(133, 562, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4_2);
+
+        JLabel lblNewLabel_4_1_4 = new JLabel("Coupé");
+        lblNewLabel_4_1_4.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_1_4.setForeground(Color.BLACK);
+        lblNewLabel_4_1_4.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_1_4.setBounds(360, 408, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4_1_4);
+
+        JLabel lblNewLabel_4_1_2_1 = new JLabel("2021");
+        lblNewLabel_4_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_1_2_1.setForeground(Color.BLACK);
+        lblNewLabel_4_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_1_2_1.setBounds(355, 511, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4_1_2_1);
+
+        JLabel lblNewLabel_3_3 = new JLabel("");
+        lblNewLabel_3_3.setIcon(new ImageIcon("src/img/Calendar today.png"));
+        lblNewLabel_3_3.setBounds(377, 500, 35, 53);
+        vehiculosPanel.add(lblNewLabel_3_3);
+
+        JLabel lblNewLabel_2_1 = new JLabel("");
+        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/image 9.png"));
+        lblNewLabel_2_1.setBounds(109, 424, 226, 140);
+        vehiculosPanel.add(lblNewLabel_2_1);
+
+        JLabel lblNewLabel_4_1_3_1 = new JLabel("Gasolina");
+        lblNewLabel_4_1_3_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_1_3_1.setForeground(Color.BLACK);
+        lblNewLabel_4_1_3_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_1_3_1.setBounds(370, 562, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4_1_3_1);
+
+        JLabel lblNewLabel_5_1 = new JLabel("$204 USD por día");
+        lblNewLabel_5_1.setOpaque(true);
+        lblNewLabel_5_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_5_1.setForeground(Color.BLACK);
+        lblNewLabel_5_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblNewLabel_5_1.setBackground(new Color(56, 182, 255));
+        lblNewLabel_5_1.setBounds(658, 404, 226, 55);
+        vehiculosPanel.add(lblNewLabel_5_1);
+
+        JLabel lblNewLabel_4_1_1_1 = new JLabel("Estándar");
+        lblNewLabel_4_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_1_1_1.setForeground(Color.BLACK);
+        lblNewLabel_4_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_1_1_1.setBounds(370, 463, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4_1_1_1);
+
+        JLabel lblNewLabel_3_1_1 = new JLabel("");
+        lblNewLabel_3_1_1.setIcon(new ImageIcon("src/img/Gearbox.png"));
+        lblNewLabel_3_1_1.setBounds(375, 451, 35, 53);
+        vehiculosPanel.add(lblNewLabel_3_1_1);
+
+        JButton btnEliminar = new JButton("Eliminar");
+
+        btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnEliminar.setFocusPainted(false);
+        btnEliminar.setBorderPainted(false);
+        btnEliminar.setBackground(Color.decode("#BF0000"));
+        btnEliminar.setBounds(658, 225, 226, 53);
+        vehiculosPanel.add(btnEliminar);
+
+        JButton btnNewButton = new JButton("Consultar");
+        btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
                 actual = "consultarVehiculo";
+
                 limpiarVentana();
 
                 repaint();
                 revalidate();
             }
         });
+        btnNewButton.setFocusPainted(false);
+        btnNewButton.setForeground(Color.WHITE);
+        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnNewButton.setBorderPainted(false);
+        btnNewButton.setBackground(Color.BLACK);
+        btnNewButton.setBounds(658, 156, 226, 55);
+        vehiculosPanel.add(btnNewButton);
+
+        JLabel lblNewLabel_5 = new JLabel("$204 USD por día");
+        lblNewLabel_5.setForeground(Color.BLACK);
+        lblNewLabel_5.setOpaque(true);
+        lblNewLabel_5.setBackground(Color.decode("#38B6FF"));
+        lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_5.setBounds(658, 90, 226, 55);
+        vehiculosPanel.add(lblNewLabel_5);
+
+        JLabel lblNewLabel_4_1_2 = new JLabel("2021");
+        lblNewLabel_4_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_1_2.setForeground(Color.BLACK);
+        lblNewLabel_4_1_2.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_1_2.setBounds(355, 197, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4_1_2);
+
+        JLabel lblNewLabel_4_1_3 = new JLabel("Gasolina");
+        lblNewLabel_4_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_1_3.setForeground(Color.BLACK);
+        lblNewLabel_4_1_3.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_1_3.setBounds(370, 248, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4_1_3);
+
+        JLabel lblNewLabel_4_1_1 = new JLabel("Estándar");
+        lblNewLabel_4_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_1_1.setForeground(Color.BLACK);
+        lblNewLabel_4_1_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_1_1.setBounds(370, 149, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4_1_1);
+
+        JLabel lblNewLabel_4_1 = new JLabel("Coupé");
+        lblNewLabel_4_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_1.setForeground(Color.BLACK);
+        lblNewLabel_4_1.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_1.setBounds(360, 94, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4_1);
+
+        JLabel lblNewLabel_3_1 = new JLabel("");
+        lblNewLabel_3_1.setIcon(new ImageIcon("src/img/Gearbox.png"));
+        lblNewLabel_3_1.setBounds(375, 137, 35, 53);
+        vehiculosPanel.add(lblNewLabel_3_1);
+
+        JLabel lblNewLabel_4 = new JLabel("BMW Rey X");
+        lblNewLabel_4.setForeground(Color.BLACK);
+        lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4.setBounds(133, 248, 166, 30);
+        vehiculosPanel.add(lblNewLabel_4);
+
+        JLabel lblNewLabel_3_2_1 = new JLabel("");
+        lblNewLabel_3_2_1.setIcon(new ImageIcon("src/img/Vector.png"));
+        lblNewLabel_3_2_1.setBounds(377, 85, 48, 53);
+        vehiculosPanel.add(lblNewLabel_3_2_1);
+
+        JLabel lblNewLabel_3_2 = new JLabel("");
+        lblNewLabel_3_2.setIcon(new ImageIcon("src/img/Local gas station.png"));
+        lblNewLabel_3_2.setBounds(377, 238, 35, 53);
+        vehiculosPanel.add(lblNewLabel_3_2);
+
+        JLabel lblNewLabel_3 = new JLabel("");
+        lblNewLabel_3.setIcon(new ImageIcon("src/img/Calendar today.png"));
+        lblNewLabel_3.setBounds(377, 186, 35, 53);
+        vehiculosPanel.add(lblNewLabel_3);
+
+        JLabel lblNewLabel_2 = new JLabel("");
+        lblNewLabel_2.setIcon(new ImageIcon("src/img/image 10.png"));
+        lblNewLabel_2.setBounds(109, 110, 226, 140);
+        vehiculosPanel.add(lblNewLabel_2);
+
+
+
+
+
+        JLabel lblNewLabel = new JLabel("");
+        lblNewLabel.setOpaque(true);
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBackground(Color.LIGHT_GRAY);
+        lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel.setBounds(84, 75, 826, 232);
+        vehiculosPanel.add(lblNewLabel);
+
+        JButton btnEliminar_1 = new JButton("Eliminar");
+        btnEliminar_1.setForeground(Color.WHITE);
+        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnEliminar_1.setFocusPainted(false);
+        btnEliminar_1.setBorderPainted(false);
+        btnEliminar_1.setBackground(new Color(191, 0, 0));
+        btnEliminar_1.setBounds(658, 539, 226, 53);
+        vehiculosPanel.add(btnEliminar_1);
+
+        JButton btnNewButton_1 = new JButton("Consultar");
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        btnNewButton_1.setForeground(Color.WHITE);
+        btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnNewButton_1.setFocusPainted(false);
+        btnNewButton_1.setBorderPainted(false);
+        btnNewButton_1.setBackground(Color.BLACK);
+        btnNewButton_1.setBounds(658, 470, 226, 55);
+        vehiculosPanel.add(btnNewButton_1);
+
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel_1.setOpaque(true);
+        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
+        lblNewLabel_1.setBounds(84, 389, 826, 232);
+        vehiculosPanel.add(lblNewLabel_1);
 
         return vehiculosPanel;
     }
@@ -2227,49 +2402,118 @@ public class Ventana extends JFrame {
         actual = "categorias";
 
         JPanel categoriasPanel = new JPanel();
+        categoriasPanel.setForeground(Color.BLACK);
         categoriasPanel.setSize(1000, 800);
-        categoriasPanel.setLocation(0, 0);
+        categoriasPanel.setLocation(0, 80);
         categoriasPanel.setLayout(null);
         categoriasPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JLabel bienvenido = new JLabel("Categorias", JLabel.CENTER);
-        bienvenido.setFont(new Font("Arial", Font.BOLD, 35));
-        bienvenido.setSize(300, 80);
-        bienvenido.setLocation(130, 10);
-        bienvenido.setForeground(Color.decode("#005F04"));
-        categoriasPanel.add(bienvenido);
+        JTextArea txtrLosSuvsDeportivos = new JTextArea();
+        txtrLosSuvsDeportivos.setText("Los SUVs deportivos son \r\nvehículos versátiles que \r\ncombinan el rendimiento\r\n deportivo con la practicidad\r\n y el espacio de carga adicional");
+        txtrLosSuvsDeportivos.setOpaque(false);
+        txtrLosSuvsDeportivos.setForeground(Color.BLACK);
+        txtrLosSuvsDeportivos.setFont(new Font("Tahoma", Font.BOLD, 18));
+        txtrLosSuvsDeportivos.setEditable(false);
+        txtrLosSuvsDeportivos.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        txtrLosSuvsDeportivos.setBounds(345, 449, 291, 143);
+        categoriasPanel.add(txtrLosSuvsDeportivos);
 
-        JButton homeBTN = new JButton("Regresar");
-        homeBTN.setSize(100, 20);
-        homeBTN.setLocation(130, 390);
-        categoriasPanel.add(homeBTN);
-        homeBTN.addActionListener(new ActionListener() {
-            @Override
+        JTextArea txtrEstaCategoraIncluye = new JTextArea();
+        txtrEstaCategoraIncluye.setForeground(Color.BLACK);
+        txtrEstaCategoraIncluye.setOpaque(false);
+        txtrEstaCategoraIncluye.setEditable(false);
+        txtrEstaCategoraIncluye.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        txtrEstaCategoraIncluye.setFont(new Font("Tahoma", Font.BOLD, 18));
+        txtrEstaCategoraIncluye.setText("Esta categoría incluye \r\nvehículos elegantes y \r\ncómodos, ideales para\r\nclientes que buscan un\r\nviaje sofisticado y de alto nivel");
+        txtrEstaCategoraIncluye.setBounds(345, 131, 291, 115);
+        categoriasPanel.add(txtrEstaCategoraIncluye);
+
+        JLabel lblNewLabel_4_2 = new JLabel("SUVs deportivos");
+        lblNewLabel_4_2.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4_2.setForeground(Color.BLACK);
+        lblNewLabel_4_2.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4_2.setBounds(133, 562, 166, 30);
+        categoriasPanel.add(lblNewLabel_4_2);
+
+        JLabel lblNewLabel_2_1 = new JLabel("");
+        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/image 11.png"));
+        lblNewLabel_2_1.setBounds(109, 424, 226, 140);
+        categoriasPanel.add(lblNewLabel_2_1);
+
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnEliminar.setFocusPainted(false);
+        btnEliminar.setBorderPainted(false);
+        btnEliminar.setBackground(Color.decode("#BF0000"));
+        btnEliminar.setBounds(658, 206, 226, 53);
+        categoriasPanel.add(btnEliminar);
+
+        JButton btnNewButton = new JButton("Consultar");
+        btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "home";
-                limpiarVentana();
 
-                repaint();
-                revalidate();
             }
         });
+        btnNewButton.setFocusPainted(false);
+        btnNewButton.setForeground(Color.WHITE);
+        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnNewButton.setBorderPainted(false);
+        btnNewButton.setBackground(Color.BLACK);
+        btnNewButton.setBounds(658, 116, 226, 55);
+        categoriasPanel.add(btnNewButton);
 
-        JButton consultaBTN = new JButton("Consultar");
-        consultaBTN.setSize(100, 20);
-        consultaBTN.setLocation(260, 390);
-        categoriasPanel.add(consultaBTN);
-        consultaBTN.addActionListener(new ActionListener() {
-            @Override
+        JLabel lblNewLabel_4 = new JLabel("Sedanes de lujo");
+        lblNewLabel_4.setForeground(Color.BLACK);
+        lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 17));
+        lblNewLabel_4.setBounds(133, 248, 166, 30);
+        categoriasPanel.add(lblNewLabel_4);
+
+        JLabel lblNewLabel_2 = new JLabel("");
+        lblNewLabel_2.setIcon(new ImageIcon("src/img/image 12.png"));
+        lblNewLabel_2.setBounds(109, 110, 226, 140);
+        categoriasPanel.add(lblNewLabel_2);
+
+
+        JLabel lblNewLabel = new JLabel("");
+        lblNewLabel.setOpaque(true);
+        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel.setBackground(Color.LIGHT_GRAY);
+        lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel.setBounds(84, 75, 826, 232);
+        categoriasPanel.add(lblNewLabel);
+
+        JButton btnEliminar_1 = new JButton("Eliminar");
+        btnEliminar_1.setForeground(Color.WHITE);
+        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnEliminar_1.setFocusPainted(false);
+        btnEliminar_1.setBorderPainted(false);
+        btnEliminar_1.setBackground(new Color(191, 0, 0));
+        btnEliminar_1.setBounds(658, 520, 226, 53);
+        categoriasPanel.add(btnEliminar_1);
+
+        JButton btnNewButton_1 = new JButton("Consultar");
+        btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "consultarCategorias";
-                limpiarVentana();
-
-                repaint();
-                revalidate();
             }
         });
+        btnNewButton_1.setForeground(Color.WHITE);
+        btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnNewButton_1.setFocusPainted(false);
+        btnNewButton_1.setBorderPainted(false);
+        btnNewButton_1.setBackground(Color.BLACK);
+        btnNewButton_1.setBounds(658, 430, 226, 55);
+        categoriasPanel.add(btnNewButton_1);
+
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
+        lblNewLabel_1.setOpaque(true);
+        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
+        lblNewLabel_1.setBounds(84, 389, 826, 232);
+        categoriasPanel.add(lblNewLabel_1);
+
         return categoriasPanel;
     }
 
@@ -2460,6 +2704,10 @@ public class Ventana extends JFrame {
         sp.setLocation(165,400);
         sp.setVisible(true);
         return sp;
+    }
+
+    public static void main(String[] args) {
+        Ventana screen = new Ventana();
     }
 }
 
