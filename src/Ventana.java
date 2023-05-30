@@ -41,7 +41,7 @@ public class Ventana extends JFrame {
         logoRamsesLbl.setSize(logoRamsesIcon.getIconWidth(),logoRamsesIcon.getIconHeight());
         logoRamsesLbl.setLocation(0,-50);
         panelActualLbl.setSize(800, 80);
-        panelActualLbl.setLocation(180, 0);
+        panelActualLbl.setLocation(100, 0);
         panelActualLbl.setForeground(Color.black);
         panelActualLbl.setFont(new Font("Lexend-Regular.ttf", Font.BOLD, 35));
         menuSuperiorPanel = new JPanel(){
@@ -51,8 +51,8 @@ public class Ventana extends JFrame {
                 g.drawLine(20,panelActualLbl.getY()+panelActualLbl.getHeight()-10,
                         980,panelActualLbl.getY()+panelActualLbl.getHeight()-10);
 
-                g.drawLine(panelActualLbl.getX()-20,panelActualLbl.getY()+20,
-                        panelActualLbl.getX()-20, panelActualLbl.getHeight()-20);
+                g.drawLine(logoRamsesLbl.getWidth()-35,panelActualLbl.getY()+20,
+                        logoRamsesLbl.getWidth()-35, panelActualLbl.getHeight()-20);
 
                 g.drawLine(930,panelActualLbl.getY()+20,930,panelActualLbl.getHeight()-20);
             }
@@ -67,16 +67,11 @@ public class Ventana extends JFrame {
         regresarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (historialPaneles.size() != 0){
-                    pasenUbi = historialPaneles.size()-1;
-                    String tmp = historialPaneles.get(pasenUbi-1);
-                    anterior = historialPaneles.get(pasenUbi);
-                    actual = tmp;
-                    pasenUbi--;
-                }
+                String tmp = anterior;
+                anterior = actual;
+                actual = tmp;
                 System.out.println(actual);
                 limpiarVentana();
-
                 repaint();
                 revalidate();
             }
@@ -102,7 +97,7 @@ public class Ventana extends JFrame {
 
     public void limpiarVentana() {
         historialPaneles.add(actual);
-        pasenUbi = historialPaneles.size()-1;
+        //pasenUbi = historialPaneles.size()-1;
         if (panel != null) {
             this.remove(panel);
         }
@@ -474,7 +469,7 @@ public class Ventana extends JFrame {
         loginIMG.setSize(550, 800);
         loginIMG.setLocation(450, 0);
         loginIMG.setLayout(null);
-        loginIMG.setBackground(Color.decode("#005F04"));
+        loginIMG.setBackground(Color.white);
         login.add(loginIMG);
 
         JLabel imagen2 = new JLabel();
@@ -482,15 +477,15 @@ public class Ventana extends JFrame {
         ImageIcon imag2 = new ImageIcon("src/img/car.png");
         ImageIcon icono2 = new ImageIcon(imag2.getImage().getScaledInstance(imagen2.getWidth(), imagen2.getHeight(), Image.SCALE_DEFAULT));
         imagen2.setIcon(icono2);
-        imagen2.setLocation(0, 0);
+        imagen2.setLocation(10, 0);
         loginIMG.add(imagen2);
 
-        JButton loginBTN = new JButton("Entrar");
-        loginBTN.setSize(300, 36);
-        loginBTN.setLocation(75, 400);
-        loginBTN.setFont(new Font("Arial", Font.BOLD, 25));
-        loginBTN.setForeground(Color.white);
-        loginBTN.setBackground(Color.decode("#38B6FF"));
+        JButton loginBTN = new JButton();
+        loginBTN.setSize(226, 31);
+        loginBTN.setLocation(105, 400);
+
+        ImageIcon loginBotonIcon = new ImageIcon("src/img/loginBoton.png");
+        loginBTN.setIcon(loginBotonIcon);
         loginPanel.add(loginBTN);
 
         loginBTN.addActionListener(new ActionListener() {
@@ -535,7 +530,7 @@ public class Ventana extends JFrame {
         bienvenido.setForeground(Color.black);
         homePanel.add(bienvenido);
 
-        //Cuando se hagan las validaciones, este texto será personalizado
+        //Cuando se hagan las validaciones, este texto será personalizado ok
         JLabel admin = new JLabel("Administrador.", JLabel.CENTER);
         admin.setFont(new Font("Arial", Font.BOLD, 25));
         admin.setSize(300, 80);
@@ -545,7 +540,7 @@ public class Ventana extends JFrame {
 
         JButton logoutBTN = new JButton();
         logoutBTN.setSize(100, 25);
-        logoutBTN.setLocation(250, 50);
+        logoutBTN.setLocation(55, 625);
         ImageIcon logoutBTNIMG = new ImageIcon("src/img/logout.png");
         logoutBTN.setIcon(logoutBTNIMG);
         homePanel.add(logoutBTN);
@@ -553,6 +548,7 @@ public class Ventana extends JFrame {
         logoutBTN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuSuperiorPanel.setVisible(false);
                 anterior = actual;
                 actual = "login";
                 limpiarVentana();
@@ -656,8 +652,7 @@ public class Ventana extends JFrame {
     }
 
     public JPanel vehiculos() {
-        anterior = actual;
-        actual = "vehiculos";
+        anterior = "home";
 
         JPanel vehiculosPanel = new JPanel();
         vehiculosPanel.setSize(1000, 800);
@@ -883,8 +878,7 @@ public class Ventana extends JFrame {
     }
 
     public JPanel consultarVehiculo() {
-        anterior = actual;
-        actual = "consultarVehiculo";
+        anterior = "vehiculos";
 
         JPanel consultarVehi = new JPanel();
         consultarVehi.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -1109,8 +1103,7 @@ public class Ventana extends JFrame {
         int yBtn = 127;
         int widthBtn  = 124;
         int heightBtn = 170;
-        anterior = actual;
-        actual = "clientes";
+        anterior = "home";
 
 
         JPanel clientesPanel = new JPanel();
@@ -1118,23 +1111,6 @@ public class Ventana extends JFrame {
         clientesPanel.setLocation(0, 0);
         clientesPanel.setLayout(null);
         clientesPanel.setBackground(Color.decode("#FFFFFF"));
-
-
-        JButton homeBTN = new JButton("Regresar");
-        homeBTN.setSize(100, 20);
-        homeBTN.setLocation(130, 390);
-        clientesPanel.add(homeBTN);
-        homeBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "home";
-                limpiarVentana();
-
-                repaint();
-                revalidate();
-            }
-        });
 
         JButton consultarBTN = new JButton();
         consultarBTN.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -1241,28 +1217,12 @@ public class Ventana extends JFrame {
     }
 
     public JPanel consultarCliente() {
-
+        anterior = "clientes";
         JPanel consultarClientePNL = new JPanel();
         consultarClientePNL.setSize(1000, 800);
         consultarClientePNL.setLocation(0, 0);
         consultarClientePNL.setLayout(null);
         consultarClientePNL.setBackground(Color.decode("#FFFFFF"));
-
-        JButton backBTN = new JButton("Regresar");
-        backBTN.setSize(100, 20);
-        backBTN.setLocation(130, 390);
-        consultarClientePNL.add(backBTN);
-        backBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "clientes";
-                limpiarVentana();
-
-                repaint();
-                revalidate();
-            }
-        });
 
         JLabel descripcionEditarCliente = new JLabel("ID del cliente a consultar");
         descripcionEditarCliente.setSize(400,100);
@@ -1398,24 +1358,6 @@ public class Ventana extends JFrame {
         crearClientesPNL.setLocation(0, 0);
         crearClientesPNL.setLayout(null);
         crearClientesPNL.setBackground(Color.decode("#FFFFFF"));
-
-        JButton backBTN = new JButton("Regresar");
-        backBTN.setSize(100, 20);
-        backBTN.setLocation(130, 390);
-        crearClientesPNL.add(backBTN);
-
-        backBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "clientes";
-                limpiarVentana();
-
-                repaint();
-                revalidate();
-            }
-        });
-
 
         int x = 200;
         int y = 50;
@@ -1577,29 +1519,13 @@ public class Ventana extends JFrame {
     }
 
     public JPanel editarCliente() {
-
+        anterior = "clientes";
 
         JPanel editarClientesPNL = new JPanel();
         editarClientesPNL.setSize(1000, 800);
         editarClientesPNL.setLocation(0, 0);
         editarClientesPNL.setLayout(null);
         editarClientesPNL.setBackground(Color.decode("#FFFFFF"));
-
-        JButton backBTN = new JButton("Regresar");
-        backBTN.setSize(100, 20);
-        backBTN.setLocation(130, 390);
-        editarClientesPNL.add(backBTN);
-        backBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "clientes";
-                limpiarVentana();
-
-                repaint();
-                revalidate();
-            }
-        });
 
         JLabel descripcionEditarCliente = new JLabel("ID del cliente a editar");
         descripcionEditarCliente.setSize(400,100);
@@ -1860,8 +1786,7 @@ public class Ventana extends JFrame {
     }
 
     public JPanel rentas() {
-        anterior = actual;
-        actual = "rentas";
+        anterior = "home";
         int xBtn = 230;
         int yBtn = 127;
         int widthBtn  = 124;
@@ -1992,6 +1917,7 @@ public class Ventana extends JFrame {
     }
 
     public JPanel consultarRentas() {
+        anterior = "rentas";
 
         JPanel consultarCarPNL = new JPanel();
         consultarCarPNL.setSize(1000, 800);
@@ -2035,24 +1961,6 @@ public class Ventana extends JFrame {
         sp.setLocation(100,225);
         sp.setVisible(true);
         consultarCarPNL.add(sp);
-
-        JButton backBTN = new JButton("Regresar");
-        backBTN.setSize(100, 20);
-        backBTN.setLocation(130, 390);
-        consultarCarPNL.add(backBTN);
-
-
-        backBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "rentas";
-                limpiarVentana();
-
-                repaint();
-                revalidate();
-            }
-        });
 
         return consultarCarPNL;
     }
@@ -2256,28 +2164,12 @@ public class Ventana extends JFrame {
         });
         crearRentaPNL.add(cancelarBtn);
 
-
-        JButton backBTN = new JButton("Regresar");
-        backBTN.setSize(100, 20);
-        backBTN.setLocation(130, 390);
-        crearRentaPNL.add(backBTN);
-        backBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "rentas";
-                limpiarVentana();
-
-                repaint();
-                revalidate();
-            }
-        });
-
         return crearRentaPNL;
     }
 
     public JPanel editarRenta() {
 
+        anterior = "rentas";
         JPanel editarRentaPNL = new JPanel();
         editarRentaPNL.setSize(1000, 800);
         editarRentaPNL.setLocation(0, 0);
@@ -2328,22 +2220,6 @@ public class Ventana extends JFrame {
         editarRentaPNL.add(idRentasCB);
         editarRentaPNL.add(sp);
         editarRentaPNL.add(editarRentaBtn);
-
-        JButton backBTN = new JButton("Regresar");
-        backBTN.setSize(100, 20);
-        backBTN.setLocation(130, 390);
-        editarRentaPNL.add(backBTN);
-        backBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "rentas";
-                limpiarVentana();
-
-                repaint();
-                revalidate();
-            }
-        });
 
         return editarRentaPNL;
     }
@@ -2585,8 +2461,7 @@ public class Ventana extends JFrame {
         return eliminarRentaPNL;
     }
     public JPanel categorias() {
-        anterior = actual;
-        actual = "categorias";
+        anterior = "home";
 
         JPanel categoriasPanel = new JPanel();
         categoriasPanel.setForeground(Color.BLACK);
@@ -2711,8 +2586,7 @@ public class Ventana extends JFrame {
     }
 
     public JPanel consultarCategorias() {
-        anterior = actual;
-        actual = "consultarCategorias";
+        anterior = "categorias";
 
         JPanel consultarCar = new JPanel();
         consultarCar.setForeground(Color.BLACK);
@@ -2798,8 +2672,7 @@ public class Ventana extends JFrame {
     }
 
     public JPanel marcas() {
-        anterior = actual;
-        actual = "marcas";
+        anterior = "home";
 
         JPanel marcasPanel = new JPanel();
         marcasPanel.setForeground(Color.BLACK);
@@ -2912,8 +2785,7 @@ public class Ventana extends JFrame {
     }
 
     public JPanel consultarMarcas() {
-        anterior = actual;
-        actual = "consultarMarcas";
+        anterior = "marcas";
 
         JPanel consultarMarcas = new JPanel();
         consultarMarcas.setRequestFocusEnabled(false);
