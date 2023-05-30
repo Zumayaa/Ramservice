@@ -42,7 +42,8 @@ public class Ventana extends JFrame {
         logoRamsesLbl.setLocation(0,-50);
         panelActualLbl.setSize(800, 80);
         panelActualLbl.setLocation(180, 0);
-        panelActualLbl.setFont(new Font("Lexend-Regular.ttf", Font.PLAIN, 35));
+        panelActualLbl.setForeground(Color.black);
+        panelActualLbl.setFont(new Font("Lexend-Regular.ttf", Font.BOLD, 35));
         menuSuperiorPanel = new JPanel(){
             @Override
             protected void paintComponent(Graphics g) {
@@ -1162,7 +1163,7 @@ public class Ventana extends JFrame {
         historialClienteSeleccionadoPanel.setBackground(Color.decode("#FFFFFF"));
 
         int xLbl = 100;
-        JLabel idClienteLbl = new JLabel("Id cliente: 1");
+        JLabel idClienteLbl = new JLabel("Id Cliente: 1");
         idClienteLbl.setFont(new Font("Arial", Font.BOLD, 24));
         idClienteLbl.setSize(300,50);
         idClienteLbl.setLocation(xLbl+20,50);
@@ -1879,7 +1880,7 @@ public class Ventana extends JFrame {
         crearRentaPNL.setBackground(Color.decode("#FFFFFF"));
 
         int x = 100;
-        int y = 100;
+        int y = 20;
         JLabel carroLbl = new JLabel("Carro a rentar");
         carroLbl.setLocation(x,y);
         carroLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -1933,7 +1934,7 @@ public class Ventana extends JFrame {
         crearRentaPNL.add(idClienteTF);
 
         x +=300;
-        y = 100;
+        y = 20;
 
         JLabel nombresLbl = new JLabel("Nombres");
         nombresLbl.setLocation(x,y);
@@ -2170,7 +2171,7 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.setBackground(Color.decode("#FFFFFF"));
 
         int x = 100;
-        int y = 100;
+        int y = 20;
         JLabel carroLbl = new JLabel("Carro a rentar");
         carroLbl.setLocation(x,y);
         carroLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -2224,7 +2225,7 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.add(idClienteTF);
 
         x +=300;
-        y = 100;
+        y = 20;
 
         JLabel nombresLbl = new JLabel("Nombres");
         nombresLbl.setLocation(x,y);
