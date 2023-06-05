@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class Ventana extends JFrame {
@@ -1261,7 +1262,14 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
-        String[] columnasTabla = {"<html><div style='text-align: center;'>Id<br>clientes</div></html>", "<html> <div style = 'text-align : center;'>Nombre</div></html>", "<html> <div style = 'text-align : center;'>Apellido</div></html>", "<html> <div style = 'text-align : center;'>Correo</div></html>", "<html> <div style = 'text-align : center;'>Telefóno</div></html>", "<html> <div style = 'text-align : center;'>Tarjeta<br>crédito</div></html>", "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
+        String[] columnasTabla = {
+                "<html><div style='text-align: center;'>Id<br>clientes</div></html>",
+                "<html> <div style = 'text-align : center;'>Nombre</div></html>",
+                "<html> <div style = 'text-align : center;'>Apellido</div></html>",
+                "<html> <div style = 'text-align : center;'>Correo</div></html>",
+                "<html> <div style = 'text-align : center;'>Telefóno</div></html>",
+                "<html> <div style = 'text-align : center;'>Tarjeta<br>crédito</div></html>",
+                "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
 
         JTable tabla_clientes = new JTable();
         TablasRamservice.crear_tabla(columnasTabla, tabla_clientes, ClientesDAO.obtener_dtm_clientes());
@@ -1366,8 +1374,9 @@ public class Ventana extends JFrame {
                 "<html><div style='text-align: center;'>CVV</div></html>",
                 "<html><div style='text-align: center;'>Costo</div></html>"};
         JTable tabla_autos = new JTable();
-        DefaultTableModel dtm = RentasService.descargar_tabla_dtm("SELECT * FROM rentas WHERE identificador_auto = "+id_auto_consultar);
-        TablasRamservice.crear_tabla(columnasTabla, tabla_autos, dtm);
+        DefaultTableModel dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla,"SELECT * FROM rentas WHERE identificador_auto = "+id_auto_consultar);
+        tabla_autos.setModel(dtm);
+        TablasRamservice.crear_tabla(tabla_autos);
         JScrollPane sp = new JScrollPane(tabla_autos);
         sp.setSize(900,500);
         sp.setLocation(50,150);
@@ -1424,8 +1433,9 @@ public class Ventana extends JFrame {
                 "<html><div style='text-align: center;'>CVV</div></html>",
                 "<html><div style='text-align: center;'>Costo</div></html>"};
         JTable tabla_autos = new JTable();
-        DefaultTableModel dtm = RentasService.descargar_tabla_dtm("SELECT * FROM rentas WHERE identificador_cliente = "+id_cliente_a_consultar);
-        TablasRamservice.crear_tabla(columnasTabla, tabla_autos, dtm);
+        DefaultTableModel dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla,"SELECT * FROM rentas WHERE identificador_cliente = "+id_cliente_a_consultar);
+        tabla_autos.setModel(dtm);
+        TablasRamservice.crear_tabla(tabla_autos);
         JScrollPane sp = new JScrollPane(tabla_autos);
         sp.setSize(900,500);
         sp.setLocation(50,185);
@@ -1885,7 +1895,6 @@ public class Ventana extends JFrame {
         int yBtn = 127;
         int widthBtn  = 124;
         int heightBtn = 170;
-
         JPanel rentasPanel = new JPanel();
         rentasPanel.setSize(1000, 800);
         rentasPanel.setLocation(0, 0);
@@ -2015,7 +2024,10 @@ public class Ventana extends JFrame {
                 "<html><div style='text-align: center;'>CVV</div></html>",
                 "<html><div style='text-align: center;'>Costo</div></html>"};
         JTable tabla_rentas = new JTable();
-        TablasRamservice.crear_tabla(columnasTabla, tabla_rentas, RentasDAO.obtener_dtm_rentas());
+        //TablasRamservice.crear_tabla(columnasTabla, tabla_rentas, RentasDAO.obtener_dtm_rentas());
+        //TablasRamservice.crear_tabla(columnasTabla, tabla_rentas, Renta_Service.crear_dtm_de_rentas(columnasTabla,"SELECT * FROM rentas"));
+        tabla_rentas.setModel(Renta_Service.crear_dtm_de_rentas(columnasTabla,"SELECT * FROM rentas"));
+        TablasRamservice.modificar_dimensiones_tabla(tabla_rentas);
         JScrollPane sp = new JScrollPane(tabla_rentas);
         sp.setSize(900,500);
         sp.setLocation(50,400);
@@ -2026,7 +2038,6 @@ public class Ventana extends JFrame {
 
     public JPanel consultarRentas() throws SQLException {
         anterior = "rentas";
-
         JPanel consultarCarPNL = new JPanel();
         consultarCarPNL.setSize(1000, 800);
         consultarCarPNL.setLocation(0, 0);
@@ -2040,7 +2051,7 @@ public class Ventana extends JFrame {
         consultarCarPNL.add(bienvenido);
 
 
-        JComboBox id_auto_a_consultar_CB = new JComboBox(AutosDAO.seleccionar_columna("id_auto"));
+        JComboBox id_auto_a_consultar_CB = new JComboBox(Renta_Service.obtener_columna("SELECT id_de_auto FROM autos"));
         id_auto_a_consultar_CB.setSize(226,40);
         id_auto_a_consultar_CB.setLocation(400,100);
         consultarCarPNL.add(id_auto_a_consultar_CB);
@@ -2083,7 +2094,10 @@ public class Ventana extends JFrame {
                 "<html><div style='text-align: center;'>CVV</div></html>",
                 "<html><div style='text-align: center;'>Monto</div></html>"};
         JTable tabla_rentas = new JTable();
-        TablasRamservice.crear_tabla(columnasTabla, tabla_rentas, RentasDAO.obtener_dtm_rentas());
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla, "SELECT * FROM rentas");
+        tabla_rentas.setModel(dtm);
+        TablasRamservice.crear_tabla(tabla_rentas);
         JScrollPane sp = new JScrollPane(tabla_rentas);
         sp.setSize(900,500);
         sp.setLocation(50,300);
@@ -2249,10 +2263,10 @@ public class Ventana extends JFrame {
                 String fecha_caducidad = fechaCadTF.getText();
                 String cvv = cvvTF.getText();
                 try {
-                    String estado_de_registro = RentasService.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad);
+                    String estado_de_registro = Renta_Service.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad);
                     switch (estado_de_registro){
                         case "Permitido":
-                            RentasService.crearRenta(
+                            Renta_Service.crearRenta(
                                 identificador_cliente, cliente,
                                 id_auto, nombre_auto, fecha_de_renta,
                                 fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
@@ -2312,7 +2326,7 @@ public class Ventana extends JFrame {
         bienvenido.setLocation(415, 30);
         editarRentaPNL.add(bienvenido);
 
-        JComboBox id_rentas_CB = new JComboBox(RentasDAO.seleccionar_columna("id_de_renta"));
+        JComboBox id_rentas_CB = new JComboBox(Renta_Service.obtener_columna("SELECT id_de_renta FROM rentas"));
         id_rentas_CB.setSize(226,40);
         id_rentas_CB.setLocation(400,100);
 
@@ -2327,7 +2341,6 @@ public class Ventana extends JFrame {
                 anterior = actual;
                 actual = "editarRentaSeleccionada";
                 id_renta_editar = Integer.parseInt((String) id_rentas_CB.getSelectedItem());
-                System.out.println(id_renta_editar);
                 try {
                     limpiarVentana();
                 } catch (SQLException ex) {
@@ -2354,7 +2367,10 @@ public class Ventana extends JFrame {
                 "<html><div style='text-align: center;'>CVV</div></html>",
                 "<html><div style='text-align: center;'>Monto</div></html>"};
         JTable tabla_rentas = new JTable();
-        TablasRamservice.crear_tabla(columnasTabla, tabla_rentas, RentasDAO.obtener_dtm_rentas());
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla, "SELECT * FROM rentas");
+        tabla_rentas.setModel(dtm);
+        TablasRamservice.crear_tabla(tabla_rentas);
         JScrollPane sp = new JScrollPane(tabla_rentas);
         sp.setSize(900,500);
         sp.setLocation(50,400);
@@ -2441,7 +2457,11 @@ public class Ventana extends JFrame {
         numTarjetaLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(numTarjetaLbl);
         y += 50;
-        JTextField numTarjetaTF = new JTextField();
+
+        String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
+        String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
+        int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
+        JTextField numTarjetaTF = new JTextField(Arrays.toString(Renta_Service.obtener_columna("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
         numTarjetaTF.setBorder(roundedBorder);
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
@@ -2454,7 +2474,7 @@ public class Ventana extends JFrame {
         fechaCadLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(fechaCadLbl);
         y += 50;
-        JTextField fechaCadTF = new JTextField();
+        JTextField fechaCadTF = new JTextField(Arrays.toString(Renta_Service.obtener_columna("SELECT fecha_de_caducidad from clientes WHERE id_de_cliente = " + identificador_cliente)));
         fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
@@ -2503,12 +2523,18 @@ public class Ventana extends JFrame {
         ImageIcon crearRentaIcon = new ImageIcon("src/img/guardarCambiosBoton.png");
         guardarBtn.setIcon(crearRentaIcon);
         editarRentaSeleccionadaPNL.add(guardarBtn);
-        guardarBtn.addActionListener(new ActionListener() {
+        id_cliente_con_nombre_CB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
                 String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
                 int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
+                numTarjetaTF.setText(Arrays.toString(Renta_Service.obtener_columna("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
+            }
+        });
+        guardarBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 String nombre_cliente = cliente_elegido_id_nombre[1];
                 String cliente = nombre_cliente;
                 String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
@@ -2521,10 +2547,10 @@ public class Ventana extends JFrame {
                 String fecha_caducidad = fechaCadTF.getText();
                 String cvv = cvvTF.getText();
                 try {
-                    String estado_de_registro = RentasService.comprobar_fechas_editar(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion,fecha_caducidad);
+                    String estado_de_registro = Renta_Service.comprobar_fechas_editar(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion,fecha_caducidad);
                     switch (estado_de_registro){
                         case "Permitido":
-                            RentasService.editarRenta(id_de_renta_a_editar,
+                            Renta_Service.editarRenta(id_de_renta_a_editar,
                                     identificador_cliente, cliente,
                                     id_auto, nombre_auto, fecha_de_renta,
                                     fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
@@ -2606,7 +2632,10 @@ public class Ventana extends JFrame {
                 "<html><div style='text-align: center;'>Monto</div></html>"
         };
         JTable tabla_rentas = new JTable();
-        TablasRamservice.crear_tabla(columnasTabla, tabla_rentas, RentasDAO.obtener_dtm_rentas());
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla, "SELECT * FROM rentas");
+        tabla_rentas.setModel(dtm);
+        TablasRamservice.crear_tabla(tabla_rentas);
         JScrollPane sp = new JScrollPane(tabla_rentas);
         sp.setSize(900,500);
         sp.setLocation(50,400);
@@ -2615,9 +2644,11 @@ public class Ventana extends JFrame {
         eliminarRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RentasService.borrar_renta(Integer.parseInt(String.valueOf(idRentasCB.getSelectedItem())));
-
-                TablasRamservice.crear_tabla(columnasTabla, tabla_rentas, RentasDAO.obtener_dtm_rentas());
+                Renta_Service.borrar_renta(Integer.parseInt(String.valueOf(idRentasCB.getSelectedItem())));
+                DefaultTableModel dtm = new DefaultTableModel();
+                dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla, "SELECT * FROM rentas");
+                tabla_rentas.setModel(dtm);
+                TablasRamservice.crear_tabla(tabla_rentas);
                 DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) idRentasCB.getModel();
                 model.removeElement(idRentasCB.getSelectedItem());
                 repaint();

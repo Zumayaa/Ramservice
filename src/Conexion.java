@@ -35,8 +35,8 @@ public class Conexion {
                     "cliente VARCHAR(255) NOT NULL,"+
                     "identificador_auto INT NOT NULL REFERENCES autos(id_auto),"+
                     "automovil VARCHAR(255) NOT NULL,"+
-                    "fecha_de_renta DATE NOT NULL,"+
-                    "fecha_de_devolucion DATE NOT NULL,"+
+                    "fecha_de_renta DATETIME NOT NULL,"+
+                    "fecha_de_devolucion DATETIME NOT NULL,"+
                     "tiempo INT NOT NULL,"+
                     "numero_tarjeta VARCHAR(255) NOT NULL,"+
                     "fecha_caducidad DATE NOT NULL,"+
@@ -52,32 +52,31 @@ public class Conexion {
                     "nombre VARCHAR(255) NOT NULL, " +
                     "apellido VARCHAR(255) NOT NULL, " +
                     "correo VARCHAR(255) NOT NULL, " +
-                    "telefono VARCHAR(255), " +
-                    "tarjeta_de_credito VARCHAR(255), " +
+                    "telefono VARCHAR(255) NOT NULL, " +
+                    "numero_de_tarjeta VARCHAR(255) NOT NULL, " +
+                    "fecha_de_caducidad DATE NOT NULL, " +
+                    "cvv VARCHAR(255) NOT NULL,"+
+                    "password VARCHAR(255) NOT NULL,"+
                     "PRIMARY KEY (id_de_cliente));";
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
                 query =
                     "CREATE TABLE IF NOT EXISTS autos (" +
-                    "id_auto INT NOT NULL AUTO_INCREMENT," +
+                    "id_de_auto INT NOT NULL AUTO_INCREMENT," +
                     "nombre_auto VARCHAR(255) NOT NULL, " +
                     "marca VARCHAR(255) NOT NULL, " +
                     "categoria VARCHAR(255) NOT NULL, " +
                     "kilometraje VARCHAR(255), " +
                     "costo FLOAT NOT NULL, " +
-                    "PRIMARY KEY (id_auto));";
+                    "PRIMARY KEY (id_de_auto));";
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
 
-                query ="INSERT IGNORE INTO clientes " +
-                        "(nombre, apellido, correo, telefono, tarjeta_de_credito) " +
-                        "VALUES ('Juan', 'Pérez', 'juan@example.com', '123456789', '1111222233334444');";
-                ps = conexion.prepareStatement(query);
-                ps.executeUpdate();
-
-                query =
-                        "INSERT IGNORE INTO clientes (nombre, apellido, correo, telefono, tarjeta_de_credito) " +
-                        "VALUES ('María', 'Gómez', 'maria@example.com', '987654321', '5555666677778888');";
+                query ="INSERT INTO clientes (nombre, apellido, correo, telefono, numero_de_tarjeta, fecha_de_caducidad, cvv, password)" +
+                        "VALUES" +
+                        "('Juan', 'Pérez', 'juan@example.com', '123456789', '1234567890123456', '2023-12-31', '123','mipassword')," +
+                        "('María', 'Gómez', 'maria@example.com', '987654321', '9876543210987654', '2024-06-30', '123','otropassword')," +
+                        "('Pedro', 'López', 'pedro@example.com', '456789123', '4567891234567890', '2023-09-30', '123','contraseña');";
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
 

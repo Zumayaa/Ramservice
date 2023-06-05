@@ -11,6 +11,9 @@ public class TablasRamservice {
         tabla_creada.setModel(dtm);
         modificar_dimensiones_tabla(tabla_creada);
     }
+    public static void crear_tabla(JTable tabla_creada){
+        modificar_dimensiones_tabla(tabla_creada);
+    }
     public static void modificar_dimensiones_tabla(JTable tabla_creada){
         JTableHeader header = tabla_creada.getTableHeader();
         header.setBackground(Color.decode("#38B6FF"));
