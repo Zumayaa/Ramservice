@@ -34,9 +34,9 @@ public class AutosDAO {
     public static String[] seleccionar_columna(String columna_nombre) {
         ArrayList<String> datos_obtenidos = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/base_ramservice", "root", "")) {
+        try (Connection conexion = dbConnect.getConnection()) {
             String consulta = "SELECT " + columna_nombre + " FROM autos";
-            PreparedStatement preparedStatement = connection.prepareStatement(consulta);
+            PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

@@ -1,3 +1,4 @@
+import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 
 public class RentasService {
@@ -48,5 +49,57 @@ public class RentasService {
         rentaNueva.setFecha_de_caducidad(fecha_de_caducidad);
         rentaNueva.setCvv(cvv);
         RentasDAO.editarRentaPorId(id_renta,rentaNueva);
+    }
+    public static String comprobar_fechas(int id_auto, String fecha_de_renta, String fecha_de_devolucion, String fecha_de_caducidad){
+        String mensaje = "";
+        if (!RentasDAO.conflicto_entre_fechas(id_auto, fecha_de_renta, fecha_de_devolucion)
+            && Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")
+            && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
+                    mensaje = "Permitido";
+            }
+            else {
+                if (RentasDAO.conflicto_entre_fechas(id_auto, fecha_de_renta, fecha_de_devolucion)){
+                    mensaje += "Fecha no disponible\n";
+                    }
+                if (!Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")){
+                    mensaje += "Fecha ilegal\n";
+                }
+                if (!Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
+                    mensaje += "Fecha de tarjeta caducada\n";
+                }
+
+            }
+        return mensaje;
+    }
+    public static String comprobar_fechas_editar(int id_de_renta_a_editar,int id_auto, String fecha_de_renta, String fecha_de_devolucion, String fecha_de_caducidad){
+        String mensaje = "";
+        if(!RentasDAO.conflicto_entre_fechas(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion)
+                && Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")
+                && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
+            mensaje = "Permitido";
+        }
+        else {
+            if (RentasDAO.conflicto_entre_fechas(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion)){
+                mensaje += "Fecha no disponible\n";
+            }
+            if (!Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")){
+                mensaje += "Fecha ilegal\n";
+            }
+            if (!Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
+                mensaje += "Fecha de tarjeta caducada\n";
+            }
+        }
+
+        return mensaje;
+    }
+
+    public static void borrar_renta(int id_renta) {
+        RentasDAO.borrar_renta_por_id(id_renta);
+    }
+    public static DefaultTableModel descargar_tabla_dtm(String query){
+        return RentasDAO.descargar_filas_tabla_dtm(query);
+    }
+    public static Object[] descargar_tabla_arreglo(String query, String nombre_tabla, int numero_columna){
+        return RentasDAO.descargar_columnas_tabla_arreglo(query, nombre_tabla, numero_columna);
     }
 }

@@ -64,13 +64,15 @@ public class Cliente {
     }
 
     public Cliente(int id_cliente, String nombre, String apellido, String correo,
-                   String telefono, String tarjeta_de_credito, String estado_de_cuenta){
+                   String telefono, String tarjeta_de_credito){
         this.id_cliente = id_cliente;
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
         this.telefono = telefono;
         this.tarjeta_de_credito = tarjeta_de_credito;
-        this.estado_de_cuenta = estado_de_cuenta;
+    }
+    public Cliente(){
+
     }
 }

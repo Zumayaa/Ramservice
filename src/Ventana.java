@@ -2,7 +2,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +19,10 @@ public class Ventana extends JFrame {
     ArrayList<String> historialPaneles = new ArrayList<>();
     private int id_renta_editar;
     private int id_auto_consultar;
-
+    private int id_cliente_a_consultar;
+    private String nombre_cliente;
+    private String email_cliente;
+    private String telefono_cliente;
     JPanel menuSuperiorPanel = new JPanel();
 
     ImageIcon logoEmpresa = new ImageIcon("src/img/company.png");
@@ -168,7 +170,7 @@ public class Ventana extends JFrame {
 
             panelActualLbl.setText("Consultar historial del cliente");
 
-            panel = historialClienteSeleccionado();
+            panel = historialClienteSeleccionado(id_cliente_a_consultar, nombre_cliente, email_cliente, telefono_cliente);
 
             this.add(panel,BorderLayout.CENTER);
 
@@ -1271,7 +1273,7 @@ public class Ventana extends JFrame {
         return clientesPanel;
     }
 
-    public JPanel consultarCliente() {
+    public JPanel consultarCliente() throws SQLException {
         anterior = "clientes";
         JPanel consultarClientePNL = new JPanel();
         consultarClientePNL.setSize(1000, 800);
@@ -1285,7 +1287,7 @@ public class Ventana extends JFrame {
         descripcionEditarCliente.setFont(new Font("Arial", Font.BOLD, 24));
         consultarClientePNL.add(descripcionEditarCliente);
 
-        JComboBox idClientesCB = new JComboBox();
+        JComboBox idClientesCB = new JComboBox(ClienteService.descargar_id_clientes("id_de_cliente"));
         idClientesCB.setSize(230,30);
         idClientesCB.setLocation(400,100);
 
@@ -1297,6 +1299,11 @@ public class Ventana extends JFrame {
         consultarHistorialClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                id_cliente_a_consultar = Integer.parseInt((String) idClientesCB.getSelectedItem());
+                String [] datos = ClienteService.informacion_cliente(id_cliente_a_consultar);
+                nombre_cliente = datos[0];
+                email_cliente = datos[1];
+                telefono_cliente = datos[2];
                 anterior = actual;
                 actual = "consultarHistorialClienteSeleccionado";
                 try {
@@ -1359,7 +1366,8 @@ public class Ventana extends JFrame {
                 "<html><div style='text-align: center;'>CVV</div></html>",
                 "<html><div style='text-align: center;'>Costo</div></html>"};
         JTable tabla_autos = new JTable();
-        TablasRamservice.crear_tabla(columnasTabla, tabla_autos, RentasDAO.obtener_dtm_historial_auto(id_auto_consultar));
+        DefaultTableModel dtm = RentasService.descargar_tabla_dtm("SELECT * FROM rentas WHERE identificador_auto = "+id_auto_consultar);
+        TablasRamservice.crear_tabla(columnasTabla, tabla_autos, dtm);
         JScrollPane sp = new JScrollPane(tabla_autos);
         sp.setSize(900,500);
         sp.setLocation(50,150);
@@ -1369,7 +1377,7 @@ public class Ventana extends JFrame {
 
         return  historialClienteSeleccionadoPanel;
     }
-    public JPanel historialClienteSeleccionado(){
+    public JPanel historialClienteSeleccionado(int id_cliente_a_consultar, String nombre_cliente, String email_cliente, String telefono_cliente){
         JPanel historialClienteSeleccionadoPanel = new JPanel();
         historialClienteSeleccionadoPanel.setSize(1000, 800);
         historialClienteSeleccionadoPanel.setLocation(0, 0);
@@ -1377,45 +1385,51 @@ public class Ventana extends JFrame {
         historialClienteSeleccionadoPanel.setBackground(Color.decode("#FFFFFF"));
 
         int xLbl = 100;
-        JLabel idClienteLbl = new JLabel("Id Cliente: 1");
+        JLabel idClienteLbl = new JLabel("Id Cliente: " + id_cliente_a_consultar);
         idClienteLbl.setFont(new Font("Arial", Font.BOLD, 24));
-        idClienteLbl.setSize(300,50);
+        idClienteLbl.setSize(500,50);
         idClienteLbl.setLocation(xLbl+20,50);
+        historialClienteSeleccionadoPanel.add(idClienteLbl);
 
-        JLabel nombreLbl = new JLabel("Nombre: Luis");
+        JLabel nombreLbl = new JLabel("Nombre: " + nombre_cliente);
         nombreLbl.setFont(new Font("Arial", Font.BOLD, 24));
-        nombreLbl.setSize(300,50);
+        nombreLbl.setSize(500,50);
         nombreLbl.setLocation(xLbl+20,130);
+        historialClienteSeleccionadoPanel.add(nombreLbl);
         xLbl += 400;
 
-        JLabel correoLbl = new JLabel("Email: luis@gmail.com");
+        JLabel correoLbl = new JLabel("Email: " + email_cliente);
         correoLbl.setFont(new Font("Arial", Font.BOLD, 24));
         correoLbl.setSize(300,50);
         correoLbl.setLocation(xLbl,50);
+        historialClienteSeleccionadoPanel.add(correoLbl);
 
-        JLabel telefonoLbl = new JLabel("Teléfono: 61212345");
+        JLabel telefonoLbl = new JLabel("Teléfono: " + telefono_cliente);
         telefonoLbl.setFont(new Font("Arial", Font.BOLD, 24));
         telefonoLbl.setSize(300,50);
         telefonoLbl.setLocation(xLbl,130);
+        historialClienteSeleccionadoPanel.add(telefonoLbl);
 
         String[] columnasTabla= {
                 "<html><div style='text-align: center;'>Id<br>renta</div></html>",
-                "<html> <div style = 'text-align : center;'>Cliente</div></html>",
-                "<html> <div style = 'text-align : center;'>Fecha<br> de renta</div></html>",
-                "<html> <div style = 'text-align : center;'>Fecha<br> de devolución</div></html>",
-                "<html> <div style = 'text-align : center;'>Costo</div></html>",
-                "<html> <div style = 'text-align : center;'>Método de<br>pago</div></html>",
-                "<html> <div style = 'text-align : center;'>Observaciones</div></html>"};
-        JTable tabla_autos = new JTable(); // cambiar esto jejej
-        TablasRamservice.crear_tabla(columnasTabla, tabla_autos, RentasDAO.obtener_datos_tabla_rentas_de_cliente_especifico("SELECT * FROM rentas WHERE identificador_auto = " + id_auto_consultar));
+                "<html><div style='text-align: center;'>Id<br>cliente</div></html>",
+                "<html><div style='text-align: center;'>Cliente</div></html>",
+                "<html><div style='text-align: center;'>Id<br>auto</div></html>",
+                "<html><div style='text-align: center;'>Automóvil</div></html>",
+                "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>",
+                "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>",
+                "<html><div style='text-align: center;'>Tiempo</div></html>",
+                "<html><div style='text-align: center;'>Número de<br>tarjeta</div></html>",
+                "<html><div style='text-align: center;'>Fecha de<br>caducidad</div></html>",
+                "<html><div style='text-align: center;'>CVV</div></html>",
+                "<html><div style='text-align: center;'>Costo</div></html>"};
+        JTable tabla_autos = new JTable();
+        DefaultTableModel dtm = RentasService.descargar_tabla_dtm("SELECT * FROM rentas WHERE identificador_cliente = "+id_cliente_a_consultar);
+        TablasRamservice.crear_tabla(columnasTabla, tabla_autos, dtm);
         JScrollPane sp = new JScrollPane(tabla_autos);
-        sp.setSize(700,500);
-        sp.setLocation(165,400);
+        sp.setSize(900,500);
+        sp.setLocation(50,185);
         sp.setVisible(true);
-        historialClienteSeleccionadoPanel.add(idClienteLbl);
-        historialClienteSeleccionadoPanel.add(nombreLbl);
-        historialClienteSeleccionadoPanel.add(correoLbl);
-        historialClienteSeleccionadoPanel.add(telefonoLbl);
         historialClienteSeleccionadoPanel.add(sp);
 
         return  historialClienteSeleccionadoPanel;
@@ -2010,7 +2024,7 @@ public class Ventana extends JFrame {
         return rentasPanel;
     }
 
-    public JPanel consultarRentas() {
+    public JPanel consultarRentas() throws SQLException {
         anterior = "rentas";
 
         JPanel consultarCarPNL = new JPanel();
@@ -2221,38 +2235,32 @@ public class Ventana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
 
-                String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
-                    int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
-                    String nombre_cliente = cliente_elegido_id_nombre[1];
+            String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
+                int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
+                String nombre_cliente = cliente_elegido_id_nombre[1];
                 String cliente = nombre_cliente;
                 String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
-                String auto_elegido_id_nombre[] = auto_elegido.split(":");
-                    int id_auto = Integer.parseInt(auto_elegido_id_nombre[0]);
-                    String nombre_auto = auto_elegido_id_nombre[1];
+            String auto_elegido_id_nombre[] = auto_elegido.split(":");
+                int id_auto = Integer.parseInt(auto_elegido_id_nombre[0]);
+                String nombre_auto = auto_elegido_id_nombre[1];
                 String fecha_de_renta = fechaInicioTF.getText();
                 String fecha_de_devolucion = fechaDeDevolucionTF.getText();
                 String numero_tarjeta = numTarjetaTF.getText();
                 String fecha_caducidad = fechaCadTF.getText();
                 String cvv = cvvTF.getText();
                 try {
-                    if(!RentasDAO.conflicto_entre_fechas(id_auto, fecha_de_renta, fecha_de_devolucion)
-                        && Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")
-                        && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_caducidad, "CADUCIDAD")){
-                        RentasService.crearRenta(
+                    String estado_de_registro = RentasService.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad);
+                    switch (estado_de_registro){
+                        case "Permitido":
+                            RentasService.crearRenta(
                                 identificador_cliente, cliente,
                                 id_auto, nombre_auto, fecha_de_renta,
-                                fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv);
-                    }
-                    else {
-                        if (RentasDAO.conflicto_entre_fechas(id_auto, fecha_de_renta, fecha_de_devolucion)){
-                        JOptionPane.showMessageDialog(null, "No están disponibles esos dias", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                        if (!Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")){
-                            JOptionPane.showMessageDialog(null, "Es una fecha ilegal", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                        if (!Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_caducidad, "CADUCIDAD")){
-                            JOptionPane.showMessageDialog(null, "La tarjeta ya ha caducado", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
+                                fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
+                            );
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(null, estado_de_registro, "Error", JOptionPane.ERROR_MESSAGE);
+                            break;
                     }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
@@ -2513,24 +2521,18 @@ public class Ventana extends JFrame {
                 String fecha_caducidad = fechaCadTF.getText();
                 String cvv = cvvTF.getText();
                 try {
-                    if(!RentasDAO.conflicto_entre_fechas(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion)
-                            && Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")
-                            && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_caducidad, "CADUCIDAD")){
-                        RentasService.editarRenta(id_de_renta_a_editar,
-                                identificador_cliente, cliente,
-                                id_auto, nombre_auto, fecha_de_renta,
-                                fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv);
-                    }
-                    else {
-                        if (RentasDAO.conflicto_entre_fechas(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion)){
-                            JOptionPane.showMessageDialog(null, "No están disponibles esos dias", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                        if (!Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")){
-                            JOptionPane.showMessageDialog(null, "Es una fecha ilegal", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                        if (!Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_caducidad, "CADUCIDAD")){
-                            JOptionPane.showMessageDialog(null, "La tarjeta ya ha caducado", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
+                    String estado_de_registro = RentasService.comprobar_fechas_editar(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion,fecha_caducidad);
+                    switch (estado_de_registro){
+                        case "Permitido":
+                            RentasService.editarRenta(id_de_renta_a_editar,
+                                    identificador_cliente, cliente,
+                                    id_auto, nombre_auto, fecha_de_renta,
+                                    fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
+                            );
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(null, estado_de_registro, "Error", JOptionPane.ERROR_MESSAGE);
+                            break;
                     }
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
@@ -2613,9 +2615,9 @@ public class Ventana extends JFrame {
         eliminarRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RentasDAO.borrar_renta_por_id(Integer.parseInt(String.valueOf(idRentasCB.getSelectedItem())));
-                TablasRamservice.crear_tabla(columnasTabla, tabla_rentas, RentasDAO.obtener_dtm_rentas());
+                RentasService.borrar_renta(Integer.parseInt(String.valueOf(idRentasCB.getSelectedItem())));
 
+                TablasRamservice.crear_tabla(columnasTabla, tabla_rentas, RentasDAO.obtener_dtm_rentas());
                 DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) idRentasCB.getModel();
                 model.removeElement(idRentasCB.getSelectedItem());
                 repaint();
@@ -3093,28 +3095,6 @@ public class Ventana extends JFrame {
             return component;
         }
     };
-    public JScrollPane scrollPaneDefault(String[] columnasTablaClientes, String nombre_tabla, DefaultTableModel dtm){
-        dtm.setColumnIdentifiers(columnasTablaClientes);
-        JTable tablaClientes = new JTable(dtm);
-        JTableHeader header = tablaClientes.getTableHeader();
-        header.setBackground(Color.decode("#38B6FF"));
-        header.setPreferredSize(new Dimension(700,40));
-        header.setFont(new Font("Arial", Font.PLAIN, 15));
-        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) header.getDefaultRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        UIManager.put("TableHeader.cellBorder", BorderFactory.createMatteBorder(0, 1, 0, 1, Color.WHITE));
-        headerRenderer.setOpaque(false);
-        for (int i = 0; i < tablaClientes.getColumnCount(); i++) {
-            tablaClientes.getColumnModel().getColumn(i).setPreferredWidth(75);
-            tablaClientes.getColumnModel().getColumn(i).setCellRenderer(renderer);
-        }
-        // fin de cosas visuales de la tabla
-        JScrollPane sp = new JScrollPane(tablaClientes);
-        sp.setSize(700,500);
-        sp.setLocation(165,400);
-        sp.setVisible(true);
-        return sp;
-    }
     public static DefaultComboBoxModel<String> generar_combobox_contenido(Map<Integer,String> hashMap) throws SQLException {
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
 
