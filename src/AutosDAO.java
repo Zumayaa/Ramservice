@@ -11,7 +11,7 @@ public class AutosDAO {
     public  static Map<Integer, String> seleccionar_autos() throws SQLException, SQLException {
         Map<Integer, String> id_autos_y_nombre_autos = new HashMap<>();
         if (dbConnect == null){
-            dbConnect = new Conexion();
+            dbConnect = new Conexion(); // commit naco quiero ver como va este asunto
         }
         try (Connection conexion = dbConnect.getConnection()){
             PreparedStatement ps = null;
