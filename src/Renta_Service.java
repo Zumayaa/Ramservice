@@ -8,7 +8,7 @@ public class Renta_Service {
                                   String fecha_de_renta, String fecha_de_devolcion,
                                   String numero_tarjeta, String fecha_de_caducidad, String cvv)
             throws SQLException {
-        Rentas rentaNueva = new Rentas();
+        Rentas_Class rentaNueva = new Rentas_Class();
         rentaNueva.setIdentificador_cliente(identificador_cliente);
         rentaNueva.setCliente(cliente);
         rentaNueva.setIdentificador_auto(identifiacdor_auto);
@@ -27,7 +27,7 @@ public class Renta_Service {
                                    String fecha_de_renta, String fecha_de_devolcion,
                                    String numero_tarjeta, String fecha_de_caducidad, String cvv)
             throws SQLException {
-        Rentas rentaNueva = new Rentas();
+        Rentas_Class rentaNueva = new Rentas_Class();
         rentaNueva.setIdentificador_cliente(identificador_cliente);
         rentaNueva.setCliente(cliente);
         rentaNueva.setIdentificador_auto(identifiacdor_auto);

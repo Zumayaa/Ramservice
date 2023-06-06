@@ -92,7 +92,7 @@ public class Rentas_DAO {
 
         return cantidadFilas;
     }
-    public  static void insertar_datos(Rentas renta) throws SQLException, SQLException {
+    public  static void insertar_datos(Rentas_Class renta) throws SQLException, SQLException {
         if (dbConnect == null){
             dbConnect = new Conexion();
         }
@@ -102,7 +102,6 @@ public class Rentas_DAO {
             try{
                 String query = "INSERT INTO `"+tabla+"` ("+columnas_de_insercion[0]+") VALUES ("+columnas_de_insercion[1]+");";
                 ps = conexion.prepareStatement(query);
-                ArrayList<String> datos = renta.getRentasDatos();
                 ps.setString(1, null);
                 ps.setString(2,String.valueOf(renta.getIdentificador_cliente()));
                 ps.setString(3, renta.getCliente());
@@ -121,7 +120,7 @@ public class Rentas_DAO {
             }
         }
     }
-    public static void editarRentaPorId(int idRenta, Rentas rentaActualizada) {
+    public static void editarRentaPorId(int idRenta, Rentas_Class rentaActualizada) {
         try (Connection conexion = dbConnect.getConnection()) {
             String consulta = "UPDATE rentas SET identificador_cliente = ?, cliente = ?, identificador_auto = ?, automovil = ?, fecha_de_renta = ?, fecha_de_devolucion = ?, tiempo = ?, numero_tarjeta = ?, fecha_caducidad = ?, cvv = ?, costo = ? WHERE id_de_renta = ?";
             PreparedStatement preparedStatement = conexion.prepareStatement(consulta);

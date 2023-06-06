@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 public class Rentas_Class {
     int id_renta;
     int identificador_cliente;
@@ -25,6 +27,10 @@ public class Rentas_Class {
         this.fecha_de_caducidad = fecha_de_caducidad;
         this.cvv = cvv;
         this.costo = costo;
+    }
+
+    public Rentas_Class() {
+
     }
 
     public int getId_renta() {
@@ -87,8 +93,8 @@ public class Rentas_Class {
         return tiempo;
     }
 
-    public void setTiempo(int tiempo) {
-        this.tiempo = tiempo;
+    public void setTiempo() {
+        this.tiempo = Fechas.getDias_De_Renta(getFecha_de_renta(),getFecha_de_devolucion());
     }
 
     public String getNumero_tarjeta() {
@@ -119,7 +125,7 @@ public class Rentas_Class {
         return costo;
     }
 
-    public void setCosto(double costo) {
-        this.costo = costo;
+    public void setCosto() throws SQLException {
+        this.costo = AutosDAO.getCosto(getIdentificador_auto());
     }
 }

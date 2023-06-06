@@ -1,9 +1,11 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Clientes_DAO {
+public class Autos_DAO {
     static Conexion dbConnect = null;
-    static String tabla = "clientes";
+    static String tabla = "autos";
     // metodos genericos, seleccionar datos
     public static Object[][] seleccionar_datos(String consulta){
         try (Connection conexion = dbConnect.getConnection()) {
@@ -94,7 +96,7 @@ public class Clientes_DAO {
         return cantidadFilas;
     }
     // insertar eliminar etc
-    public  static void insertar_datos(Clientes_Class cliente) throws SQLException, SQLException {
+    public  static void insertar_datos(Autos_Class auto) throws SQLException, SQLException {
         if (dbConnect == null){
             dbConnect = new Conexion();
         }
@@ -105,44 +107,40 @@ public class Clientes_DAO {
                 String query = "INSERT INTO `"+tabla+"` ("+columnas_de_insercion[0]+") VALUES ("+columnas_de_insercion[1]+");";
                 ps = conexion.prepareStatement(query);
                 ps.setString(1, null);
-                ps.setString(2, cliente.getNombre());
-                ps.setString(3, cliente.getApellido());
-                ps.setString(4, cliente.getCorreo());
-                ps.setString(5, cliente.getTelefono());
-                ps.setString(6, cliente.getNumero_de_tarjeta());
-                ps.setString(7, cliente.getFecha_de_caducidad());
-                ps.setString(8, cliente.getCvv());
-                ps.setString(9, cliente.getPassword());
+                ps.setString(2, auto.getNombre_auto());
+                ps.setString(3, auto.getMarca());
+                ps.setString(4, auto.getCategoria());
+                ps.setString(5, auto.getKilometraje());
+                ps.setString(6, auto.getCosto());
+                ps.setString(7, auto.getImg_dir());
                 ps.executeUpdate();
             }catch (Exception e){
                 System.out.println(e);
             }
         }
     }
-    public static void editar_cliente_por_id(int id_cliente, Clientes_Class clienteActualizado) {
+    public static void editar_auto_por_id(int id_auto, Autos_Class autoActualizado) {
         try (Connection conexion = dbConnect.getConnection()) {
             String consulta = "UPDATE clientes SET nombre = ?, apellido = ?, correo = ?, telefono = ?, numero_de_tarjeta = ?, fecha_de_caducidad = ?, cvv = ?, password = ? WHERE id_de_cliente = ?";
             PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
-            preparedStatement.setString(1, clienteActualizado.getNombre());
-            preparedStatement.setString(2, clienteActualizado.getApellido());
-            preparedStatement.setString(3, clienteActualizado.getCorreo());
-            preparedStatement.setString(4, clienteActualizado.getTelefono());
-            preparedStatement.setString(5, clienteActualizado.getNumero_de_tarjeta());
-            preparedStatement.setString(6, clienteActualizado.getFecha_de_caducidad());
-            preparedStatement.setString(7, clienteActualizado.getCvv());
-            preparedStatement.setString(8, clienteActualizado.getPassword());
-            preparedStatement.setInt(9, id_cliente);
+            preparedStatement.setString(1, null);
+            preparedStatement.setString(2, autoActualizado.getNombre_auto());
+            preparedStatement.setString(3, autoActualizado.getMarca());
+            preparedStatement.setString(4, autoActualizado.getCategoria());
+            preparedStatement.setString(5, autoActualizado.getKilometraje());
+            preparedStatement.setString(6, autoActualizado.getCosto());
+            preparedStatement.setString(7, autoActualizado.getImg_dir());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static void borrar_cliente_por_id(int id_de_cliente) {
+    public static void borrar_auto_por_id(int id_de_auto) {
         try (Connection conexion = dbConnect.getConnection()) {
-            String consulta = "DELETE FROM "+tabla+" WHERE id_de_cliente = ?";
+            String consulta = "DELETE FROM "+tabla+" WHERE id_de_auto = ?";
             PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
-            preparedStatement.setInt(1, id_de_cliente);
+            preparedStatement.setInt(1, id_de_auto);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -170,5 +168,29 @@ public class Clientes_DAO {
             e.printStackTrace();
         }
         return nombres_columnas;
+    }
+    // funciones muy especificas
+    public  static Map<Integer, String> seleccionar_autos() throws SQLException, SQLException {
+        Map<Integer, String> id_autos_y_nombre_autos = new HashMap<>();
+        if (dbConnect == null){
+            dbConnect = new Conexion(); // commit naco quiero ver como va este asunto
+        }
+        try (Connection conexion = dbConnect.getConnection()){
+            PreparedStatement ps = null;
+            try{
+                String query = "SELECT id_de_auto, nombre_auto FROM autos";
+                ps = conexion.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int idAuto = rs.getInt("id_de_auto");
+                    String nombreAuto = rs.getString("nombre_auto");
+                    id_autos_y_nombre_autos.put(idAuto,nombreAuto);
+                }
+                ps.executeUpdate();
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        }
+        return id_autos_y_nombre_autos;
     }
 }

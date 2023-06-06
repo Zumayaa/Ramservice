@@ -68,6 +68,7 @@ public class Conexion {
                     "categoria VARCHAR(255) NOT NULL, " +
                     "kilometraje VARCHAR(255), " +
                     "costo FLOAT NOT NULL, " +
+                    "imagen_dir VARCHAR(255), "+
                     "PRIMARY KEY (id_de_auto));";
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
@@ -80,7 +81,8 @@ public class Conexion {
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
 
-                query = "INSERT INTO autos (nombre_auto, marca, categoria, kilometraje, costo) VALUES ('Auto1', 'Marca1', 'Categoria1', '10000', 10000.00), ('Auto2', 'Marca2', 'Categoria2', '20000', 20000.00), ('Auto3', 'Marca3', 'Categoria3', '30000', 30000.00);";
+                query = "INSERT INTO autos " +
+                        "(nombre_auto, marca, categoria, kilometraje, costo, imagen_dir) VALUES ('Auto1', 'Marca1', 'Categoria1', '10000', 10000.00, 'src/img/auto1'), ('Auto2', 'Marca2', 'Categoria2', '20000', 20000.00, 'src/img/auto1'), ('Auto3', 'Marca3', 'Categoria3', '30000', 30000.00, 'src/img/auto1');";
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
                 System.out.println("Se hizo la tabla");
