@@ -16,11 +16,11 @@ public class AutosDAO {
         try (Connection conexion = dbConnect.getConnection()){
             PreparedStatement ps = null;
             try{
-                String query = "SELECT id_auto, nombre_auto FROM autos";
+                String query = "SELECT id_de_auto, nombre_auto FROM autos";
                 ps = conexion.prepareStatement(query);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    int idAuto = rs.getInt("id_auto");
+                    int idAuto = rs.getInt("id_de_auto");
                     String nombreAuto = rs.getString("nombre_auto");
                     id_autos_y_nombre_autos.put(idAuto,nombreAuto);
                 }
@@ -63,7 +63,7 @@ public class AutosDAO {
         try (Connection conexion = dbConnect.getConnection()){
             PreparedStatement ps = null;
             try{
-                String query = "SELECT costo FROM autos WHERE id_auto = ?";
+                String query = "SELECT costo FROM autos WHERE id_de_auto = ?";
                 ps = conexion.prepareStatement(query);
                 ps.setString(1, String.valueOf(id_auto));
                 ResultSet rs = ps.executeQuery();

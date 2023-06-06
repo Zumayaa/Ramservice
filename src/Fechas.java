@@ -44,6 +44,7 @@ public class Fechas {
         return fechaActual.format(formatter);
     }
 
+
     public static int getDias_De_Renta(String fecha_inicial, String fecha_final) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
