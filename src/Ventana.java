@@ -1,7 +1,10 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +26,7 @@ public class Ventana extends JFrame {
     private int id_cliente_a_consultar;
     private int id_cliente_a_editar;
     private int id_cliente_a_borrar;
+    private int id_cliente_editando_renta;
     private String nombre_cliente;
     private String email_cliente;
     private String telefono_cliente;
@@ -1395,7 +1399,7 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_autos);
 
         JScrollPane sp = new JScrollPane(tabla_autos);
-            sp.setSize(900,500);
+            sp.setSize(900,250);
             sp.setLocation(50,150);
             sp.setVisible(true);
 
@@ -1458,7 +1462,7 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_autos);
 
         JScrollPane sp = new JScrollPane(tabla_autos);
-            sp.setSize(900,500);
+            sp.setSize(900,250);
             sp.setLocation(50,185);
             sp.setVisible(true);
 
@@ -2130,7 +2134,7 @@ public class Ventana extends JFrame {
         TablasRamservice.modificar_dimensiones_tabla(tabla_rentas);
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
-            sp.setSize(900,500);
+            sp.setSize(900,250);
             sp.setLocation(50,400);
             sp.setVisible(true);
 
@@ -2204,7 +2208,7 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_rentas);
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
-        sp.setSize(900,500);
+        sp.setSize(900,250);
         sp.setLocation(50,300);
         sp.setVisible(true);
         consultarCarPNL.add(sp);
@@ -2323,7 +2327,7 @@ public class Ventana extends JFrame {
         crearRentaPNL.add(cvvTF);
 
         x += 200;
-        y = 100;
+        y = 50;
         JLabel costoEstimadoLbl = new JLabel("Costo estimado", JLabel.CENTER);
         costoEstimadoLbl.setLocation(x,y);
         costoEstimadoLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -2334,14 +2338,24 @@ public class Ventana extends JFrame {
 
         JLabel costoEstimadoVisualLbl = new JLabel();
         costoEstimadoVisualLbl.setHorizontalAlignment(JLabel.CENTER);
+        costoEstimadoVisualLbl.setOpaque(true);
         costoEstimadoVisualLbl.setBackground(Color.pink);
         costoEstimadoVisualLbl.setLocation(x+15,y);
         costoEstimadoVisualLbl.setSize(193,102);
-        ImageIcon facturaIcon = new ImageIcon("src/img/rentaFacturaIcon.png");
-        costoEstimadoVisualLbl.setIcon(facturaIcon);
+        //ImageIcon facturaIcon = new ImageIcon("src/img/rentaFacturaIcon.png");
+        //costoEstimadoVisualLbl.setIcon(facturaIcon);
         crearRentaPNL.add(costoEstimadoVisualLbl);
 
         y += costoEstimadoVisualLbl.getHeight()+10;
+
+        JButton calcularCostoBtn = new JButton();
+        calcularCostoBtn.setSize(226,31);
+        calcularCostoBtn.setLocation(x,y);
+        ImageIcon calcularCostoIcon = new ImageIcon("src/img/calcularCostoIcon.png");
+        calcularCostoBtn.setIcon(calcularCostoIcon);
+        crearRentaPNL.add(calcularCostoBtn);
+
+        y += 50;
 
         JButton crearRentaBtn = new JButton();
         crearRentaBtn.setSize(226,31);
@@ -2350,6 +2364,30 @@ public class Ventana extends JFrame {
         crearRentaBtn.setIcon(crearRentaIcon);
         crearRentaPNL.add(crearRentaBtn);
 
+        // poner formato de fechas
+
+        fechaInicioTF.setDocument(new Fechas.NumericDocument());
+            AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaInicioTF.getDocument();
+            documentoFiltroInicio.setDocumentFilter(new Fechas.FechaDocumentFilter());
+
+        fechaDeDevolucionTF.setDocument(new Fechas.NumericDocument());
+            AbstractDocument documentoFiltroFinal = (AbstractDocument) fechaDeDevolucionTF.getDocument();
+            documentoFiltroFinal.setDocumentFilter(new Fechas.FechaDocumentFilter());
+
+        calcularCostoBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
+                String auto_elegido_id_nombre[] = auto_elegido.split(":");
+                int id_auto = Integer.parseInt(auto_elegido_id_nombre[0]);
+                double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
+                int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
+                String costo_total = String.valueOf(costo_auto*dias);
+                if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
+                    costoEstimadoVisualLbl.setText(costo_total+ "Pesos MXN");
+                }
+            }
+        });
         crearRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -2359,15 +2397,15 @@ public class Ventana extends JFrame {
                 int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
                 String nombre_cliente = cliente_elegido_id_nombre[1];
                 String cliente = nombre_cliente;
-                String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
-            String auto_elegido_id_nombre[] = auto_elegido.split(":");
+            String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
+                String auto_elegido_id_nombre[] = auto_elegido.split(":");
                 int id_auto = Integer.parseInt(auto_elegido_id_nombre[0]);
                 String nombre_auto = auto_elegido_id_nombre[1];
-                String fecha_de_renta = fechaInicioTF.getText();
-                String fecha_de_devolucion = fechaDeDevolucionTF.getText();
-                String numero_tarjeta = numTarjetaTF.getText();
-                String fecha_caducidad = fechaCadTF.getText();
-                String cvv = cvvTF.getText();
+            String fecha_de_renta = fechaInicioTF.getText();
+            String fecha_de_devolucion = fechaDeDevolucionTF.getText();
+            String numero_tarjeta = numTarjetaTF.getText();
+            String fecha_caducidad = fechaCadTF.getText();
+            String cvv = cvvTF.getText();
                 try {
                     String estado_de_registro = Renta_Service.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad);
                     switch (estado_de_registro){
@@ -2447,6 +2485,7 @@ public class Ventana extends JFrame {
                 anterior = actual;
                 actual = "editarRentaSeleccionada";
                 id_renta_editar = Integer.parseInt((String) id_rentas_CB.getSelectedItem());
+                id_cliente_editando_renta = Integer.parseInt(Renta_Service.obtener_celda("SELECT * FROM rentas WHERE id_de_renta = "+ id_renta_editar));
                 try {
                     limpiarVentana();
                 } catch (SQLException ex) {
@@ -2480,7 +2519,7 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_rentas);
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
-            sp.setSize(900,500);
+            sp.setSize(900,250);
             sp.setLocation(50,400);
             sp.setVisible(true);
 
@@ -2528,7 +2567,6 @@ public class Ventana extends JFrame {
         fechaInicioTF.setSize(200,30);
         editarRentaSeleccionadaPNL.add(fechaInicioTF);
 
-
         y += 50;
         JLabel fechaDeDevolucionLbl = new JLabel("Fecha de devolución");
         fechaDeDevolucionLbl.setLocation(x,y);
@@ -2549,6 +2587,7 @@ public class Ventana extends JFrame {
         idClienteLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(idClienteLbl);
         y += 50;
+
         JComboBox id_cliente_con_nombre_CB = new JComboBox();
         Map<Integer,String> hashMapClientesId = Clientes_Service.seleccionar_clientes_map();
         id_cliente_con_nombre_CB.setModel(generar_combobox_contenido(hashMapClientesId));
@@ -2569,7 +2608,8 @@ public class Ventana extends JFrame {
         String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
         String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
         int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
-        JTextField numTarjetaTF = new JTextField(Arrays.toString(Renta_Service.obtener_columna("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
+
+        JTextField numTarjetaTF = new JTextField((Clientes_Service.obtener_celda("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
         numTarjetaTF.setBorder(roundedBorder);
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
@@ -2582,7 +2622,7 @@ public class Ventana extends JFrame {
         fechaCadLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(fechaCadLbl);
         y += 50;
-        JTextField fechaCadTF = new JTextField(Arrays.toString(Renta_Service.obtener_columna("SELECT fecha_de_caducidad from clientes WHERE id_de_cliente = " + identificador_cliente)));
+        JTextField fechaCadTF = new JTextField((Clientes_Service.obtener_celda("SELECT fecha_de_caducidad from clientes WHERE id_de_cliente = " + identificador_cliente)));
         fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
@@ -2624,6 +2664,14 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.add(costoEstimadoVisualLbl);
 
         y += costoEstimadoVisualLbl.getHeight()+10;
+        JButton calcularCostoBtn = new JButton();
+        calcularCostoBtn.setSize(226,31);
+        calcularCostoBtn.setLocation(x,y);
+        ImageIcon calcularCostoIcon = new ImageIcon("src/img/calcularCostoIcon.png");
+        calcularCostoBtn.setIcon(calcularCostoIcon);
+        editarRentaSeleccionadaPNL.add(calcularCostoBtn);
+
+        y += 50;
 
         JButton guardarBtn = new JButton();
         guardarBtn.setSize(226,31);
@@ -2637,7 +2685,30 @@ public class Ventana extends JFrame {
                 String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
                 String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
                 int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
-                numTarjetaTF.setText(Arrays.toString(Renta_Service.obtener_columna("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
+                numTarjetaTF.setText((Clientes_Service.obtener_celda("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
+            }
+        });
+        fechaInicioTF.setDocument(new Fechas.NumericDocument());
+        AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaInicioTF.getDocument();
+        documentoFiltroInicio.setDocumentFilter(new Fechas.FechaDocumentFilter());
+
+        fechaDeDevolucionTF.setDocument(new Fechas.NumericDocument());
+        AbstractDocument documentoFiltroFinal = (AbstractDocument) fechaDeDevolucionTF.getDocument();
+        documentoFiltroFinal.setDocumentFilter(new Fechas.FechaDocumentFilter());
+
+
+        calcularCostoBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
+                String auto_elegido_id_nombre[] = auto_elegido.split(":");
+                int id_auto = Integer.parseInt(auto_elegido_id_nombre[0]);
+                double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
+                int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
+                String costo_total = String.valueOf(costo_auto*dias);
+                if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
+                    costoEstimadoVisualLbl.setText(costo_total+ "Pesos MXN");
+                }
             }
         });
         guardarBtn.addActionListener(new ActionListener() {
@@ -2748,7 +2819,7 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_rentas);
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
-            sp.setSize(900,500);
+            sp.setSize(900,250);
             sp.setLocation(50,400);
             sp.setVisible(true);
 
@@ -3252,7 +3323,6 @@ public class Ventana extends JFrame {
         }
         return comboBoxModel;
     }
-
     public static void main(String[] args) throws SQLException {
         Ventana screen = new Ventana();
     }

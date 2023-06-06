@@ -2,7 +2,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 
 public class Renta_Service {
-    // modificar las tablas
+    // insertar alterar eliminar
     public static void crearRenta(int identificador_cliente,String cliente,
                                   int identifiacdor_auto, String automovil,
                                   String fecha_de_renta, String fecha_de_devolcion,
@@ -90,13 +90,13 @@ public class Renta_Service {
 
         return mensaje;
     }
-    // funciones apra rellenar tablas, combobboxes y poner textos
+
+    // funciones generales
     public static DefaultTableModel crear_dtm_de_rentas(String [] nombres_columnas, String consulta){
         Object [][] datos = Rentas_DAO.seleccionar_datos(consulta);
         DefaultTableModel dtm = new DefaultTableModel(datos,nombres_columnas);
         return dtm;
     }
-
     public static String[] crear_arreglo_de_rentas(String [] nombres_columnas, String consulta){
         String seccion_de_datos_seleccionada [] = null;
         return seccion_de_datos_seleccionada;
@@ -109,5 +109,8 @@ public class Renta_Service {
     }
     public static String[] obtener_columna(String consulta){
         return Rentas_DAO.seleccionar_columna(consulta);
+    }
+    public static String obtener_celda(String consulta){
+        return Rentas_DAO.seleccionar_celda(consulta);
     }
 }

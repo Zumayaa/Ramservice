@@ -200,7 +200,6 @@ public class Autos_DAO {
                     String nombreAuto = rs.getString("nombre_auto");
                     id_autos_y_nombre_autos.put(idAuto,nombreAuto);
                 }
-                ps.executeUpdate();
             }catch (Exception e){
                 System.out.println(e);
             }

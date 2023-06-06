@@ -44,9 +44,6 @@ public class Clientes_DAO {
                 datos_seleccionados.add(resultSet.getString(1));
             }
             String[] arreglo_columna = datos_seleccionados.toArray(new String[0]);
-            for (int i = 0; i<arreglo_columna.length; i++){
-                System.out.println(arreglo_columna.length);
-            }
             return arreglo_columna;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,6 +73,22 @@ public class Clientes_DAO {
             e.printStackTrace();
         }
         return new String[0];
+    }
+
+    public static String seleccionar_celda(String consulta){
+        try (Connection conexion = dbConnect.getConnection()) {
+            ArrayList<String> datos_seleccionados = new ArrayList<String>();
+            PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            if (resultSet.next()){
+                return resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "-1";
     }
 
     public static int contarFilasTabla(String nombreTabla) {
@@ -167,11 +180,8 @@ public  static Map<Integer, String> seleccionar_clientes() throws SQLException, 
             while (rs.next()) {
                 int idCliente = rs.getInt("id_de_cliente");
                 String apellidoCliente = rs.getString("apellido");
-                System.out.println(idCliente);
-                System.out.println(apellidoCliente);
                 id_autos_y_nombre_autos.put(idCliente,apellidoCliente); // selecciona el id del cliente y su apellido correspondiente, los guarda en un hasmap y boom aparecen en el combobox
             }
-            ps.executeUpdate();
         }catch (Exception e){
             System.out.println(e);
         }

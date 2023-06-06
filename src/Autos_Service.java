@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class Autos_Service {
+    // insertar alterar eliminar
     public static void crearAuto(String nombre_auto, String marca, String categoria, String kilometraje, String costo, String img_dir)
             throws SQLException {
         Autos_Class autoNuevo = new Autos_Class(nombre_auto, marca, categoria, kilometraje, costo, img_dir);
@@ -18,7 +19,7 @@ public class Autos_Service {
     public static void borrar_auto(int id_auto) {
         Autos_DAO.borrar_auto_por_id(id_auto);
     }
-    // funciones apra rellenar tablas, combobboxes y poner textos
+    // funciones generales
     public static DefaultTableModel crear_dtm_de_autos(String [] nombres_columnas, String consulta){
         Object [][] datos = Autos_DAO.seleccionar_datos(consulta);
         DefaultTableModel dtm = new DefaultTableModel(datos,nombres_columnas);

@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class Clientes_Service {
+    // insertar alterar eliminar
     public static void crear_cliente(String nombre, String apellido, String correo,
                               String telefono, String numero_de_tarjeta,String fecha_de_caducidad,
                               String cvv, String password) throws SQLException {
@@ -32,7 +33,6 @@ public class Clientes_Service {
         DefaultTableModel dtm = new DefaultTableModel(datos,nombres_columnas);
         return dtm;
     }
-
     public static Object [][] crear_matriz_de_rentas(String consulta){
         return Rentas_DAO.seleccionar_datos(consulta);
     }
@@ -41,6 +41,9 @@ public class Clientes_Service {
     }
     public static String[] obtener_columna(String consulta){
         return Rentas_DAO.seleccionar_columna(consulta);
+    }
+    public static String obtener_celda(String consulta){
+        return Rentas_DAO.seleccionar_celda(consulta);
     }
     // funciones espcicficas
     public static Map<Integer, String> seleccionar_clientes_map() throws SQLException {
