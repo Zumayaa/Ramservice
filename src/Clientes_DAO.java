@@ -1,5 +1,7 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Clientes_DAO {
     static Conexion dbConnect = null;
@@ -148,7 +150,34 @@ public class Clientes_DAO {
             e.printStackTrace();
         }
     }
-
+// funciones muy especificas
+public  static Map<Integer, String> seleccionar_clientes() throws SQLException, SQLException { // cuando puse esta madre solo chatgpt
+    // y dios sabian lo que hacia
+    // ahora solo chatgpt lo sabe pero perdi el prompt perdon zumaya
+    Map<Integer, String> id_autos_y_nombre_autos = new HashMap<>();
+    if (dbConnect == null){
+        dbConnect = new Conexion();
+    }
+    try (Connection conexion = dbConnect.getConnection()){
+        PreparedStatement ps = null;
+        try{
+            String query = "SELECT id_de_cliente, apellido FROM clientes";
+            ps = conexion.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCliente = rs.getInt("id_de_cliente");
+                String apellidoCliente = rs.getString("apellido");
+                System.out.println(idCliente);
+                System.out.println(apellidoCliente);
+                id_autos_y_nombre_autos.put(idCliente,apellidoCliente); // selecciona el id del cliente y su apellido correspondiente, los guarda en un hasmap y boom aparecen en el combobox
+            }
+            ps.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    return id_autos_y_nombre_autos;
+}
     public static String[] nombres_de_columnas(String nombreTabla){
         String nombres_columnas[] = new String[2];
 

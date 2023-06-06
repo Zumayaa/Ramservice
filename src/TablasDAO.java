@@ -1,4 +1,4 @@
-import java.sql.*;
+/*import java.sql.*;
 import java.util.ArrayList;
 
 public class TablasDAO {
@@ -51,4 +51,4 @@ public class TablasDAO {
         }
         return nombres_columnas;
     }
-}
+}*/

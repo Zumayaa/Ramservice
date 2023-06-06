@@ -1,4 +1,4 @@
-import javax.swing.table.DefaultTableModel;
+/*import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -375,4 +375,4 @@ public class RentasDAO {
         }
         return null;
     }
-}
+}*/

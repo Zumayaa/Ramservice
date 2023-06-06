@@ -1,4 +1,4 @@
-import java.sql.SQLException;
+/*import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Rentas {
@@ -145,4 +145,4 @@ public class Rentas {
         datos.add(String.valueOf(costo));
         return datos;
     }
-}
+}*/

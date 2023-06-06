@@ -1,4 +1,4 @@
-import javax.swing.table.DefaultTableModel;
+/*import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -182,4 +182,4 @@ public class ClientesDAO {
         return cliente_info;
     }
 
-}
+}*/

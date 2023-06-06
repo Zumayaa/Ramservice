@@ -1,8 +1,8 @@
-import javax.swing.table.DefaultTableModel;
+/*import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 
 public class RentasService {
-    /*
+
     int identificador_cliente;
     String cliente;
     int identificador_auto;
@@ -11,7 +11,7 @@ public class RentasService {
     String fecha_de_devolucion;
     int tiempo;
     String numero_tarjeta;
-    double costo;*/
+    double costo;
     public static void crearRenta(int identificador_cliente,String cliente,
                                   int identifiacdor_auto, String automovil,
                                   String fecha_de_renta, String fecha_de_devolcion,
@@ -102,4 +102,4 @@ public class RentasService {
     public static Object[] descargar_tabla_arreglo(String query, String nombre_tabla, int numero_columna){
         return RentasDAO.descargar_columnas_tabla_arreglo(query, nombre_tabla, numero_columna);
     }
-}
+}*/

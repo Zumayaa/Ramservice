@@ -1,5 +1,6 @@
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class Clientes_Service {
     public static void crear_cliente(String nombre, String apellido, String correo,
@@ -40,5 +41,9 @@ public class Clientes_Service {
     }
     public static String[] obtener_columna(String consulta){
         return Rentas_DAO.seleccionar_columna(consulta);
+    }
+    // funciones espcicficas
+    public static Map<Integer, String> seleccionar_clientes_map() throws SQLException {
+        return Clientes_DAO.seleccionar_clientes();
     }
 }

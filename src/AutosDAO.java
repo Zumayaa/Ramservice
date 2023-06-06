@@ -1,4 +1,4 @@
-import javax.swing.table.DefaultTableModel;
+/*import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class AutosDAO {
     static Conexion dbConnect = null;
-/**/
 
     public  static Map<Integer, String> seleccionar_autos() throws SQLException, SQLException {
         Map<Integer, String> id_autos_y_nombre_autos = new HashMap<>();
@@ -110,5 +109,5 @@ public class AutosDAO {
 
         return dtm;
     }
-}
+}*/
 

@@ -2272,7 +2272,7 @@ public class Ventana extends JFrame {
         y += 50;
 
         JComboBox id_cliente_con_nombre_CB = new JComboBox();
-        Map<Integer,String> hashMapClientesId = ClientesDAO.seleccionar_clientes();
+        Map<Integer,String> hashMapClientesId = Clientes_Service.seleccionar_clientes_map();
         id_cliente_con_nombre_CB.setModel(generar_combobox_contenido(hashMapClientesId));
         id_cliente_con_nombre_CB.setLocation(x,y);
         id_cliente_con_nombre_CB.setSize(200,30);
@@ -2550,7 +2550,7 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.add(idClienteLbl);
         y += 50;
         JComboBox id_cliente_con_nombre_CB = new JComboBox();
-        Map<Integer,String> hashMapClientesId = ClientesDAO.seleccionar_clientes();
+        Map<Integer,String> hashMapClientesId = Clientes_Service.seleccionar_clientes_map();
         id_cliente_con_nombre_CB.setModel(generar_combobox_contenido(hashMapClientesId));
         id_cliente_con_nombre_CB.setLocation(x,y);
         id_cliente_con_nombre_CB.setSize(200,30);
@@ -2715,7 +2715,7 @@ public class Ventana extends JFrame {
         descripcionLbl.setSize(300,50);
         descripcionLbl.setLocation(400,50);
 
-        JComboBox idRentasCB = new JComboBox(RentasDAO.seleccionar_columna("id_de_renta"));
+        JComboBox idRentasCB = new JComboBox(Renta_Service.obtener_columna("SELECT id_de_renta FROM rentas"));
         idRentasCB.setSize(226,40);
         idRentasCB.setLocation(400,100);
 

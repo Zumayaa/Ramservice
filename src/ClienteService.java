@@ -1,4 +1,4 @@
-import javax.swing.table.DefaultTableModel;
+/*import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -30,4 +30,4 @@ public class ClienteService {
         info[2] = clienteDatos.getTelefono();
         return info;
     };
-}
+}*/

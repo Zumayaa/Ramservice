@@ -1,4 +1,4 @@
-public class Cliente {
+/*public class Cliente {
     int id_cliente;
     String nombre;
     String apellido;
@@ -75,4 +75,4 @@ public class Cliente {
     public Cliente(){
 
     }
-}
+}*/
