@@ -31,7 +31,21 @@ public class Autos_DAO {
         }
         return new Object[0][];
     }
+    public static String seleccionar_celda(String consulta){
+        try (Connection conexion = dbConnect.getConnection()) {
+            ArrayList<String> datos_seleccionados = new ArrayList<String>();
+            PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            if (resultSet.next()){
+                return resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "-1";
+    }
     public static String[] seleccionar_columna(String consulta){
         try (Connection conexion = dbConnect.getConnection()) {
             ArrayList<String> datos_seleccionados = new ArrayList<String>();

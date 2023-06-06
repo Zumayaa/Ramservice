@@ -126,6 +126,7 @@ public class Rentas_Class {
     }
 
     public void setCosto() throws SQLException {
-        this.costo = AutosDAO.getCosto(getIdentificador_auto());
+        String costo_celda = Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + getIdentificador_auto());
+        this.costo = Double.parseDouble(costo_celda);
     }
 }

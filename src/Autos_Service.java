@@ -30,6 +30,9 @@ public class Autos_Service {
     public static String[] obtener_fila(String consulta){
         return Autos_DAO.seleccionar_fila(consulta);
     }
+    public static String obtener_celda(String consulta){
+        return Autos_DAO.seleccionar_celda(consulta);
+    }
     public static String[] obtener_columna(String consulta){
         return Autos_DAO.seleccionar_columna(consulta);
     }
