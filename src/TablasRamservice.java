@@ -34,6 +34,38 @@ public class TablasRamservice {
         //Cambiar el tamaño y color de los nombres de las columnas
 
     }
+    public static String[] obtener_nombres_columnas(String tabla_nombre){
+        String [] nombres_de_las_columnas = new String[0];
+        if (tabla_nombre.equals("RENTAS")) {
+            return new String[]
+                    {"<html><div style='text-align: center;'>Id<br>renta</div></html>",
+                            "<html><div style='text-align: center;'>Id<br>cliente</div></html>",
+                            "<html><div style='text-align: center;'>Cliente</div></html>",
+                            "<html><div style='text-align: center;'>Id<br>auto</div></html>",
+                            "<html><div style='text-align: center;'>Automóvil</div></html>",
+                            "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>",
+                            "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>",
+                            "<html><div style='text-align: center;'>Tiempo</div></html>",
+                            "<html><div style='text-align: center;'>Número de<br>tarjeta</div></html>",
+                            "<html><div style='text-align: center;'>Fecha de<br>caducidad</div></html>",
+                            "<html><div style='text-align: center;'>CVV</div></html>",
+                            "<html><div style='text-align: center;'>Costo</div></html>"
+                    };
+        }
+        if (tabla_nombre.equals("CLIENTES")){
+            return new String[]
+                    {"<html><div style='text-align: center;'>    Id<br>clientes</div></html>",
+                    "<html> <div style = 'text-align : center;'> Nombre</div></html>",
+                    "<html> <div style = 'text-align : center;'> Apellido</div></html>",
+                    "<html> <div style = 'text-align : center;'> Correo</div></html>",
+                    "<html> <div style = 'text-align : center;'> Telefóno </div></html>",
+                    "<html> <div style = 'text-align : center;'> Número de<br>tarjeta</div></html>",
+                    "<html> <div style = 'text-align : center;'> Fecha de <br> caducidad</div></html>",
+                    "<html> <div style = 'text-align : center;'> CVV </div></html>",
+                    "<html> <div style = 'text-align : center;'> Contraseña</div></html>",};
+        }
+        return null;
+    }
     static DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {

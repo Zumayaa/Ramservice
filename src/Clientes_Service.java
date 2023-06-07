@@ -49,4 +49,41 @@ public class Clientes_Service {
     public static Map<Integer, String> seleccionar_clientes_map() throws SQLException {
         return Clientes_DAO.seleccionar_clientes();
     }
+    public static String verificar_campos_de_registro(String nombre, String apellido, String correo,
+                                                String telefono, String numero_de_tarjeta,String fecha_de_caducidad,
+                                                String cvv, String password, String passwordConf, String editar_where){
+        String mensaje = "";
+        Boolean correo_existe = false;
+        String correos[] = Clientes_Service.obtener_columna("SELECT correo FROM clientes "+ editar_where);
+        for (int i = 0 ; i<correos.length; i++){
+            if (correo.equals(correos[i])){
+                correo_existe = true;
+            }
+        }
+        if (password.equals(passwordConf) && !fecha_de_caducidad.isEmpty()
+            && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD") && !correo_existe
+                && (!nombre.isEmpty() && !apellido.isEmpty() && !correo.isEmpty()
+                && !telefono.isEmpty() && !numero_de_tarjeta.isEmpty() && !cvv.isEmpty() &&
+                !password.isEmpty() && !passwordConf.isEmpty())){
+                mensaje = "Permitido";
+        }
+        else{
+            if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || telefono.isEmpty() ||
+                    numero_de_tarjeta.isEmpty() || fecha_de_caducidad.isEmpty() || cvv.isEmpty() ||
+                    password.isEmpty() || passwordConf.isEmpty()){
+                mensaje += "Rellene todos los campos\n";
+            }
+            if (!password.equals(passwordConf)){
+                mensaje += "Las contraseñas no coinciden\n";
+            }
+            if (!Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
+                mensaje += "La tarjeta está caducada\n";
+            }
+            if (correo_existe){
+                mensaje += "El correo ya se encuentra registrado\n";
+            }
+        }
+
+        return mensaje;
+    }
 }

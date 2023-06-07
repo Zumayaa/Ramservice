@@ -1268,14 +1268,7 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
-        String[] columnasTabla = {
-                "<html><div style='text-align: center;'>Id<br>clientes</div></html>",
-                "<html> <div style = 'text-align : center;'>Nombre</div></html>",
-                "<html> <div style = 'text-align : center;'>Apellido</div></html>",
-                "<html> <div style = 'text-align : center;'>Correo</div></html>",
-                "<html> <div style = 'text-align : center;'>Telefóno</div></html>",
-                "<html> <div style = 'text-align : center;'>Tarjeta<br>crédito</div></html>",
-                "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
+        String[] columnasTabla = TablasRamservice.obtener_nombres_columnas("CLIENTES");
 
         JTable tabla_clientes = new JTable();
 
@@ -1286,7 +1279,7 @@ public class Ventana extends JFrame {
 
         JScrollPane sp = new JScrollPane(tabla_clientes);
             sp.setSize(700,250);
-            sp.setLocation(165,400);
+            sp.setLocation(165,350);
             sp.setVisible(true);
 
         clientesPanel.add(sp);
@@ -1320,7 +1313,7 @@ public class Ventana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 id_cliente_a_consultar = Integer.parseInt((String) idClientesCB.getSelectedItem());
-                String [] datos = Clientes_Service.obtener_fila("SELECT * FROM clientes where id_de_cliente = " + id_cliente_a_consultar);
+                String [] datos = Clientes_Service.obtener_fila("SELECT * FROM clientes WHERE id_de_cliente = " + id_cliente_a_consultar);
                 nombre_cliente = datos[1];
                 email_cliente = datos[3];
                 telefono_cliente = datos[4];
@@ -1338,13 +1331,7 @@ public class Ventana extends JFrame {
         });
 
 
-        String[] columnasTabla = {"<html><div style='text-align: center;'>Id<br>clientes</div></html>",
-                "<html> <div style = 'text-align : center;'>Nombre</div></html>",
-                "<html> <div style = 'text-align : center;'>Apellido</div></html>",
-                "<html> <div style = 'text-align : center;'>Correo</div></html>",
-                "<html> <div style = 'text-align : center;'>Telefóno</div></html>",
-                "<html> <div style = 'text-align : center;'>Tarjeta<br>crédito</div></html>",
-                "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
+        String[] columnasTabla = TablasRamservice.obtener_nombres_columnas("CLIENTES");;
         JTable tabla_clientes = new JTable();
 
         DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTabla,"SELECT * FROM clientes");
@@ -1372,24 +1359,18 @@ public class Ventana extends JFrame {
         historialClienteSeleccionadoPanel.setBackground(Color.decode("#FFFFFF"));
 
         int xLbl = 100;
-        JLabel autoLbl = new JLabel("ID de auto seleccionado: " + id_auto_consultar);
-        autoLbl.setFont(new Font("Arial", Font.BOLD, 24));
-        autoLbl.setSize(700,50);
-        autoLbl.setLocation(50,75);
+        JLabel autoIdLbl = new JLabel("ID de auto seleccionado: " + id_auto_consultar);
+        autoIdLbl.setFont(new Font("Arial", Font.BOLD, 24));
+        autoIdLbl.setSize(700,50);
+        autoIdLbl.setLocation(50,75);
 
-        String[] columnasTabla = {
-                "<html><div style='text-align: center;'>Id<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Id<br>cliente</div></html>",
-                "<html><div style='text-align: center;'>Cliente</div></html>",
-                "<html><div style='text-align: center;'>Id<br>auto</div></html>",
-                "<html><div style='text-align: center;'>Automóvil</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>",
-                "<html><div style='text-align: center;'>Tiempo</div></html>",
-                "<html><div style='text-align: center;'>Número de<br>tarjeta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>caducidad</div></html>",
-                "<html><div style='text-align: center;'>CVV</div></html>",
-                "<html><div style='text-align: center;'>Costo</div></html>"};
+        JLabel autoNombreLbl = new JLabel(" Auto: " + Autos_Service.obtener_celda("SELECT nombre_auto FROM AUTOS WHERE id_de_auto = " + id_auto_consultar));
+        autoNombreLbl.setFont(new Font("Arial", Font.BOLD, 24));
+        autoNombreLbl.setSize(700,50);
+        autoNombreLbl.setLocation(750,75);
+
+
+        String[] columnasTabla = TablasRamservice.obtener_nombres_columnas("RENTAS");
 
         JTable tabla_autos = new JTable();
 
@@ -1403,7 +1384,8 @@ public class Ventana extends JFrame {
             sp.setLocation(50,150);
             sp.setVisible(true);
 
-        historialClienteSeleccionadoPanel.add(autoLbl);
+        historialClienteSeleccionadoPanel.add(autoIdLbl);
+        historialClienteSeleccionadoPanel.add(autoNombreLbl);
         historialClienteSeleccionadoPanel.add(sp);
 
         return  historialClienteSeleccionadoPanel;
@@ -1431,7 +1413,7 @@ public class Ventana extends JFrame {
 
         JLabel correoLbl = new JLabel("Email: " + email_cliente);
         correoLbl.setFont(new Font("Arial", Font.BOLD, 24));
-        correoLbl.setSize(300,50);
+        correoLbl.setSize(600,50);
         correoLbl.setLocation(xLbl,50);
         historialClienteSeleccionadoPanel.add(correoLbl);
 
@@ -1441,19 +1423,7 @@ public class Ventana extends JFrame {
         telefonoLbl.setLocation(xLbl,130);
         historialClienteSeleccionadoPanel.add(telefonoLbl);
 
-        String[] columnasTabla= {
-                "<html><div style='text-align: center;'>Id<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Id<br>cliente</div></html>",
-                "<html><div style='text-align: center;'>Cliente</div></html>",
-                "<html><div style='text-align: center;'>Id<br>auto</div></html>",
-                "<html><div style='text-align: center;'>Automóvil</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>",
-                "<html><div style='text-align: center;'>Tiempo</div></html>",
-                "<html><div style='text-align: center;'>Número de<br>tarjeta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>caducidad</div></html>",
-                "<html><div style='text-align: center;'>CVV</div></html>",
-                "<html><div style='text-align: center;'>Costo</div></html>"};
+        String[] columnasTabla= TablasRamservice.obtener_nombres_columnas("RENTAS");;
         JTable tabla_autos = new JTable();
 
         DefaultTableModel dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla,"SELECT * FROM rentas WHERE identificador_cliente = "+id_cliente_a_consultar);
@@ -1590,6 +1560,11 @@ public class Ventana extends JFrame {
         fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
+
+        fechaCadTF.setDocument(new Fechas.NumericDocument());
+            AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaCadTF.getDocument();
+            documentoFiltroInicio.setDocumentFilter(new Fechas.FechaDocumentFilter());
+
         crearClientesPNL.add(fechaCadTF);
 
         y += 50;
@@ -1647,15 +1622,28 @@ public class Ventana extends JFrame {
                 String cvv = cvvTF.getText();
                 String password = new String(passwordPF.getPassword());
                 String passwordConf = new String(passwordConfPF.getPassword());
-                if (password.equals(passwordConf) && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
+                String mensaje = Clientes_Service.verificar_campos_de_registro(
+                        nombre, apellidos, correo, telefono,
+                        numero_de_tarjeta, fecha_de_caducidad,
+                        cvv, password, passwordConf, "");
+                if (mensaje.equals("Permitido")){
                     try {
                         Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono, numero_de_tarjeta, fecha_de_caducidad, cvv, password);
+                        JOptionPane.showMessageDialog(null, "Registro exitoso", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+
+                        anterior = actual;
+                        actual = "clientes";
+                        try {
+                            limpiarVentana();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
                 else{
-                    System.out.println("popo");
+                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -1712,13 +1700,7 @@ public class Ventana extends JFrame {
         });
 
 
-        String[] columnasTablaClientes = {"<html><div style='text-align: center;'>Id<br>clientes</div></html>",
-                "<html> <div style = 'text-align : center;'>Nombre</div></html>",
-                "<html> <div style = 'text-align : center;'>Apellido</div></html>",
-                "<html> <div style = 'text-align : center;'>Correo</div></html>",
-                "<html> <div style = 'text-align : center;'>Telefóno</div></html>",
-                "<html> <div style = 'text-align : center;'>Tarjeta<br>crédito</div></html>",
-                "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
+        String[] columnasTablaClientes = TablasRamservice.obtener_nombres_columnas("CLIENTES");;
         JTable tabla_clientes = new JTable();
 
         DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTablaClientes,"SELECT * FROM clientes");
@@ -1853,6 +1835,9 @@ public class Ventana extends JFrame {
         fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
+        fechaCadTF.setDocument(new Fechas.NumericDocument());
+        AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaCadTF.getDocument();
+        documentoFiltroInicio.setDocumentFilter(new Fechas.FechaDocumentFilter());
         editarClienteSeleccionadoPNL.add(fechaCadTF);
 
         y += 50;
@@ -1909,15 +1894,27 @@ public class Ventana extends JFrame {
                 String cvv = cvvTF.getText();
                 String password = new String(passwordPF.getPassword());
                 String passwordConf = new String(passwordConfPF.getPassword());
-                if (password.equals(passwordConf) && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
+                String mensaje = Clientes_Service.verificar_campos_de_registro(
+                        nombre, apellidos, correo, telefono,
+                        numero_de_tarjeta, fecha_de_caducidad,
+                        cvv, password, passwordConf, " WHERE id_de_cliente <> " + id_cliente_a_editar);
+                if (mensaje.equals("Permitido")){
                     try {
                         Clientes_Service.editar_cliente(nombre, apellidos, correo, telefono, numero_de_tarjeta, fecha_de_caducidad, cvv, password, id_cliente_a_editar);
+                        JOptionPane.showMessageDialog(null, "Registro exitoso", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+                        anterior = actual;
+                        actual = "clientes";
+                        try {
+                            limpiarVentana();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
                 else{
-                    System.out.println("popo");
+                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -1953,13 +1950,7 @@ public class Ventana extends JFrame {
 
         ImageIcon eliminarIcon = new ImageIcon("src/img/eliminarClienteBoton.png");
         eliminarClienteBtn.setIcon(eliminarIcon);
-        String[] columnasTablaClientes = {"<html> <div style = 'text-align : center;'>Id <br> cliente</div></html>"
-                , "<html> <div style = 'text-align : center;'>Nombre</div></html>",
-                "<html> <div style = 'text-align : center;'>Apellidos</div></html>",
-                "<html> <div style = 'text-align : center;'>Correo</div></html>",
-                "<html> <div style = 'text-align : center;'>Teléfono</div></html>",
-                "<html> <div style = 'text-align : center;'>Tarjeta de <br> credito</div></html>",
-                "<html> <div style = 'text-align : center;'>Estado de <br> cuenta</div></html>"};
+        String[] columnasTablaClientes = TablasRamservice.obtener_nombres_columnas("CLIENTES");;
 
         JTable tabla_clientes = new JTable();
             DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTablaClientes,"SELECT * FROM clientes");
@@ -2114,19 +2105,7 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
-        String[] columnasTabla = {
-                "<html><div style='text-align: center;'>Id<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Id<br>cliente</div></html>",
-                "<html><div style='text-align: center;'>Cliente</div></html>",
-                "<html><div style='text-align: center;'>Id<br>auto</div></html>",
-                "<html><div style='text-align: center;'>Automóvil</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>",
-                "<html><div style='text-align: center;'>Tiempo</div></html>",
-                "<html><div style='text-align: center;'>Número de<br>tarjeta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>caducidad</div></html>",
-                "<html><div style='text-align: center;'>CVV</div></html>",
-                "<html><div style='text-align: center;'>Costo</div></html>"};
+        String[] columnasTabla =TablasRamservice.obtener_nombres_columnas("RENTAS");;
 
         JTable tabla_rentas = new JTable();
             tabla_rentas.setModel(Renta_Service.crear_dtm_de_rentas(columnasTabla,"SELECT * FROM rentas"));
@@ -2135,7 +2114,7 @@ public class Ventana extends JFrame {
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
             sp.setSize(900,250);
-            sp.setLocation(50,400);
+            sp.setLocation(50,350);
             sp.setVisible(true);
 
         rentasPanel.add(sp);
@@ -2186,19 +2165,7 @@ public class Ventana extends JFrame {
             }
         });
         // <html><div style='text-align: center;'>Id<br>clientes</div></html>
-        String[] columnasTabla = {
-                "<html><div style='text-align: center;'>Id<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Identificador<br>de cliente</div></html>",
-                "<html><div style='text-align: center;'>Cliente</div></html>",
-                "<html><div style='text-align: center;'>Identificador<br>de automóvil</div></html>",
-                "<html><div style='text-align: center;'>Automóvil</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>",
-                "<html><div style='text-align: center;'>Tiempo de<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Numero de<br>tarjeta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>caducidad</div></html>",
-                "<html><div style='text-align: center;'>CVV</div></html>",
-                "<html><div style='text-align: center;'>Monto</div></html>"};
+        String[] columnasTabla = TablasRamservice.obtener_nombres_columnas("RENTAS");;
         JTable tabla_rentas = new JTable();
 
         DefaultTableModel dtm = new DefaultTableModel();
@@ -2225,7 +2192,7 @@ public class Ventana extends JFrame {
         crearRentaPNL.setBackground(Color.decode("#FFFFFF"));
 
         int x = 100;
-        int y = 50;
+        int y = 20;
 
         JLabel carroLbl = new JLabel("Carro a rentar");
         carroLbl.setLocation(x,y);
@@ -2283,7 +2250,7 @@ public class Ventana extends JFrame {
         crearRentaPNL.add(id_cliente_con_nombre_CB);
 
         x +=300;
-        y = 50;
+        y = 20;
 
         JLabel numTarjetaLbl = new JLabel("Número de tarjeta");
         numTarjetaLbl.setLocation(x,y);
@@ -2327,7 +2294,7 @@ public class Ventana extends JFrame {
         crearRentaPNL.add(cvvTF);
 
         x += 200;
-        y = 50;
+        y = 20;
         JLabel costoEstimadoLbl = new JLabel("Costo estimado", JLabel.CENTER);
         costoEstimadoLbl.setLocation(x,y);
         costoEstimadoLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -2346,7 +2313,7 @@ public class Ventana extends JFrame {
         //costoEstimadoVisualLbl.setIcon(facturaIcon);
         crearRentaPNL.add(costoEstimadoVisualLbl);
 
-        y += costoEstimadoVisualLbl.getHeight()+10;
+        y += costoEstimadoVisualLbl.getHeight()+50;
 
         JButton calcularCostoBtn = new JButton();
         calcularCostoBtn.setSize(226,31);
@@ -2384,7 +2351,7 @@ public class Ventana extends JFrame {
                 int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
                 String costo_total = String.valueOf(costo_auto*dias);
                 if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
-                    costoEstimadoVisualLbl.setText(costo_total+ "Pesos MXN");
+                    costoEstimadoVisualLbl.setText(costo_total+ " Pesos MXN");
                 }
             }
         });
@@ -2415,6 +2382,14 @@ public class Ventana extends JFrame {
                                 id_auto, nombre_auto, fecha_de_renta,
                                 fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
                             );
+                            JOptionPane.showMessageDialog(null, "Edición exitosa", "Bien!", JOptionPane.INFORMATION_MESSAGE);
+                            anterior = actual;
+                            actual = "rentas";
+                            try {
+                                limpiarVentana();
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
                             break;
                         default:
                             JOptionPane.showMessageDialog(null, estado_de_registro, "Error", JOptionPane.ERROR_MESSAGE);
@@ -2498,19 +2473,7 @@ public class Ventana extends JFrame {
         });
 
 
-        String[] columnasTabla = {
-                "<html><div style='text-align: center;'>Id<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Identificador<br>de cliente</div></html>",
-                "<html><div style='text-align: center;'>Cliente</div></html>",
-                "<html><div style='text-align: center;'>Identificador<br>de automóvil</div></html>",
-                "<html><div style='text-align: center;'>Automóvil</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>",
-                "<html><div style='text-align: center;'>Tiempo de<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Numero de<br>tarjeta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>caducidad</div></html>",
-                "<html><div style='text-align: center;'>CVV</div></html>",
-                "<html><div style='text-align: center;'>Monto</div></html>"};
+        String[] columnasTabla = TablasRamservice.obtener_nombres_columnas("RENTAS");;
         JTable tabla_rentas = new JTable();
         DefaultTableModel dtm = new DefaultTableModel();
             dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla, "SELECT * FROM rentas");
@@ -2520,7 +2483,7 @@ public class Ventana extends JFrame {
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
             sp.setSize(900,250);
-            sp.setLocation(50,400);
+            sp.setLocation(50,350);
             sp.setVisible(true);
 
         editarRentaPNL.add(id_rentas_CB);
@@ -2645,7 +2608,7 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.add(cvvTF);
 
         x += 200;
-        y = 100;
+        y = 20;
         JLabel costoEstimadoLbl = new JLabel("Costo estimado", JLabel.CENTER);
         costoEstimadoLbl.setLocation(x,y);
         costoEstimadoLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -2656,14 +2619,15 @@ public class Ventana extends JFrame {
 
         JLabel costoEstimadoVisualLbl = new JLabel();
         costoEstimadoVisualLbl.setHorizontalAlignment(JLabel.CENTER);
+        costoEstimadoVisualLbl.setOpaque(true);
         costoEstimadoVisualLbl.setBackground(Color.pink);
         costoEstimadoVisualLbl.setLocation(x+15,y);
         costoEstimadoVisualLbl.setSize(193,102);
-        ImageIcon facturaIcon = new ImageIcon("src/img/rentaFacturaIcon.png");
-        costoEstimadoVisualLbl.setIcon(facturaIcon);
+        //ImageIcon facturaIcon = new ImageIcon("src/img/rentaFacturaIcon.png");
+        //costoEstimadoVisualLbl.setIcon(facturaIcon);
         editarRentaSeleccionadaPNL.add(costoEstimadoVisualLbl);
 
-        y += costoEstimadoVisualLbl.getHeight()+10;
+        y += costoEstimadoVisualLbl.getHeight()+50;
         JButton calcularCostoBtn = new JButton();
         calcularCostoBtn.setSize(226,31);
         calcularCostoBtn.setLocation(x,y);
@@ -2707,8 +2671,9 @@ public class Ventana extends JFrame {
                 int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
                 String costo_total = String.valueOf(costo_auto*dias);
                 if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
-                    costoEstimadoVisualLbl.setText(costo_total+ "Pesos MXN");
+                    costoEstimadoVisualLbl.setText(costo_total+ " Pesos MXN");
                 }
+                System.out.println(costo_total);
             }
         });
         guardarBtn.addActionListener(new ActionListener() {
@@ -2729,11 +2694,19 @@ public class Ventana extends JFrame {
                     String estado_de_registro = Renta_Service.comprobar_fechas_editar(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion,fecha_caducidad);
                     switch (estado_de_registro){
                         case "Permitido":
+                            JOptionPane.showMessageDialog(null, "Edición exitosa", "Bien!", JOptionPane.INFORMATION_MESSAGE);
                             Renta_Service.editarRenta(id_de_renta_a_editar,
                                     identificador_cliente, cliente,
                                     id_auto, nombre_auto, fecha_de_renta,
                                     fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
                             );
+                            anterior = actual;
+                            actual = "rentas";
+                            try {
+                                limpiarVentana();
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
                             break;
                         default:
                             JOptionPane.showMessageDialog(null, estado_de_registro, "Error", JOptionPane.ERROR_MESSAGE);
@@ -2796,20 +2769,7 @@ public class Ventana extends JFrame {
         ImageIcon eliminarIcon = new ImageIcon("src/img/eliminarClienteBoton.png");
         eliminarRentaBtn.setIcon(eliminarIcon);
 
-        String[] columnasTabla = {
-                "<html><div style='text-align: center;'>Id<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Identificador<br>de cliente</div></html>",
-                "<html><div style='text-align: center;'>Cliente</div></html>",
-                "<html><div style='text-align: center;'>Identificador<br>de automóvil</div></html>",
-                "<html><div style='text-align: center;'>Automóvil</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>devolución</div></html>",
-                "<html><div style='text-align: center;'>Tiempo de<br>renta</div></html>",
-                "<html><div style='text-align: center;'>Numero de<br>tarjeta</div></html>",
-                "<html><div style='text-align: center;'>Fecha de<br>caducidad</div></html>",
-                "<html><div style='text-align: center;'>CVV</div></html>",
-                "<html><div style='text-align: center;'>Monto</div></html>"
-        };
+        String[] columnasTabla = TablasRamservice.obtener_nombres_columnas("RENTAS");
         JTable tabla_rentas = new JTable();
 
         DefaultTableModel dtm = new DefaultTableModel();
@@ -2820,7 +2780,7 @@ public class Ventana extends JFrame {
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
             sp.setSize(900,250);
-            sp.setLocation(50,400);
+            sp.setLocation(50,350);
             sp.setVisible(true);
 
         eliminarRentaBtn.addActionListener(new ActionListener() {
