@@ -2382,7 +2382,7 @@ public class Ventana extends JFrame {
                                 id_auto, nombre_auto, fecha_de_renta,
                                 fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
                             );
-                            JOptionPane.showMessageDialog(null, "Edición exitosa", "Bien!", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Renta creada", "Bien!", JOptionPane.INFORMATION_MESSAGE);
                             anterior = actual;
                             actual = "rentas";
                             try {
