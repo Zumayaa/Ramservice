@@ -362,54 +362,6 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
     }
-
-    /*public JPanel pintarMenuSuperior() {
-        System.out.println("actual: " + actual + " anterior: " + anterior);
-
-        ImageIcon logoRamsesIcon = new ImageIcon("logoRamservice.png");
-        JLabel logoRamsesLbl = new JLabel();
-            logoRamsesLbl.setIcon(logoRamsesIcon);
-            logoRamsesLbl.setSize(logoRamsesIcon.getIconWidth(),logoRamsesIcon.getIconHeight());
-            logoRamsesLbl.setLocation(0,-50);
-        panelActualLbl.setSize(300, 80);
-        panelActualLbl.setLocation(180, 0);
-        panelActualLbl.setForeground(Color.blue);
-        panelActualLbl.setFont(new Font("Arial", Font.BOLD, 35));
-        JPanel menuSuperiorPanel = new JPanel(){
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawLine(20,panelActualLbl.getY()+panelActualLbl.getHeight()-10,
-                        980,panelActualLbl.getY()+panelActualLbl.getHeight()-10);
-
-                g.drawLine(panelActualLbl.getX()-20,panelActualLbl.getY()+20,
-                        panelActualLbl.getX()-20, panelActualLbl.getHeight()-20);
-
-                g.drawLine(930,panelActualLbl.getY()+20,930,panelActualLbl.getHeight()-20);
-            }
-        };
-
-        JButton regresarBtn = new JButton("<--");
-        regresarBtn.setLocation(940,panelActualLbl.getY()+20);
-        regresarBtn.setSize(50,40);
-        regresarBtn.setVisible(true);
-        regresarBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("actual: " + actual + " anterior: " + anterior);
-            }
-        });
-        menuSuperiorPanel.setPreferredSize(new Dimension(1000,80));
-        menuSuperiorPanel.setBackground(Color.orange);
-        menuSuperiorPanel.add(panelActualLbl);
-        menuSuperiorPanel.add(logoRamsesLbl);
-        menuSuperiorPanel.add(regresarBtn);
-        menuSuperiorPanel.setLayout(null);
-        repaint();
-        revalidate();
-        return menuSuperiorPanel;
-    }*/
-
     public JPanel login() {
         anterior = actual;
         actual = "login";
@@ -468,12 +420,6 @@ public class Ventana extends JFrame {
         passwordText.setLocation(-7, 270);
         passwordText.setForeground(Color.black);
         loginPanel.add(passwordText);
-
-        /*JTextField password = new JTextField();
-        password.setSize(300,36);
-        password.setLocation(75,320);
-        password.setBorder(roundedBorder);
-        loginPanel.add(password);*/
 
         JPasswordField password = new JPasswordField();
         password.setSize(300, 36);
@@ -542,10 +488,11 @@ public class Ventana extends JFrame {
         homePanel.setLayout(null);
         homePanel.setBackground(Color.decode("#FFFFFF"));
 
+        int adicion_a_x = 25;
         JLabel bienvenido = new JLabel("Bienvenido, ", JLabel.CENTER);
         bienvenido.setFont(new Font("Arial", Font.BOLD, 25));
         bienvenido.setSize(300, 80);
-        bienvenido.setLocation(230, 600-100);
+        bienvenido.setLocation(230+adicion_a_x, 0);
         bienvenido.setForeground(Color.black);
         homePanel.add(bienvenido);
 
@@ -553,7 +500,7 @@ public class Ventana extends JFrame {
         JLabel admin = new JLabel("Administrador.", JLabel.CENTER);
         admin.setFont(new Font("Arial", Font.BOLD, 25));
         admin.setSize(300, 80);
-        admin.setLocation(397, 600-100);
+        admin.setLocation(397+adicion_a_x, 0);
         admin.setForeground(Color.decode("#38B6FF"));
         homePanel.add(admin);
 
@@ -1146,8 +1093,8 @@ public class Ventana extends JFrame {
     }
 
     public JPanel clientes() {
-        int xBtn = 230;
-        int yBtn = 127;
+        int xBtn = 215;
+        int yBtn = 50;
         int widthBtn  = 124;
         int heightBtn = 170;
         anterior = "home";
@@ -1278,9 +1225,9 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_clientes);
 
         JScrollPane sp = new JScrollPane(tabla_clientes);
-            sp.setSize(700,250);
-            sp.setLocation(165,350);
-            sp.setVisible(true);
+        sp.setSize(900,400);
+        sp.setLocation(50,heightBtn+yBtn+25);
+        sp.setVisible(true);
 
         clientesPanel.add(sp);
         return clientesPanel;
@@ -1296,17 +1243,17 @@ public class Ventana extends JFrame {
 
         JLabel descripcionEditarCliente = new JLabel("ID del cliente a consultar");
         descripcionEditarCliente.setSize(400,100);
-        descripcionEditarCliente.setLocation(370,20);
+        descripcionEditarCliente.setLocation(385, 15);
         descripcionEditarCliente.setFont(new Font("Arial", Font.BOLD, 24));
         consultarClientePNL.add(descripcionEditarCliente);
         // corregir URGE!!!
         JComboBox idClientesCB = new JComboBox(Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes"));
         idClientesCB.setSize(230,30);
-        idClientesCB.setLocation(400,100);
+        idClientesCB.setLocation(400,95);
 
         JButton consultarHistorialClienteBtn = new JButton();
         consultarHistorialClienteBtn.setSize(226,44);
-        consultarHistorialClienteBtn.setLocation(400, 145);
+        consultarHistorialClienteBtn.setLocation(400, 150);
         ImageIcon consultarHistorialIcon = new ImageIcon("src/img/consultarHistorialClienteIcon.png");
         consultarHistorialClienteBtn.setIcon(consultarHistorialIcon);
         consultarHistorialClienteBtn.addActionListener(new ActionListener() {
@@ -1340,8 +1287,8 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_clientes);
 
         JScrollPane sp = new JScrollPane(tabla_clientes);
-            sp.setSize(700,250);
-            sp.setLocation(165,400);
+            sp.setSize(900,400);
+            sp.setLocation(50,200+44);
             sp.setVisible(true);
 
         consultarClientePNL.add(idClientesCB);
@@ -1380,9 +1327,11 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_autos);
 
         JScrollPane sp = new JScrollPane(tabla_autos);
-            sp.setSize(900,250);
-            sp.setLocation(50,150);
+            sp.setSize(900,400);
+            sp.setLocation(50,185);
             sp.setVisible(true);
+
+
 
         historialClienteSeleccionadoPanel.add(autoIdLbl);
         historialClienteSeleccionadoPanel.add(autoNombreLbl);
@@ -1432,8 +1381,8 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_autos);
 
         JScrollPane sp = new JScrollPane(tabla_autos);
-            sp.setSize(900,250);
-            sp.setLocation(50,185);
+            sp.setSize(900,400);
+            sp.setLocation(50,233);
             sp.setVisible(true);
 
         historialClienteSeleccionadoPanel.add(sp);
@@ -1676,7 +1625,7 @@ public class Ventana extends JFrame {
 
         JButton editarClienteBtn = new JButton();
         editarClienteBtn.setSize(226,31);
-        editarClienteBtn.setLocation(400, 140);
+        editarClienteBtn.setLocation(400, 150);
 
         ImageIcon editarClienteBotonIcon = new ImageIcon("src/img/editarClienteBoton.png");
         editarClienteBtn.setIcon(editarClienteBotonIcon);
@@ -1708,9 +1657,10 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_clientes);
 
         JScrollPane sp = new JScrollPane(tabla_clientes);
-            sp.setSize(700,250);
-            sp.setLocation(165,400);
+            sp.setSize(900,400);
+            sp.setLocation(50,233);
             sp.setVisible(true);
+
 
         editarClientesPNL.add(sp);
 
@@ -1959,9 +1909,10 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_clientes);
 
         JScrollPane sp = new JScrollPane(tabla_clientes);
-            sp.setSize(700,250);
-            sp.setLocation(165,400);
+            sp.setSize(900,400);
+            sp.setLocation(50,233);
             sp.setVisible(true);
+
         eliminarClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1987,7 +1938,7 @@ public class Ventana extends JFrame {
     public JPanel rentas() {
         anterior = "home";
         int xBtn = 215;
-        int yBtn = 127;
+        int yBtn = 50;
         int widthBtn  = 124;
         int heightBtn = 170;
         JPanel rentasPanel = new JPanel();
@@ -2113,8 +2064,8 @@ public class Ventana extends JFrame {
         TablasRamservice.modificar_dimensiones_tabla(tabla_rentas);
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
-            sp.setSize(900,250);
-            sp.setLocation(50,350);
+            sp.setSize(900,400);
+            sp.setLocation(50,heightBtn+yBtn+25);
             sp.setVisible(true);
 
         rentasPanel.add(sp);
@@ -2132,7 +2083,7 @@ public class Ventana extends JFrame {
         JLabel bienvenido = new JLabel("Automovil a consultar");
         bienvenido.setFont(new Font("Arial", Font.BOLD, 24));
         bienvenido.setSize(300, 80);
-        bienvenido.setLocation(385, 40);
+        bienvenido.setLocation(385, 20);
         consultarCarPNL.add(bienvenido);
 
 
@@ -2141,13 +2092,13 @@ public class Ventana extends JFrame {
         id_auto_a_consultar_CB.setLocation(400,100);
         consultarCarPNL.add(id_auto_a_consultar_CB);
 
-        JButton consultarHistorialClienteBtn = new JButton();
-        consultarHistorialClienteBtn.setSize(226,44);
-        consultarHistorialClienteBtn.setLocation(400, 150);
-        ImageIcon consultarHistorialIcon = new ImageIcon("src/img/consultarHistorialClienteIcon.png");
-        consultarHistorialClienteBtn.setIcon(consultarHistorialIcon);
-        consultarCarPNL.add(consultarHistorialClienteBtn);
-        consultarHistorialClienteBtn.addActionListener(new ActionListener() {
+        JButton consultarHistorialAutoBtn = new JButton();
+        consultarHistorialAutoBtn.setSize(226,31);
+        consultarHistorialAutoBtn.setLocation(400, 150);
+        ImageIcon consultarHistorialIcon = new ImageIcon("src/img/consultarHistorialAutoIcon.png");
+        consultarHistorialAutoBtn.setIcon(consultarHistorialIcon);
+        consultarCarPNL.add(consultarHistorialAutoBtn);
+        consultarHistorialAutoBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
@@ -2175,8 +2126,8 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_rentas);
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
-        sp.setSize(900,250);
-        sp.setLocation(50,300);
+        sp.setSize(900,400);
+        sp.setLocation(50,244);
         sp.setVisible(true);
         consultarCarPNL.add(sp);
 
@@ -2442,16 +2393,16 @@ public class Ventana extends JFrame {
         JLabel bienvenido = new JLabel("ID renta a editar");
         bienvenido.setFont(new Font("Arial", Font.BOLD, 24));
         bienvenido.setSize(300, 80);
-        bienvenido.setLocation(415, 30);
+        bienvenido.setLocation(415, 20);
         editarRentaPNL.add(bienvenido);
 
         JComboBox id_rentas_CB = new JComboBox(Renta_Service.obtener_columna("SELECT id_de_renta FROM rentas"));
         id_rentas_CB.setSize(226,40);
-        id_rentas_CB.setLocation(400,100);
+        id_rentas_CB.setLocation(400,90);
 
         JButton editarRentaBtn = new JButton();
         editarRentaBtn.setSize(226,31);
-        editarRentaBtn.setLocation(400, 150);
+        editarRentaBtn.setLocation(400, 140);
         ImageIcon editarIcon = new ImageIcon("src/img/editarRentaBoton.png");
         editarRentaBtn.setIcon(editarIcon);
         editarRentaBtn.addActionListener(new ActionListener() {
@@ -2482,8 +2433,8 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_rentas);
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
-            sp.setSize(900,250);
-            sp.setLocation(50,350);
+            sp.setSize(900,400);
+            sp.setLocation(50,233);
             sp.setVisible(true);
 
         editarRentaPNL.add(id_rentas_CB);
@@ -2524,7 +2475,7 @@ public class Ventana extends JFrame {
         fechaInicioLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(fechaInicioLbl);
         y += 50;
-        JTextField fechaInicioTF = new JTextField();
+        JTextField fechaInicioTF = new JTextField(Renta_Service.obtener_celda("SELECT fecha_de_renta FROM rentas WHERE id_de_renta = " + id_de_renta_a_editar));
         fechaInicioTF.setBorder(roundedBorder);
         fechaInicioTF.setLocation(x,y);
         fechaInicioTF.setSize(200,30);
@@ -2537,7 +2488,7 @@ public class Ventana extends JFrame {
         fechaDeDevolucionLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(fechaDeDevolucionLbl);
         y += 50;
-        JTextField fechaDeDevolucionTF = new JTextField();
+        JTextField fechaDeDevolucionTF = new JTextField("qe");
         fechaDeDevolucionTF.setBorder(roundedBorder);
         fechaDeDevolucionTF.setLocation(x,y);
         fechaDeDevolucionTF.setSize(200,30);
@@ -2617,14 +2568,13 @@ public class Ventana extends JFrame {
 
         y += 50;
 
-        JLabel costoEstimadoVisualLbl = new JLabel();
+        JLabel costoEstimadoVisualLbl = new JLabel((Clientes_Service.obtener_celda
+                ("SELECT costo from rentas WHERE id_de_renta = " + id_de_renta_a_editar)) + " Pesos MXN");
         costoEstimadoVisualLbl.setHorizontalAlignment(JLabel.CENTER);
         costoEstimadoVisualLbl.setOpaque(true);
         costoEstimadoVisualLbl.setBackground(Color.pink);
         costoEstimadoVisualLbl.setLocation(x+15,y);
         costoEstimadoVisualLbl.setSize(193,102);
-        //ImageIcon facturaIcon = new ImageIcon("src/img/rentaFacturaIcon.png");
-        //costoEstimadoVisualLbl.setIcon(facturaIcon);
         editarRentaSeleccionadaPNL.add(costoEstimadoVisualLbl);
 
         y += costoEstimadoVisualLbl.getHeight()+50;
@@ -2650,16 +2600,22 @@ public class Ventana extends JFrame {
                 String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
                 int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
                 numTarjetaTF.setText((Clientes_Service.obtener_celda("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
+                fechaCadTF.setText((Clientes_Service.obtener_celda("SELECT fecha_de_caducidad from clientes WHERE id_de_cliente = " + identificador_cliente)));
             }
         });
         fechaInicioTF.setDocument(new Fechas.NumericDocument());
-        AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaInicioTF.getDocument();
-        documentoFiltroInicio.setDocumentFilter(new Fechas.FechaDocumentFilter());
+            AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaInicioTF.getDocument();
+            documentoFiltroInicio.setDocumentFilter(new Fechas.FechaDocumentFilter());
+
+        fechaInicioTF.setText((Clientes_Service.obtener_celda
+                ("SELECT fecha_de_renta from rentas WHERE id_de_renta = " + id_de_renta_a_editar)));
 
         fechaDeDevolucionTF.setDocument(new Fechas.NumericDocument());
-        AbstractDocument documentoFiltroFinal = (AbstractDocument) fechaDeDevolucionTF.getDocument();
-        documentoFiltroFinal.setDocumentFilter(new Fechas.FechaDocumentFilter());
+            AbstractDocument documentoFiltroFinal = (AbstractDocument) fechaDeDevolucionTF.getDocument();
+            documentoFiltroFinal.setDocumentFilter(new Fechas.FechaDocumentFilter());
 
+        fechaDeDevolucionTF.setText((Clientes_Service.obtener_celda
+                ("SELECT fecha_de_devolucion from rentas WHERE id_de_renta = " + id_de_renta_a_editar)));
 
         calcularCostoBtn.addActionListener(new ActionListener() {
             @Override
@@ -2757,16 +2713,16 @@ public class Ventana extends JFrame {
         JLabel descripcionLbl = new JLabel("ID de renta a eliminar");
         descripcionLbl.setFont(new Font("Arial", Font.BOLD, 24));
         descripcionLbl.setSize(300,50);
-        descripcionLbl.setLocation(400,50);
+        descripcionLbl.setLocation(400,20);
 
         JComboBox idRentasCB = new JComboBox(Renta_Service.obtener_columna("SELECT id_de_renta FROM rentas"));
         idRentasCB.setSize(226,40);
-        idRentasCB.setLocation(400,100);
+        idRentasCB.setLocation(400,80);
 
         JButton eliminarRentaBtn = new JButton();
         eliminarRentaBtn.setSize(226,31);
-        eliminarRentaBtn.setLocation(400, 150);
-        ImageIcon eliminarIcon = new ImageIcon("src/img/eliminarClienteBoton.png");
+        eliminarRentaBtn.setLocation(400, 130);
+        ImageIcon eliminarIcon = new ImageIcon("src/img/eliminarRentaBoton.png");
         eliminarRentaBtn.setIcon(eliminarIcon);
 
         String[] columnasTabla = TablasRamservice.obtener_nombres_columnas("RENTAS");
@@ -2779,8 +2735,8 @@ public class Ventana extends JFrame {
         TablasRamservice.crear_tabla(tabla_rentas);
 
         JScrollPane sp = new JScrollPane(tabla_rentas);
-            sp.setSize(900,250);
-            sp.setLocation(50,350);
+            sp.setSize(900,400);
+            sp.setLocation(50,233);
             sp.setVisible(true);
 
         eliminarRentaBtn.addActionListener(new ActionListener() {
