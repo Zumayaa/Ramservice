@@ -40,7 +40,7 @@ public class Clientes_Service {
         return Rentas_DAO.seleccionar_fila(consulta);
     }
     public static String[] obtener_columna(String consulta){
-        return Rentas_DAO.seleccionar_columna(consulta);
+        return Clientes_DAO.seleccionar_columna(consulta);
     }
     public static String obtener_celda(String consulta){
         return Rentas_DAO.seleccionar_celda(consulta);

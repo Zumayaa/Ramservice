@@ -35,8 +35,8 @@ public class Conexion {
                     "cliente VARCHAR(255) NOT NULL,"+
                     "identificador_auto INT NOT NULL REFERENCES autos(id_auto),"+
                     "automovil VARCHAR(255) NOT NULL,"+
-                    "fecha_de_renta DATETIME NOT NULL,"+
-                    "fecha_de_devolucion DATETIME NOT NULL,"+
+                    "fecha_de_renta DATE NOT NULL,"+
+                    "fecha_de_devolucion DATE NOT NULL,"+
                     "tiempo INT NOT NULL,"+
                     "numero_tarjeta VARCHAR(255) NOT NULL,"+
                     "fecha_caducidad DATE NOT NULL,"+

@@ -12,6 +12,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class Ventana extends JFrame {
@@ -1246,8 +1247,13 @@ public class Ventana extends JFrame {
         descripcionEditarCliente.setLocation(385, 15);
         descripcionEditarCliente.setFont(new Font("Arial", Font.BOLD, 24));
         consultarClientePNL.add(descripcionEditarCliente);
-        // corregir URGE!!!
-        JComboBox idClientesCB = new JComboBox(Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes"));
+        // corregir URGE!!! ya no jeje o si quien sabe
+        String nombres_Clientes[] = concatenarArreglos
+                (Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),
+                 Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
+        String id_cliente [] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
+        String id_nombre [] = concatenarArreglos(id_cliente,nombres_Clientes, " : ");
+        JComboBox idClientesCB = new JComboBox(id_nombre);
         idClientesCB.setSize(230,30);
         idClientesCB.setLocation(400,95);
 
@@ -1259,7 +1265,7 @@ public class Ventana extends JFrame {
         consultarHistorialClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                id_cliente_a_consultar = Integer.parseInt((String) idClientesCB.getSelectedItem());
+                id_cliente_a_consultar = Integer.parseInt(id_cliente[idClientesCB.getSelectedIndex()]);
                 String [] datos = Clientes_Service.obtener_fila("SELECT * FROM clientes WHERE id_de_cliente = " + id_cliente_a_consultar);
                 nombre_cliente = datos[1];
                 email_cliente = datos[3];
@@ -1618,7 +1624,11 @@ public class Ventana extends JFrame {
         descripcionEditarCliente.setFont(new Font("Arial", Font.BOLD, 24));
         editarClientesPNL.add(descripcionEditarCliente);
 
-        JComboBox idClientesCB = new JComboBox(Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes"));
+        String nombres_completos [] = concatenarArreglos(Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
+        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
+        String id_nombres[] = concatenarArreglos(ids, nombres_completos, ":");
+
+        JComboBox idClientesCB = new JComboBox(id_nombres);
         idClientesCB.setSize(226,40);
         idClientesCB.setLocation(400,100);
         editarClientesPNL.add(idClientesCB);
@@ -1635,7 +1645,7 @@ public class Ventana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
                 actual = "editarClienteSeleccionado";
-                id_cliente_a_editar = Integer.parseInt((String) idClientesCB.getSelectedItem());
+                id_cliente_a_editar = Integer.parseInt(ids[idClientesCB.getSelectedIndex()]);
 
                 try {
                     limpiarVentana();
@@ -1851,7 +1861,7 @@ public class Ventana extends JFrame {
                 if (mensaje.equals("Permitido")){
                     try {
                         Clientes_Service.editar_cliente(nombre, apellidos, correo, telefono, numero_de_tarjeta, fecha_de_caducidad, cvv, password, id_cliente_a_editar);
-                        JOptionPane.showMessageDialog(null, "Registro exitoso", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Edición exitosa", "Registrado", JOptionPane.INFORMATION_MESSAGE);
                         anterior = actual;
                         actual = "clientes";
                         try {
@@ -1890,7 +1900,12 @@ public class Ventana extends JFrame {
         descripcionLbl.setSize(300,50);
         descripcionLbl.setLocation(380,50);
 
-        JComboBox idClientesCB = new JComboBox(Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes"));
+        String nombres_Clientes[] = concatenarArreglos
+                (Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),
+                        Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
+        String id_cliente [] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
+        String id_nombres [] = concatenarArreglos(id_cliente,nombres_Clientes, " : ");
+        JComboBox idClientesCB = new JComboBox(id_nombres);
         idClientesCB.setSize(226,40);
         idClientesCB.setLocation(400,100);
 
@@ -1916,14 +1931,17 @@ public class Ventana extends JFrame {
         eliminarClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Clientes_Service.eliminar_cliente(Integer.parseInt((String)idClientesCB.getSelectedItem()));
-
-                DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) idClientesCB.getModel();
-                    model.removeElement(idClientesCB.getSelectedItem());
-
+                String id_cl [] = (String.valueOf(idClientesCB.getSelectedItem()).split(":"));
+                id_cl[0] = id_cl[0].replace(" ", "");
+                Clientes_Service.eliminar_cliente(Integer.parseInt(id_cl[0]));
+                //idClientesCB.removeItem(idClientesCB.getSelectedItem());
                 DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTablaClientes,"SELECT * FROM clientes");
                     tabla_clientes.setModel(dtm);
                     TablasRamservice.crear_tabla(tabla_clientes);
+                    idClientesCB.removeItemAt(idClientesCB.getSelectedIndex());
+                repaint();
+                revalidate();
+
             }
         });
         eliminarPanel.add(idClientesCB);
@@ -2087,7 +2105,10 @@ public class Ventana extends JFrame {
         consultarCarPNL.add(bienvenido);
 
 
-        JComboBox id_auto_a_consultar_CB = new JComboBox(Renta_Service.obtener_columna("SELECT id_de_auto FROM autos"));
+        String nombres_completos [] = Clientes_Service.obtener_columna("SELECT nombre_auto FROM autos");
+        String ids_renta [] = Clientes_Service.obtener_columna("SELECT id_de_auto FROM autos");
+        String id_nombre_concatenado[] = concatenarArreglos(ids_renta, nombres_completos, " : ");
+        JComboBox id_auto_a_consultar_CB = new JComboBox(id_nombre_concatenado);
         id_auto_a_consultar_CB.setSize(226,40);
         id_auto_a_consultar_CB.setLocation(400,100);
         consultarCarPNL.add(id_auto_a_consultar_CB);
@@ -2103,7 +2124,7 @@ public class Ventana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
                 actual = "consultarAutomovilSeleccionado";
-                id_auto_consultar = Integer.parseInt(String.valueOf(id_auto_a_consultar_CB.getSelectedItem()));
+                id_auto_consultar = Integer.parseInt(ids_renta[id_auto_a_consultar_CB.getSelectedIndex()]);
                 System.out.println(id_auto_consultar);
                 try {
                     limpiarVentana();
@@ -2152,11 +2173,15 @@ public class Ventana extends JFrame {
         crearRentaPNL.add(carroLbl);
         y += 50;
 
-        JComboBox carros_id_con_nombre_CB = new JComboBox();
+        String nombres_autos [] = Autos_Service.obtener_columna("SELECT nombre_auto FROM autos");
+        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_de_auto FROM autos");
+        String id_nombres_autos[] = concatenarArreglos(ids_autos, nombres_autos, " : ");
+
+        JComboBox carros_id_con_nombre_CB = new JComboBox(id_nombres_autos);
         carros_id_con_nombre_CB.setLocation(x,y);
-        Map<Integer,String> hashMapCarrosId = Autos_Service.obtener_id_nombre_auto();
-        carros_id_con_nombre_CB.setModel(generar_combobox_contenido(hashMapCarrosId));
-        carros_id_con_nombre_CB.setSize(200,30);
+        //Map<Integer,String> hashMapCarrosId = Autos_Service.obtener_id_nombre_auto();
+        //carros_id_con_nombre_CB.setModel(generar_combobox_contenido(hashMapCarrosId));
+        carros_id_con_nombre_CB.setSize(270,30);
         crearRentaPNL.add(carros_id_con_nombre_CB);
 
         y += 50;
@@ -2193,11 +2218,15 @@ public class Ventana extends JFrame {
         crearRentaPNL.add(idClienteLbl);
         y += 50;
 
-        JComboBox id_cliente_con_nombre_CB = new JComboBox();
-        Map<Integer,String> hashMapClientesId = Clientes_Service.seleccionar_clientes_map();
-        id_cliente_con_nombre_CB.setModel(generar_combobox_contenido(hashMapClientesId));
+        String nombres_completos [] = concatenarArreglos(Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
+        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
+        String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
+
+        JComboBox id_cliente_con_nombre_CB = new JComboBox(id_nombres);
+        //Map<Integer,String> hashMapClientesId = Clientes_Service.seleccionar_clientes_map();
+        //id_cliente_con_nombre_CB.setModel(hashMapClientesId);
         id_cliente_con_nombre_CB.setLocation(x,y);
-        id_cliente_con_nombre_CB.setSize(200,30);
+        id_cliente_con_nombre_CB.setSize(270,30);
         crearRentaPNL.add(id_cliente_con_nombre_CB);
 
         x +=300;
@@ -2295,9 +2324,7 @@ public class Ventana extends JFrame {
         calcularCostoBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
-                String auto_elegido_id_nombre[] = auto_elegido.split(":");
-                int id_auto = Integer.parseInt(auto_elegido_id_nombre[0]);
+                int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
                 double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
                 int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
                 String costo_total = String.valueOf(costo_auto*dias);
@@ -2312,13 +2339,11 @@ public class Ventana extends JFrame {
                 String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
 
             String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
-                int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
+                int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
                 String nombre_cliente = cliente_elegido_id_nombre[1];
                 String cliente = nombre_cliente;
-            String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
-                String auto_elegido_id_nombre[] = auto_elegido.split(":");
-                int id_auto = Integer.parseInt(auto_elegido_id_nombre[0]);
-                String nombre_auto = auto_elegido_id_nombre[1];
+                int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
+                String nombre_auto = nombres_autos[carros_id_con_nombre_CB.getSelectedIndex()];
             String fecha_de_renta = fechaInicioTF.getText();
             String fecha_de_devolucion = fechaDeDevolucionTF.getText();
             String numero_tarjeta = numTarjetaTF.getText();
@@ -2396,7 +2421,11 @@ public class Ventana extends JFrame {
         bienvenido.setLocation(415, 20);
         editarRentaPNL.add(bienvenido);
 
-        JComboBox id_rentas_CB = new JComboBox(Renta_Service.obtener_columna("SELECT id_de_renta FROM rentas"));
+        String nombres_completos [] = Clientes_Service.obtener_columna("SELECT cliente FROM rentas");
+        String ids[] = Renta_Service.obtener_columna("SELECT id_de_renta FROM rentas");
+        String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
+
+        JComboBox id_rentas_CB = new JComboBox(id_nombres);
         id_rentas_CB.setSize(226,40);
         id_rentas_CB.setLocation(400,90);
 
@@ -2410,7 +2439,7 @@ public class Ventana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
                 actual = "editarRentaSeleccionada";
-                id_renta_editar = Integer.parseInt((String) id_rentas_CB.getSelectedItem());
+                id_renta_editar = Integer.parseInt(ids[id_rentas_CB.getSelectedIndex()]);
                 id_cliente_editando_renta = Integer.parseInt(Renta_Service.obtener_celda("SELECT * FROM rentas WHERE id_de_renta = "+ id_renta_editar));
                 try {
                     limpiarVentana();
@@ -2460,10 +2489,17 @@ public class Ventana extends JFrame {
         carroLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(carroLbl);
         y += 50;
-        JComboBox carros_id_con_nombre_CB = new JComboBox();
+
+        String nombres_autos [] = Autos_Service.obtener_columna("SELECT nombre_auto FROM autos");
+        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_de_auto FROM autos");
+        String id_nombres_autos[] = concatenarArreglos(ids_autos, nombres_autos, " : ");
+        String id_auto = Renta_Service.obtener_celda("SELECT identificador_auto FROM rentas WHERE id_de_renta = " + id_de_renta_a_editar);
+        int index_carros = indexSeleccionado(ids_autos, String.valueOf(id_auto));
+        JComboBox carros_id_con_nombre_CB = new JComboBox(id_nombres_autos);
         carros_id_con_nombre_CB.setLocation(x,y);
-        Map<Integer,String> hashMapCarrosId = Autos_Service.obtener_id_nombre_auto();
-        carros_id_con_nombre_CB.setModel(generar_combobox_contenido(hashMapCarrosId));
+        carros_id_con_nombre_CB.setSelectedIndex(index_carros);
+        //Map<Integer,String> hashMapCarrosId = Autos_Service.obtener_id_nombre_auto();
+        //carros_id_con_nombre_CB.setModel(generar_combobox_contenido(hashMapCarrosId));
         carros_id_con_nombre_CB.setSize(200,30);
         editarRentaSeleccionadaPNL.add(carros_id_con_nombre_CB);
 
@@ -2502,9 +2538,17 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.add(idClienteLbl);
         y += 50;
 
-        JComboBox id_cliente_con_nombre_CB = new JComboBox();
-        Map<Integer,String> hashMapClientesId = Clientes_Service.seleccionar_clientes_map();
-        id_cliente_con_nombre_CB.setModel(generar_combobox_contenido(hashMapClientesId));
+
+        String nombres_completos [] = concatenarArreglos
+                (Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),
+                Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
+        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
+        String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
+        String id_cliente = Clientes_Service.obtener_celda("SELECT identificador_cliente FROM rentas WHERE id_de_renta = " + id_de_renta_a_editar);
+        int index_cliente = indexSeleccionado(ids,String.valueOf(id_cliente));
+        JComboBox id_cliente_con_nombre_CB = new JComboBox(id_nombres);
+
+        id_cliente_con_nombre_CB.setSelectedIndex(index_cliente);
         id_cliente_con_nombre_CB.setLocation(x,y);
         id_cliente_con_nombre_CB.setSize(200,30);
         editarRentaSeleccionadaPNL.add(id_cliente_con_nombre_CB);
@@ -2519,11 +2563,11 @@ public class Ventana extends JFrame {
         editarRentaSeleccionadaPNL.add(numTarjetaLbl);
         y += 50;
 
-        String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
-        String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
-        int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
+        //String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
+        //String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
+        int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
 
-        JTextField numTarjetaTF = new JTextField((Clientes_Service.obtener_celda("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
+        JTextField numTarjetaTF = new JTextField((Clientes_Service.obtener_celda("SELECT numero_tarjeta from rentas WHERE id_de_renta = " + id_de_renta_a_editar)));
         numTarjetaTF.setBorder(roundedBorder);
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
@@ -2536,7 +2580,7 @@ public class Ventana extends JFrame {
         fechaCadLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(fechaCadLbl);
         y += 50;
-        JTextField fechaCadTF = new JTextField((Clientes_Service.obtener_celda("SELECT fecha_de_caducidad from clientes WHERE id_de_cliente = " + identificador_cliente)));
+        JTextField fechaCadTF = new JTextField((Renta_Service.obtener_celda("SELECT fecha_caducidad from rentas WHERE id_de_renta = " + id_de_renta_a_editar)));
         fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
@@ -2552,7 +2596,7 @@ public class Ventana extends JFrame {
 
         x += 100;
 
-        JTextField cvvTF = new JTextField();
+        JTextField cvvTF = new JTextField(Renta_Service.obtener_celda("SELECT cvv from rentas WHERE id_de_renta = " + id_de_renta_a_editar));
         cvvTF.setBorder(roundedBorder);
         cvvTF.setLocation(x,y);
         cvvTF.setSize(100,30);
@@ -2596,9 +2640,7 @@ public class Ventana extends JFrame {
         id_cliente_con_nombre_CB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
-                String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
-                int identificador_cliente = Integer.parseInt(cliente_elegido_id_nombre[0]);
+                int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
                 numTarjetaTF.setText((Clientes_Service.obtener_celda("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
                 fechaCadTF.setText((Clientes_Service.obtener_celda("SELECT fecha_de_caducidad from clientes WHERE id_de_cliente = " + identificador_cliente)));
             }
@@ -2620,9 +2662,8 @@ public class Ventana extends JFrame {
         calcularCostoBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
-                String auto_elegido_id_nombre[] = auto_elegido.split(":");
-                int id_auto = Integer.parseInt(auto_elegido_id_nombre[0]);
+                String auto_elegido = nombres_autos[carros_id_con_nombre_CB.getSelectedIndex()];
+                int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
                 double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
                 int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
                 String costo_total = String.valueOf(costo_auto*dias);
@@ -2635,12 +2676,12 @@ public class Ventana extends JFrame {
         guardarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nombre_cliente = cliente_elegido_id_nombre[1];
+                String nombre_cliente = nombres_completos[id_cliente_con_nombre_CB.getSelectedIndex()];
                 String cliente = nombre_cliente;
                 String auto_elegido = (String) carros_id_con_nombre_CB.getSelectedItem();
-                String auto_elegido_id_nombre[] = auto_elegido.split(":");
-                int id_auto = Integer.parseInt(auto_elegido_id_nombre[0]);
-                String nombre_auto = auto_elegido_id_nombre[1];
+                int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
+                int id_auto = Integer.parseInt(ids[carros_id_con_nombre_CB.getSelectedIndex()]);
+                String nombre_auto = nombres_autos[carros_id_con_nombre_CB.getSelectedIndex()];
                 String fecha_de_renta = fechaInicioTF.getText();
                 String fecha_de_devolucion = fechaDeDevolucionTF.getText();
                 String numero_tarjeta = numTarjetaTF.getText();
@@ -2715,7 +2756,14 @@ public class Ventana extends JFrame {
         descripcionLbl.setSize(300,50);
         descripcionLbl.setLocation(400,20);
 
-        JComboBox idRentasCB = new JComboBox(Renta_Service.obtener_columna("SELECT id_de_renta FROM rentas"));
+
+        String nombres_completos [] = Renta_Service.obtener_columna("SELECT cliente FROM rentas");
+
+        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_renta FROM rentas");
+
+        String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
+        JComboBox idRentasCB = new JComboBox(id_nombres);
+        System.out.println(ids[idRentasCB.getSelectedIndex()]);
         idRentasCB.setSize(226,40);
         idRentasCB.setLocation(400,80);
 
@@ -2742,7 +2790,9 @@ public class Ventana extends JFrame {
         eliminarRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Renta_Service.borrar_renta(Integer.parseInt(String.valueOf(idRentasCB.getSelectedItem())));
+                String id_cl [] = (String.valueOf(idRentasCB.getSelectedItem()).split(":"));
+                id_cl[0] = id_cl[0].replace(" ", "");
+                Renta_Service.borrar_renta(Integer.parseInt(id_cl[0]));
 
                 DefaultTableModel dtm = new DefaultTableModel();
                     dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla, "SELECT * FROM rentas");
@@ -2750,8 +2800,7 @@ public class Ventana extends JFrame {
 
                 TablasRamservice.crear_tabla(tabla_rentas);
 
-                DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) idRentasCB.getModel();
-                model.removeElement(idRentasCB.getSelectedItem());
+                idRentasCB.removeItemAt(idRentasCB.getSelectedIndex());
                 repaint();
                 revalidate();
             }
@@ -3230,7 +3279,7 @@ public class Ventana extends JFrame {
     public static DefaultComboBoxModel<String> generar_combobox_contenido(Map<Integer,String> hashMap) throws SQLException {
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
 
-        // Iterar sobre las entradas del HashMap y agregarlas al modelo del ComboBox
+
         for (Map.Entry<Integer, String> entry : hashMap.entrySet()) {
             Integer clave = entry.getKey();
             String valor = entry.getValue();
@@ -3239,6 +3288,30 @@ public class Ventana extends JFrame {
         }
         return comboBoxModel;
     }
+    public String[] concatenarArreglos(String[] primer_arreglo, String[] segundo_arreglo, String separador){
+        String [] arreglo_concatenado = new String[primer_arreglo.length];
+        for (int i = 0; i < primer_arreglo.length; i++){
+            arreglo_concatenado[i] = primer_arreglo[i] +separador+ segundo_arreglo[i];
+        }
+        return arreglo_concatenado;
+    };
+    public int indexSeleccionado(String arreglo[], String id){
+        for (int i = 0; i < arreglo.length; i++){
+            if (arreglo[i].equals(id)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public int indexDeItemSeleccionado(String ids [], String id){
+        for (int i = 0; i<ids.length; i++){
+            if (ids[i].equals(id)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public static void main(String[] args) throws SQLException {
         Ventana screen = new Ventana();
     }
