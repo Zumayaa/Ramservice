@@ -1251,7 +1251,7 @@ public class Ventana extends JFrame {
         String nombres_Clientes[] = concatenarArreglos
                 (Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),
                  Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
-        String id_cliente [] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
+        String id_cliente [] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes ORDER BY id_de_cliente");
         String id_nombre [] = concatenarArreglos(id_cliente,nombres_Clientes, " : ");
         JComboBox idClientesCB = new JComboBox(id_nombre);
         idClientesCB.setSize(230,30);
@@ -1461,37 +1461,13 @@ public class Ventana extends JFrame {
         crearClientesPNL.add(correoTF);
 
         x = x*3;
-        y = yOriginal;
+        y = 180;
 
-        JLabel passwordLbl = new JLabel("Contraseña");
-        passwordLbl.setLocation(x,y);
-        passwordLbl.setFont(new Font("Arial", Font.BOLD, 16));
-        passwordLbl.setSize(200,40);
-        crearClientesPNL.add(passwordLbl);
-        y += 50;
-        JPasswordField passwordPF = new JPasswordField();
-        passwordPF.setBorder(roundedBorder);
-        passwordPF.setLocation(x,y);
-        passwordPF.setSize(200,30);
-        crearClientesPNL.add(passwordPF);
+        JLabel fondoDatosDeTarjetaLbl = new JLabel();
+        fondoDatosDeTarjetaLbl.setLocation(x-25,y);
+        fondoDatosDeTarjetaLbl.setIcon(new ImageIcon("src/img/fondoTarjetaInformacionIcon.png"));
+        fondoDatosDeTarjetaLbl.setSize(263,250);
 
-        y += 50;
-
-
-        JLabel passwordConfLbl = new JLabel("Repetir contraseña");
-        passwordConfLbl.setLocation(x,y);
-        passwordConfLbl.setFont(new Font("Arial", Font.BOLD, 16));
-        passwordConfLbl.setSize(200,40);
-        crearClientesPNL.add(passwordConfLbl);
-        y += 50;
-        JPasswordField passwordConfPF = new JPasswordField();
-        passwordConfPF.setBorder(roundedBorder);
-        passwordConfPF.setLocation(x,y);
-        passwordConfPF.setSize(200,30);
-        crearClientesPNL.add(passwordConfPF);
-
-
-        y += 50;
         JLabel numTarjetaLbl = new JLabel("Número de tarjeta");
         numTarjetaLbl.setLocation(x,y);
         numTarjetaLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -1499,7 +1475,7 @@ public class Ventana extends JFrame {
         crearClientesPNL.add(numTarjetaLbl);
         y += 50;
         JTextField numTarjetaTF = new JTextField();
-        numTarjetaTF.setBorder(roundedBorder);
+        //numTarjetaTF.setBorder(roundedBorder);
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
         crearClientesPNL.add(numTarjetaTF);
@@ -1512,7 +1488,7 @@ public class Ventana extends JFrame {
         crearClientesPNL.add(fechaCadLbl);
         y += 50;
         JTextField fechaCadTF = new JTextField();
-        fechaCadTF.setBorder(roundedBorder);
+        //fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
 
@@ -1525,7 +1501,7 @@ public class Ventana extends JFrame {
         y += 50;
 
         JLabel ccvLbl = new JLabel("CVV");
-        ccvLbl.setLocation(x,y);
+        ccvLbl.setLocation(x,y-5);
         ccvLbl.setFont(new Font("Arial", Font.BOLD, 16));
         ccvLbl.setSize(200,40);
         crearClientesPNL.add(ccvLbl);
@@ -1533,7 +1509,7 @@ public class Ventana extends JFrame {
         x += 100;
 
         JTextField cvvTF = new JTextField();
-        cvvTF.setBorder(roundedBorder);
+        //cvvTF.setBorder(roundedBorder);
         cvvTF.setLocation(x,y);
         cvvTF.setSize(100,30);
         crearClientesPNL.add(cvvTF);
@@ -1543,6 +1519,7 @@ public class Ventana extends JFrame {
         cancelarBtn.setSize(230,35);
         cancelarBtn.setLocation(250,y+distancia_botones_crear_cancelar);
         ImageIcon cancelarIcon = new ImageIcon("src/img/cancelarBoton.png");
+        crearClientesPNL.add(fondoDatosDeTarjetaLbl);
         cancelarBtn.setIcon(cancelarIcon);
         cancelarBtn.addActionListener(new ActionListener() {
             @Override
@@ -1575,16 +1552,34 @@ public class Ventana extends JFrame {
                 String numero_de_tarjeta = numTarjetaTF.getText();
                 String fecha_de_caducidad = fechaCadTF.getText();
                 String cvv = cvvTF.getText();
-                String password = new String(passwordPF.getPassword());
-                String passwordConf = new String(passwordConfPF.getPassword());
                 String mensaje = Clientes_Service.verificar_campos_de_registro(
                         nombre, apellidos, correo, telefono,
                         numero_de_tarjeta, fecha_de_caducidad,
-                        cvv, password, passwordConf, "");
+                        cvv, "");
                 if (mensaje.equals("Permitido")){
                     try {
-                        Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono, numero_de_tarjeta, fecha_de_caducidad, cvv, password);
+                        Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
+                        Tarjetas_Service.crear_tarjeta(nombre, apellidos, Clientes_Service.obtener_celda
+                                ("SELECT id_de_cliente FROM clientes WHERE correo = '" +correo +"'"),
+                                numero_de_tarjeta, fecha_de_caducidad, cvv);
+
                         JOptionPane.showMessageDialog(null, "Registro exitoso", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+
+                        anterior = actual;
+                        actual = "clientes";
+                        try {
+                            limpiarVentana();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else if (mensaje.equals("Permitido sin tarjeta")){
+                    try {
+                        Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
+                        JOptionPane.showMessageDialog(null, "Registro exitoso sin tarjeta", "Registrado", JOptionPane.INFORMATION_MESSAGE);
 
                         anterior = actual;
                         actual = "clientes";
@@ -1625,9 +1620,11 @@ public class Ventana extends JFrame {
         editarClientesPNL.add(descripcionEditarCliente);
 
         String nombres_completos [] = concatenarArreglos(Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
-        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
+        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes ORDER BY id_de_cliente");
         String id_nombres[] = concatenarArreglos(ids, nombres_completos, ":");
-
+        for(String idn : ids){
+            System.out.println(idn);
+        }
         JComboBox idClientesCB = new JComboBox(id_nombres);
         idClientesCB.setSize(226,40);
         idClientesCB.setLocation(400,100);
@@ -1685,7 +1682,7 @@ public class Ventana extends JFrame {
         editarClienteSeleccionadoPNL.setBackground(Color.decode("#FFFFFF"));
 
         int x = 200;
-        int distancia_vertical_botones = 100;
+        int distancia_vertical_botones = 300;
         int yOriginal = 50;
         int y = yOriginal;
         JLabel nombresLbl = new JLabel("Nombres");
@@ -1694,7 +1691,7 @@ public class Ventana extends JFrame {
         nombresLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(nombresLbl);
         y += 50;
-        JTextField nombresTF = new JTextField();
+        JTextField nombresTF = new JTextField(Clientes_Service.obtener_celda("SELECT nombre FROM clientes WHERE id_de_cliente = " + id_cliente_a_editar));
         nombresTF.setBorder(roundedBorder);
         nombresTF.setLocation(x,y);
         nombresTF.setSize(200,30);
@@ -1707,7 +1704,7 @@ public class Ventana extends JFrame {
         ApellidosLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(ApellidosLbl);
         y += 50;
-        JTextField apellidosTF = new JTextField();
+        JTextField apellidosTF = new JTextField(Clientes_Service.obtener_celda("SELECT apellido FROM clientes WHERE id_de_cliente = " + id_cliente_a_editar));
         apellidosTF.setBorder(roundedBorder);
         apellidosTF.setLocation(x,y);
         apellidosTF.setSize(200,30);
@@ -1721,7 +1718,7 @@ public class Ventana extends JFrame {
         telefonoLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(telefonoLbl);
         y += 50;
-        JTextField telefonoTF = new JTextField();
+        JTextField telefonoTF = new JTextField(Clientes_Service.obtener_celda("SELECT telefono FROM clientes WHERE id_de_cliente = " + id_cliente_a_editar));
         telefonoTF.setBorder(roundedBorder);
         telefonoTF.setLocation(x,y);
         telefonoTF.setSize(200,30);
@@ -1734,7 +1731,7 @@ public class Ventana extends JFrame {
         correoLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(correoLbl);
         y += 50;
-        JTextField correoTF = new JTextField();
+        JTextField correoTF = new JTextField(Clientes_Service.obtener_celda("SELECT correo FROM clientes WHERE id_de_cliente = " + id_cliente_a_editar));
         correoTF.setBorder(roundedBorder);
         correoTF.setLocation(x,y);
         correoTF.setSize(200,30);
@@ -1743,42 +1740,13 @@ public class Ventana extends JFrame {
         x = x*3;
         y = 50;
 
-        JLabel passwordLbl = new JLabel("Contraseña");
-        passwordLbl.setLocation(x,y);
-        passwordLbl.setFont(new Font("Arial", Font.BOLD, 16));
-        passwordLbl.setSize(200,40);
-        editarClienteSeleccionadoPNL.add(passwordLbl);
-        y += 50;
-        JPasswordField passwordPF = new JPasswordField();
-        passwordPF.setBorder(roundedBorder);
-        passwordPF.setLocation(x,y);
-        passwordPF.setSize(200,30);
-        editarClienteSeleccionadoPNL.add(passwordPF);
-
-        y += 50;
-
-
-        JLabel passwordConfLbl = new JLabel("Repetir contraseña");
-        passwordConfLbl.setLocation(x,y);
-        passwordConfLbl.setFont(new Font("Arial", Font.BOLD, 16));
-        passwordConfLbl.setSize(200,40);
-        editarClienteSeleccionadoPNL.add(passwordConfLbl);
-        y += 50;
-        JPasswordField passwordConfPF = new JPasswordField();
-        passwordConfPF.setBorder(roundedBorder);
-        passwordConfPF.setLocation(x,y);
-        passwordConfPF.setSize(200,30);
-        editarClienteSeleccionadoPNL.add(passwordConfPF);
-
-
-        y += 50;
         JLabel numTarjetaLbl = new JLabel("Número de tarjeta");
         numTarjetaLbl.setLocation(x,y);
         numTarjetaLbl.setFont(new Font("Arial", Font.BOLD, 16));
         numTarjetaLbl.setSize(200,40);
         editarClienteSeleccionadoPNL.add(numTarjetaLbl);
         y += 50;
-        JTextField numTarjetaTF = new JTextField();
+        JTextField numTarjetaTF = new JTextField(Tarjetas_Service.obtener_celda("SELECT numero_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = " + id_cliente_a_editar));
         numTarjetaTF.setBorder(roundedBorder);
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
@@ -1796,9 +1764,10 @@ public class Ventana extends JFrame {
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
         fechaCadTF.setDocument(new Fechas.NumericDocument());
-        AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaCadTF.getDocument();
-        documentoFiltroInicio.setDocumentFilter(new Fechas.FechaDocumentFilter());
-        editarClienteSeleccionadoPNL.add(fechaCadTF);
+            AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaCadTF.getDocument();
+            documentoFiltroInicio.setDocumentFilter(new Fechas.FechaDocumentFilter());
+            editarClienteSeleccionadoPNL.add(fechaCadTF);
+        fechaCadTF.setText(Tarjetas_Service.obtener_celda("SELECT fecha_de_caducidad FROM tarjetas_de_clientes WHERE identificador_cliente = " + id_cliente_a_editar));
 
         y += 50;
 
@@ -1810,7 +1779,7 @@ public class Ventana extends JFrame {
 
         x += 100;
 
-        JTextField cvvTF = new JTextField();
+        JTextField cvvTF = new JTextField(Tarjetas_Service.obtener_celda("SELECT cvv FROM tarjetas_de_clientes WHERE identificador_cliente = " + id_cliente_a_editar));
         cvvTF.setBorder(roundedBorder);
         cvvTF.setLocation(x,y);
         cvvTF.setSize(100,30);
@@ -1852,16 +1821,41 @@ public class Ventana extends JFrame {
                 String numero_de_tarjeta = numTarjetaTF.getText();
                 String fecha_de_caducidad = fechaCadTF.getText();
                 String cvv = cvvTF.getText();
-                String password = new String(passwordPF.getPassword());
-                String passwordConf = new String(passwordConfPF.getPassword());
                 String mensaje = Clientes_Service.verificar_campos_de_registro(
                         nombre, apellidos, correo, telefono,
                         numero_de_tarjeta, fecha_de_caducidad,
-                        cvv, password, passwordConf, " WHERE id_de_cliente <> " + id_cliente_a_editar);
+                        cvv, " WHERE id_de_cliente <> " + id_cliente_a_editar);
                 if (mensaje.equals("Permitido")){
                     try {
-                        Clientes_Service.editar_cliente(nombre, apellidos, correo, telefono, numero_de_tarjeta, fecha_de_caducidad, cvv, password, id_cliente_a_editar);
+
+                        Clientes_Service.editar_cliente(nombre, apellidos, correo, telefono, id_cliente_a_editar);
+                        // agregar una funcion que detecte que si existe un tarjeta registrada con ese id de usuario se edite la tarjeta
+                        // jeje es tu chamba yo de mañana q estara unu porq la dopamina se le acabo mientras dormia
+                        if (Tarjetas_Service.existencia_de_tarjeta_con_usuario(id_cliente_a_editar)){
+                            Tarjetas_Service.editar_tarjeta(nombre, apellidos, String.valueOf(id_cliente_a_editar),
+                                    numero_de_tarjeta, fecha_de_caducidad, cvv);
+                        }
+                        else{
+                            Tarjetas_Service.crear_tarjeta(nombre, apellidos, String.valueOf(id_cliente_a_editar),
+                                    numero_de_tarjeta, fecha_de_caducidad, cvv);
+                        }
                         JOptionPane.showMessageDialog(null, "Edición exitosa", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+                        anterior = actual;
+                        actual = "clientes";
+                        try {
+                            limpiarVentana();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else if(mensaje.equals("Permitido sin tarjeta")){
+                    try {
+
+                        Clientes_Service.editar_cliente(nombre, apellidos, correo, telefono, id_cliente_a_editar);
+                        JOptionPane.showMessageDialog(null, "Edición exitosa a cliente sin tarjeta", "Registrado", JOptionPane.INFORMATION_MESSAGE);
                         anterior = actual;
                         actual = "clientes";
                         try {
@@ -1903,7 +1897,7 @@ public class Ventana extends JFrame {
         String nombres_Clientes[] = concatenarArreglos
                 (Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),
                         Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
-        String id_cliente [] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
+        String id_cliente [] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes  ORDER BY id_de_cliente");
         String id_nombres [] = concatenarArreglos(id_cliente,nombres_Clientes, " : ");
         JComboBox idClientesCB = new JComboBox(id_nombres);
         idClientesCB.setSize(226,40);
@@ -1934,6 +1928,7 @@ public class Ventana extends JFrame {
                 String id_cl [] = (String.valueOf(idClientesCB.getSelectedItem()).split(":"));
                 id_cl[0] = id_cl[0].replace(" ", "");
                 Clientes_Service.eliminar_cliente(Integer.parseInt(id_cl[0]));
+                Tarjetas_Service.eliminar_tarjeta(Integer.parseInt(Tarjetas_Service.obtener_celda("SELECT id_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = '" + id_cl[0] + "'")));
                 //idClientesCB.removeItem(idClientesCB.getSelectedItem());
                 DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTablaClientes,"SELECT * FROM clientes");
                     tabla_clientes.setModel(dtm);
@@ -2166,25 +2161,62 @@ public class Ventana extends JFrame {
         int x = 100;
         int y = 20;
 
+        int xSeparador = 340;
+        int ySeparador = 50;
+
         JLabel carroLbl = new JLabel("Carro a rentar");
         carroLbl.setLocation(x,y);
         carroLbl.setFont(new Font("Arial", Font.BOLD, 16));
         carroLbl.setSize(200,40);
         crearRentaPNL.add(carroLbl);
+
+        JLabel separadorLbl = new JLabel();
+        separadorLbl.setSize(10,200);
+        separadorLbl.setLocation(xSeparador,ySeparador);
+        separadorLbl.setIcon(new ImageIcon("src/img/lineaSeparadorIcon.png"));
+        crearRentaPNL.add(separadorLbl);
+
         y += 50;
 
         String nombres_autos [] = Autos_Service.obtener_columna("SELECT nombre_auto FROM autos");
-        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_de_auto FROM autos");
+        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_de_auto FROM autos ORDER BY id_de_auto");
         String id_nombres_autos[] = concatenarArreglos(ids_autos, nombres_autos, " : ");
 
         JComboBox carros_id_con_nombre_CB = new JComboBox(id_nombres_autos);
         carros_id_con_nombre_CB.setLocation(x,y);
         //Map<Integer,String> hashMapCarrosId = Autos_Service.obtener_id_nombre_auto();
         //carros_id_con_nombre_CB.setModel(generar_combobox_contenido(hashMapCarrosId));
-        carros_id_con_nombre_CB.setSize(270,30);
+        carros_id_con_nombre_CB.setSize(200,30);
         crearRentaPNL.add(carros_id_con_nombre_CB);
 
         y += 50;
+        JLabel idClienteLbl = new JLabel("Id Cliente");
+        idClienteLbl.setLocation(x,y);
+        idClienteLbl.setFont(new Font("Arial", Font.BOLD, 16));
+        idClienteLbl.setSize(200,40);
+        crearRentaPNL.add(idClienteLbl);
+        y += 50;
+
+        String nombres_completos [] = concatenarArreglos(Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
+        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes ORDER BY id_de_cliente");
+        String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
+
+        JComboBox id_cliente_con_nombre_CB = new JComboBox(id_nombres);
+        //Map<Integer,String> hashMapClientesId = Clientes_Service.seleccionar_clientes_map();
+        //id_cliente_con_nombre_CB.setModel(hashMapClientesId);
+        id_cliente_con_nombre_CB.setLocation(x,y);
+        id_cliente_con_nombre_CB.setSize(200,30);
+        crearRentaPNL.add(id_cliente_con_nombre_CB);
+
+        x +=300;
+        y = 20;
+
+        JLabel separadorDosLbl = new JLabel();
+        separadorDosLbl.setSize(10,200);
+        separadorDosLbl.setLocation(xSeparador+300,ySeparador);
+        separadorDosLbl.setIcon(new ImageIcon("src/img/lineaSeparadorIcon.png"));
+        crearRentaPNL.add(separadorDosLbl);
+
         JLabel fechaInicioLbl = new JLabel("Fecha de inicio");
         fechaInicioLbl.setLocation(x,y);
         fechaInicioLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -2209,25 +2241,6 @@ public class Ventana extends JFrame {
         fechaDeDevolucionTF.setLocation(x,y);
         fechaDeDevolucionTF.setSize(200,30);
         crearRentaPNL.add(fechaDeDevolucionTF);
-
-        y += 50;
-        JLabel idClienteLbl = new JLabel("Id Cliente");
-        idClienteLbl.setLocation(x,y);
-        idClienteLbl.setFont(new Font("Arial", Font.BOLD, 16));
-        idClienteLbl.setSize(200,40);
-        crearRentaPNL.add(idClienteLbl);
-        y += 50;
-
-        String nombres_completos [] = concatenarArreglos(Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
-        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
-        String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
-
-        JComboBox id_cliente_con_nombre_CB = new JComboBox(id_nombres);
-        //Map<Integer,String> hashMapClientesId = Clientes_Service.seleccionar_clientes_map();
-        //id_cliente_con_nombre_CB.setModel(hashMapClientesId);
-        id_cliente_con_nombre_CB.setLocation(x,y);
-        id_cliente_con_nombre_CB.setSize(270,30);
-        crearRentaPNL.add(id_cliente_con_nombre_CB);
 
         x +=300;
         y = 20;
@@ -2260,21 +2273,22 @@ public class Ventana extends JFrame {
         y += 50;
 
         JLabel ccvLbl = new JLabel("CVV");
-        ccvLbl.setLocation(x,y);
+        ccvLbl.setLocation(x,y-10);
         ccvLbl.setFont(new Font("Arial", Font.BOLD, 16));
         ccvLbl.setSize(200,40);
         crearRentaPNL.add(ccvLbl);
 
         x += 100;
 
-        JTextField cvvTF = new JTextField("a");
+        JTextField cvvTF = new JTextField("");
         cvvTF.setBorder(roundedBorder);
         cvvTF.setLocation(x,y);
         cvvTF.setSize(100,30);
         crearRentaPNL.add(cvvTF);
 
-        x += 200;
-        y = 20;
+        x = 250;
+        y = 300;
+
         JLabel costoEstimadoLbl = new JLabel("Costo estimado", JLabel.CENTER);
         costoEstimadoLbl.setLocation(x,y);
         costoEstimadoLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -2293,7 +2307,9 @@ public class Ventana extends JFrame {
         //costoEstimadoVisualLbl.setIcon(facturaIcon);
         crearRentaPNL.add(costoEstimadoVisualLbl);
 
-        y += costoEstimadoVisualLbl.getHeight()+50;
+
+        x = costoEstimadoVisualLbl.getWidth()+x+50;
+        y = 320;
 
         JButton calcularCostoBtn = new JButton();
         calcularCostoBtn.setSize(226,31);
@@ -2321,6 +2337,20 @@ public class Ventana extends JFrame {
             AbstractDocument documentoFiltroFinal = (AbstractDocument) fechaDeDevolucionTF.getDocument();
             documentoFiltroFinal.setDocumentFilter(new Fechas.FechaDocumentFilter());
 
+        fechaCadTF.setDocument(new Fechas.NumericDocument());
+            AbstractDocument documentoFiltroCad = (AbstractDocument) fechaCadTF.getDocument();
+            documentoFiltroCad.setDocumentFilter(new Fechas.FechaDocumentFilter());
+
+
+        id_cliente_con_nombre_CB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
+                numTarjetaTF.setText(Tarjetas_Service.obtener_celda("SELECT numero_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = '" + identificador_cliente +"'"));
+                fechaCadTF.setText(
+                        Tarjetas_Service.obtener_celda("SELECT fecha_de_caducidad FROM tarjetas_de_clientes WHERE identificador_cliente = '" +identificador_cliente+"'"));
+            }
+        });
         calcularCostoBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -2422,7 +2452,7 @@ public class Ventana extends JFrame {
         editarRentaPNL.add(bienvenido);
 
         String nombres_completos [] = Clientes_Service.obtener_columna("SELECT cliente FROM rentas");
-        String ids[] = Renta_Service.obtener_columna("SELECT id_de_renta FROM rentas");
+        String ids[] = Renta_Service.obtener_columna("SELECT id_de_renta FROM rentas ORDER BY id_de_renta");
         String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
 
         JComboBox id_rentas_CB = new JComboBox(id_nombres);
@@ -2483,15 +2513,25 @@ public class Ventana extends JFrame {
 
         int x = 100;
         int y = 20;
+        int xSeparador = 340;
+        int ySeparador = 50;
         JLabel carroLbl = new JLabel("Carro a rentar");
         carroLbl.setLocation(x,y);
         carroLbl.setFont(new Font("Arial", Font.BOLD, 16));
         carroLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(carroLbl);
+
+
+        JLabel separadorLbl = new JLabel();
+        separadorLbl.setSize(10,200);
+        separadorLbl.setLocation(xSeparador,ySeparador);
+        separadorLbl.setIcon(new ImageIcon("src/img/lineaSeparadorIcon.png"));
+        editarRentaSeleccionadaPNL.add(separadorLbl);
+
         y += 50;
 
         String nombres_autos [] = Autos_Service.obtener_columna("SELECT nombre_auto FROM autos");
-        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_de_auto FROM autos");
+        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_de_auto FROM autos ORDER BY id_de_auto");
         String id_nombres_autos[] = concatenarArreglos(ids_autos, nombres_autos, " : ");
         String id_auto = Renta_Service.obtener_celda("SELECT identificador_auto FROM rentas WHERE id_de_renta = " + id_de_renta_a_editar);
         int index_carros = indexSeleccionado(ids_autos, String.valueOf(id_auto));
@@ -2503,8 +2543,39 @@ public class Ventana extends JFrame {
         carros_id_con_nombre_CB.setSize(200,30);
         editarRentaSeleccionadaPNL.add(carros_id_con_nombre_CB);
 
+        y += 50;
+
+        JLabel idClienteLbl = new JLabel("Id Cliente");
+        idClienteLbl.setLocation(x,y);
+        idClienteLbl.setFont(new Font("Arial", Font.BOLD, 16));
+        idClienteLbl.setSize(200,40);
+        editarRentaSeleccionadaPNL.add(idClienteLbl);
 
         y += 50;
+
+        String nombres_completos [] = concatenarArreglos
+                (Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),
+                Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
+        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes ORDER BY id_de_cliente");
+        String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
+        String id_cliente = Clientes_Service.obtener_celda("SELECT identificador_cliente FROM rentas WHERE id_de_renta = " + id_de_renta_a_editar);
+        int index_cliente = indexSeleccionado(ids,String.valueOf(id_cliente));
+        JComboBox id_cliente_con_nombre_CB = new JComboBox(id_nombres);
+
+        id_cliente_con_nombre_CB.setSelectedIndex(index_cliente);
+        id_cliente_con_nombre_CB.setLocation(x,y);
+        id_cliente_con_nombre_CB.setSize(200,30);
+        editarRentaSeleccionadaPNL.add(id_cliente_con_nombre_CB);
+
+        x +=300;
+        y = 20;
+
+        JLabel separadorDosLbl = new JLabel();
+        separadorDosLbl.setSize(10,200);
+        separadorDosLbl.setLocation(xSeparador+300,ySeparador);
+        separadorDosLbl.setIcon(new ImageIcon("src/img/lineaSeparadorIcon.png"));
+        editarRentaSeleccionadaPNL.add(separadorDosLbl);
+
         JLabel fechaInicioLbl = new JLabel("Fecha de inicio");
         fechaInicioLbl.setLocation(x,y);
         fechaInicioLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -2530,30 +2601,7 @@ public class Ventana extends JFrame {
         fechaDeDevolucionTF.setSize(200,30);
         editarRentaSeleccionadaPNL.add(fechaDeDevolucionTF);
 
-        y += 50;
-        JLabel idClienteLbl = new JLabel("Id Cliente");
-        idClienteLbl.setLocation(x,y);
-        idClienteLbl.setFont(new Font("Arial", Font.BOLD, 16));
-        idClienteLbl.setSize(200,40);
-        editarRentaSeleccionadaPNL.add(idClienteLbl);
-        y += 50;
-
-
-        String nombres_completos [] = concatenarArreglos
-                (Clientes_Service.obtener_columna("SELECT nombre FROM clientes"),
-                Clientes_Service.obtener_columna("SELECT apellido FROM clientes"), " ");
-        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_cliente FROM clientes");
-        String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
-        String id_cliente = Clientes_Service.obtener_celda("SELECT identificador_cliente FROM rentas WHERE id_de_renta = " + id_de_renta_a_editar);
-        int index_cliente = indexSeleccionado(ids,String.valueOf(id_cliente));
-        JComboBox id_cliente_con_nombre_CB = new JComboBox(id_nombres);
-
-        id_cliente_con_nombre_CB.setSelectedIndex(index_cliente);
-        id_cliente_con_nombre_CB.setLocation(x,y);
-        id_cliente_con_nombre_CB.setSize(200,30);
-        editarRentaSeleccionadaPNL.add(id_cliente_con_nombre_CB);
-
-        x +=300;
+        x += 300;
         y = 20;
 
         JLabel numTarjetaLbl = new JLabel("Número de tarjeta");
@@ -2565,7 +2613,8 @@ public class Ventana extends JFrame {
 
         //String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
         //String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
-        int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
+
+        String identificador_cliente = Renta_Service.obtener_celda("SELECT identificador_cliente FROM rentas WHERE id_de_renta = " + id_de_renta_a_editar);
 
         JTextField numTarjetaTF = new JTextField((Clientes_Service.obtener_celda("SELECT numero_tarjeta from rentas WHERE id_de_renta = " + id_de_renta_a_editar)));
         numTarjetaTF.setBorder(roundedBorder);
@@ -2589,7 +2638,7 @@ public class Ventana extends JFrame {
         y += 50;
 
         JLabel ccvLbl = new JLabel("CVV");
-        ccvLbl.setLocation(x,y);
+        ccvLbl.setLocation(x,y-10);
         ccvLbl.setFont(new Font("Arial", Font.BOLD, 16));
         ccvLbl.setSize(200,40);
         editarRentaSeleccionadaPNL.add(ccvLbl);
@@ -2602,8 +2651,10 @@ public class Ventana extends JFrame {
         cvvTF.setSize(100,30);
         editarRentaSeleccionadaPNL.add(cvvTF);
 
-        x += 200;
-        y = 20;
+
+        x = 250;
+        y = 300;
+
         JLabel costoEstimadoLbl = new JLabel("Costo estimado", JLabel.CENTER);
         costoEstimadoLbl.setLocation(x,y);
         costoEstimadoLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -2621,7 +2672,9 @@ public class Ventana extends JFrame {
         costoEstimadoVisualLbl.setSize(193,102);
         editarRentaSeleccionadaPNL.add(costoEstimadoVisualLbl);
 
-        y += costoEstimadoVisualLbl.getHeight()+50;
+        x = costoEstimadoVisualLbl.getWidth()+x+50;
+        y = 320;
+
         JButton calcularCostoBtn = new JButton();
         calcularCostoBtn.setSize(226,31);
         calcularCostoBtn.setLocation(x,y);
@@ -2641,8 +2694,9 @@ public class Ventana extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
-                numTarjetaTF.setText((Clientes_Service.obtener_celda("SELECT numero_de_tarjeta from clientes WHERE id_de_cliente = " + identificador_cliente)));
-                fechaCadTF.setText((Clientes_Service.obtener_celda("SELECT fecha_de_caducidad from clientes WHERE id_de_cliente = " + identificador_cliente)));
+                numTarjetaTF.setText(Tarjetas_Service.obtener_celda("SELECT numero_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = '" + identificador_cliente +"'"));
+                fechaCadTF.setText(
+                        Tarjetas_Service.obtener_celda("SELECT fecha_de_caducidad FROM tarjetas_de_clientes WHERE identificador_cliente = '" +identificador_cliente+"'"));
             }
         });
         fechaInicioTF.setDocument(new Fechas.NumericDocument());
@@ -2759,7 +2813,7 @@ public class Ventana extends JFrame {
 
         String nombres_completos [] = Renta_Service.obtener_columna("SELECT cliente FROM rentas");
 
-        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_renta FROM rentas");
+        String ids[] = Clientes_Service.obtener_columna("SELECT id_de_renta FROM rentas ORDER BY id_de_renta");
 
         String id_nombres[] = concatenarArreglos(ids, nombres_completos, " : ");
         JComboBox idRentasCB = new JComboBox(id_nombres);

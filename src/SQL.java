@@ -1,12 +1,9 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-public class Clientes_DAO {
+public class SQL {
     static Conexion dbConnect = null;
-    static String tabla = "clientes";
-    // metodos genericos, seleccionar datos
+    static String tabla = "";
     public static Object[][] seleccionar_datos(String consulta){
         try (Connection conexion = dbConnect.getConnection()) {
             PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
@@ -44,6 +41,9 @@ public class Clientes_DAO {
                 datos_seleccionados.add(resultSet.getString(1));
             }
             String[] arreglo_columna = datos_seleccionados.toArray(new String[0]);
+            for (int i = 0; i<arreglo_columna.length; i++){
+                System.out.println(arreglo_columna.length);
+            }
             return arreglo_columna;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -108,80 +108,50 @@ public class Clientes_DAO {
 
         return cantidadFilas;
     }
-    // insertar eliminar etc
-    public  static void insertar_datos(Clientes_Class cliente) throws SQLException, SQLException {
+    public  static void insertar_datos(String datos_a_insertar[], String tabla_nombre) throws SQLException, SQLException {
         if (dbConnect == null){
             dbConnect = new Conexion();
         }
         try (Connection conexion = dbConnect.getConnection()){
             PreparedStatement ps = null;
-            String columnas_de_insercion[] = nombres_de_columnas(tabla);
+            String columnas_de_insercion[] = nombres_de_columnas(tabla_nombre);
             try{
-                String query = "INSERT INTO `"+tabla+"` ("+columnas_de_insercion[0]+") VALUES ("+columnas_de_insercion[1]+");";
-                System.out.println(columnas_de_insercion[0]);
-                System.out.println(columnas_de_insercion[1]);
+                String query = "INSERT INTO `"+tabla_nombre+"` ("+columnas_de_insercion[0]+") VALUES ("+columnas_de_insercion[1]+");";
                 ps = conexion.prepareStatement(query);
                 ps.setString(1, null);
-                ps.setString(2, cliente.getNombre());
-                ps.setString(3, cliente.getApellido());
-                ps.setString(4, cliente.getCorreo());
-                ps.setString(5, cliente.getTelefono());
+                int pos = 0;
+                for (int i = 2; i<datos_a_insertar.length; i++){
+                    ps.setString(i,datos_a_insertar[pos++]);
+                }
                 ps.executeUpdate();
             }catch (Exception e){
                 System.out.println(e);
             }
         }
     }
-    public static void editar_cliente_por_id(int id_cliente, Clientes_Class clienteActualizado) {
+    public static void editar_tabla(String datos_a_actualizar[], String query) {
         try (Connection conexion = dbConnect.getConnection()) {
-            String consulta = "UPDATE clientes SET nombre = ?, apellido = ?, correo = ?, telefono = ? WHERE id_de_cliente = ?";
-            PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
-            preparedStatement.setString(1, clienteActualizado.getNombre());
-            preparedStatement.setString(2, clienteActualizado.getApellido());
-            preparedStatement.setString(3, clienteActualizado.getCorreo());
-            preparedStatement.setString(4, clienteActualizado.getTelefono());
-            preparedStatement.setInt(5, id_cliente);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void borrar_cliente_por_id(int id_de_cliente) {
-        try (Connection conexion = dbConnect.getConnection()) {
-            String consulta = "DELETE FROM "+tabla+" WHERE id_de_cliente = ?";
-            PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
-            preparedStatement.setInt(1, id_de_cliente);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-// funciones muy especificas
-public  static Map<Integer, String> seleccionar_clientes() throws SQLException, SQLException { // cuando puse esta madre solo chatgpt
-    // y dios sabian lo que hacia
-    // ahora solo chatgpt lo sabe pero perdi el prompt perdon zumaya
-    Map<Integer, String> id_autos_y_nombre_autos = new HashMap<>();
-    if (dbConnect == null){
-        dbConnect = new Conexion();
-    }
-    try (Connection conexion = dbConnect.getConnection()){
-        PreparedStatement ps = null;
-        try{
-            String query = "SELECT id_de_cliente, apellido FROM clientes";
-            ps = conexion.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int idCliente = rs.getInt("id_de_cliente");
-                String apellidoCliente = rs.getString("apellido");
-                id_autos_y_nombre_autos.put(idCliente,apellidoCliente); // selecciona el id del cliente y su apellido correspondiente, los guarda en un hasmap y boom aparecen en el combobox
+            String consulta = query;
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setString(1,null);
+            for (int i = 2; i<= datos_a_actualizar.length; i++){
+                ps.setString(i,datos_a_actualizar[i-2]);
             }
-        }catch (Exception e){
-            System.out.println(e);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-    return id_autos_y_nombre_autos;
-}
+    public static void eliminar_registro(String tabla_nombre, String discriminador ,int id) {
+        try (Connection conexion = dbConnect.getConnection()) {
+            String consulta = "DELETE FROM "+tabla_nombre+" WHERE "+discriminador+" = ?";
+            PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static String[] nombres_de_columnas(String nombreTabla){
         String nombres_columnas[] = new String[2];
 

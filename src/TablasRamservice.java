@@ -58,11 +58,7 @@ public class TablasRamservice {
                     "<html> <div style = 'text-align : center;'> Nombre</div></html>",
                     "<html> <div style = 'text-align : center;'> Apellido</div></html>",
                     "<html> <div style = 'text-align : center;'> Correo</div></html>",
-                    "<html> <div style = 'text-align : center;'> Telefóno </div></html>",
-                    "<html> <div style = 'text-align : center;'> Número de<br>tarjeta</div></html>",
-                    "<html> <div style = 'text-align : center;'> Fecha de <br> caducidad</div></html>",
-                    "<html> <div style = 'text-align : center;'> CVV </div></html>",
-                    "<html> <div style = 'text-align : center;'> Contraseña</div></html>",};
+                    "<html> <div style = 'text-align : center;'> Telefóno </div></html>"};
         }
         return null;
     }

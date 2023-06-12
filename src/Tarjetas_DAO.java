@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Clientes_DAO {
+public class Tarjetas_DAO {
     static Conexion dbConnect = null;
-    static String tabla = "clientes";
+    static String tabla = "tarjetas_de_clientes";
     // metodos genericos, seleccionar datos
     public static Object[][] seleccionar_datos(String consulta){
         try (Connection conexion = dbConnect.getConnection()) {
@@ -88,7 +88,7 @@ public class Clientes_DAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "-1";
+        return "";
     }
 
     public static int contarFilasTabla(String nombreTabla) {
@@ -109,7 +109,7 @@ public class Clientes_DAO {
         return cantidadFilas;
     }
     // insertar eliminar etc
-    public  static void insertar_datos(Clientes_Class cliente) throws SQLException, SQLException {
+    public  static void insertar_datos(Tarjeta_Class tarjeta, String id) throws SQLException, SQLException {
         if (dbConnect == null){
             dbConnect = new Conexion();
         }
@@ -118,38 +118,40 @@ public class Clientes_DAO {
             String columnas_de_insercion[] = nombres_de_columnas(tabla);
             try{
                 String query = "INSERT INTO `"+tabla+"` ("+columnas_de_insercion[0]+") VALUES ("+columnas_de_insercion[1]+");";
-                System.out.println(columnas_de_insercion[0]);
-                System.out.println(columnas_de_insercion[1]);
                 ps = conexion.prepareStatement(query);
                 ps.setString(1, null);
-                ps.setString(2, cliente.getNombre());
-                ps.setString(3, cliente.getApellido());
-                ps.setString(4, cliente.getCorreo());
-                ps.setString(5, cliente.getTelefono());
+                ps.setString(2, id);
+                ps.setString(3, tarjeta.getNombres_cliente());
+                ps.setString(4, tarjeta.getApellidos_cliente());
+                ps.setString(5, tarjeta.getNumero_de_tarjeta());
+                ps.setString(6, tarjeta.getFecha_de_caducidad());
+                ps.setString(7, tarjeta.getCvv());
+
                 ps.executeUpdate();
             }catch (Exception e){
                 System.out.println(e);
             }
         }
     }
-    public static void editar_cliente_por_id(int id_cliente, Clientes_Class clienteActualizado) {
+    public static void editar_tarjeta_por_id(Tarjeta_Class tarjetaNueva, int id_tarjeta) {
         try (Connection conexion = dbConnect.getConnection()) {
-            String consulta = "UPDATE clientes SET nombre = ?, apellido = ?, correo = ?, telefono = ? WHERE id_de_cliente = ?";
-            PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
-            preparedStatement.setString(1, clienteActualizado.getNombre());
-            preparedStatement.setString(2, clienteActualizado.getApellido());
-            preparedStatement.setString(3, clienteActualizado.getCorreo());
-            preparedStatement.setString(4, clienteActualizado.getTelefono());
-            preparedStatement.setInt(5, id_cliente);
-            preparedStatement.executeUpdate();
+            String consulta = "UPDATE tarjetas_de_clientes SET nombres_cliente = ?, apellidos_cliente = ?, numero_de_tarjeta = ?, fecha_de_caducidad = ?, cvv = ? WHERE identificador_cliente = ?;";
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setString(1, tarjetaNueva.getNombres_cliente());
+            ps.setString(2, tarjetaNueva.getApellidos_cliente());
+            ps.setString(3, tarjetaNueva.getNumero_de_tarjeta());
+            ps.setString(4, tarjetaNueva.getFecha_de_caducidad());
+            ps.setString(5, tarjetaNueva.getCvv());
+            ps.setInt(6, id_tarjeta);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static void borrar_cliente_por_id(int id_de_cliente) {
+    public static void borrar_tarjeta_por_id(int id_de_cliente) {
         try (Connection conexion = dbConnect.getConnection()) {
-            String consulta = "DELETE FROM "+tabla+" WHERE id_de_cliente = ?";
+            String consulta = "DELETE FROM "+tabla+" WHERE id_de_tarjeta = ?";
             PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
             preparedStatement.setInt(1, id_de_cliente);
             preparedStatement.executeUpdate();
@@ -157,31 +159,49 @@ public class Clientes_DAO {
             e.printStackTrace();
         }
     }
-// funciones muy especificas
-public  static Map<Integer, String> seleccionar_clientes() throws SQLException, SQLException { // cuando puse esta madre solo chatgpt
-    // y dios sabian lo que hacia
-    // ahora solo chatgpt lo sabe pero perdi el prompt perdon zumaya
-    Map<Integer, String> id_autos_y_nombre_autos = new HashMap<>();
-    if (dbConnect == null){
-        dbConnect = new Conexion();
-    }
-    try (Connection conexion = dbConnect.getConnection()){
-        PreparedStatement ps = null;
-        try{
-            String query = "SELECT id_de_cliente, apellido FROM clientes";
-            ps = conexion.prepareStatement(query);
+
+    public static boolean existencia_tarjeta(int id) throws SQLException {
+        try (Connection conexion = dbConnect.getConnection()) {
+            PreparedStatement ps = conexion.prepareStatement("SELECT COUNT(*) AS count FROM tarjetas_de_clientes WHERE identificador_cliente = ?");
+            ps.setString(1, String.valueOf(id));
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int idCliente = rs.getInt("id_de_cliente");
-                String apellidoCliente = rs.getString("apellido");
-                id_autos_y_nombre_autos.put(idCliente,apellidoCliente); // selecciona el id del cliente y su apellido correspondiente, los guarda en un hasmap y boom aparecen en el combobox
+
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                return count > 0;
             }
-        }catch (Exception e){
-            System.out.println(e);
         }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-    return id_autos_y_nombre_autos;
-}
+    // funciones muy especificas
+    public  static Map<Integer, String> seleccionar_clientes() throws SQLException, SQLException {
+        // cuando puse esta madre solo chatgpt
+        // y dios sabian lo que hacia
+        // ahora solo chatgpt lo sabe pero perdi el prompt perdon zumaya
+        Map<Integer, String> id_autos_y_nombre_autos = new HashMap<>();
+        if (dbConnect == null){
+            dbConnect = new Conexion();
+        }
+        try (Connection conexion = dbConnect.getConnection()){
+            PreparedStatement ps = null;
+            try{
+                String query = "SELECT id_de_cliente, apellido FROM clientes";
+                ps = conexion.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int idCliente = rs.getInt("id_de_cliente");
+                    String apellidoCliente = rs.getString("apellido");
+                    id_autos_y_nombre_autos.put(idCliente,apellidoCliente); // selecciona el id del cliente y su apellido correspondiente, los guarda en un hasmap y boom aparecen en el combobox
+                }
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        }
+        return id_autos_y_nombre_autos;
+    }
     public static String[] nombres_de_columnas(String nombreTabla){
         String nombres_columnas[] = new String[2];
 

@@ -29,21 +29,19 @@ public class Rentas_DAO {
         return new Object[0][];
     }
 
-    public static String[] seleccionar_columna(String consulta){
+    public static String[] seleccionar_columna(String consulta) {
         try (Connection conexion = dbConnect.getConnection()) {
-            ArrayList<String> datos_seleccionados = new ArrayList<String>();
-            PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
+            ArrayList<String> datos_seleccionados = new ArrayList<>();
+            PreparedStatement preparedStatement = conexion.prepareStatement(consulta );
             ResultSet resultSet = preparedStatement.executeQuery();
 
             ResultSetMetaData metaData = resultSet.getMetaData();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 datos_seleccionados.add(resultSet.getString(1));
             }
+
             String[] arreglo_columna = datos_seleccionados.toArray(new String[0]);
-            for (int i = 0; i<arreglo_columna.length; i++){
-                System.out.println(arreglo_columna.length);
-            }
             return arreglo_columna;
         } catch (SQLException e) {
             e.printStackTrace();
