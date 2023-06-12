@@ -11,8 +11,8 @@ public class FuncionesSQL {
     static void insertar_a_tabla(String datos_a_ingresar[], String nombre_tabla) throws SQLException {
         SQL.insertar_datos(datos_a_ingresar,nombre_tabla);
     }
-    static void actualizar_tabla(String datos_a_ingresar[], String query){
-        SQL.editar_tabla(datos_a_ingresar,query);
+    static void actualizar_tabla(String datos_a_ingresar[], String nombre_tabla ,String columnas_a_modificar, String discriminador, int id){
+        SQL.editar_tabla(datos_a_ingresar, nombre_tabla, columnas_a_modificar, discriminador, id);
     }
     static void borrar_registro(String tabla_nombre, String discriminador ,int id){
         SQL.eliminar_registro(tabla_nombre,discriminador,id);

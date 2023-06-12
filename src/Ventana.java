@@ -38,6 +38,14 @@ public class Ventana extends JFrame {
     public Ventana() throws SQLException {
         Conexion.crearBaseDeDatosSiNoExiste();
         Conexion.crearTablasSiNoExisten();
+        String[] dasd = {"4", "EAAA", "Marca1", "Categoria1", "10000", "10000.00", "src/img/auto1"};
+
+        /*
+        FuncionesSQL.insertar_a_tabla(dasd, "autos");
+        FuncionesSQL.borrar_registro("autos", "id_de_auto", 5);
+        String[] dasd2 = {"3", "3", "edit", "10000", "10000.00", "src/img/auto1"};
+        FuncionesSQL.actualizar_tabla(dasd2,"autos","nombre_auto = ?, marca = ?, categoria = ?, kilometraje = ?, costo = ?, imagen_dir = ?", "id_de_auto", 6);
+        */
 
         this.setVisible(true);
         this.setSize(1000, 800);
@@ -2712,7 +2720,12 @@ public class Ventana extends JFrame {
 
         fechaDeDevolucionTF.setText((Clientes_Service.obtener_celda
                 ("SELECT fecha_de_devolucion from rentas WHERE id_de_renta = " + id_de_renta_a_editar)));
+        fechaCadTF.setDocument(new Fechas.NumericDocument());
+            AbstractDocument documentoFiltroCad = (AbstractDocument) fechaCadTF.getDocument();
+            documentoFiltroCad.setDocumentFilter(new Fechas.FechaDocumentFilter());
 
+        fechaCadTF.setText((Tarjetas_Service.obtener_celda
+                ("SELECT fecha_caducidad FROM rentas WHERE id_de_renta = " + id_de_renta_a_editar)));
         calcularCostoBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

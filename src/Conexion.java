@@ -83,7 +83,18 @@ public class Conexion {
                 ps.executeUpdate();
 
                 query = "INSERT IGNORE INTO autos " +
-                        "(nombre_auto, marca, categoria, kilometraje, costo, imagen_dir) VALUES ('Auto1', 'Marca1', 'Categoria1', '10000', 10000.00, 'src/img/auto1'), ('Auto2', 'Marca2', 'Categoria2', '20000', 20000.00, 'src/img/auto1'), ('Auto3', 'Marca3', 'Categoria3', '30000', 30000.00, 'src/img/auto1');";
+                        "(id_de_auto,nombre_auto, marca, categoria, kilometraje, costo, imagen_dir) VALUES " +
+                        "('1','Auto1', 'Marca1', 'Categoria1', '10000', 10000.00, 'src/img/auto1'), ('2','Auto2', 'Marca2', 'Categoria2', '20000', 20000.00, 'src/img/auto1'), ('3','Auto3', 'Marca3', 'Categoria3', '30000', 30000.00, 'src/img/auto1');";
+                ps = conexion.prepareStatement(query);
+                ps.executeUpdate();
+
+                query = "INSERT IGNORE INTO clientes " +
+                        "(id_de_cliente,nombre, apellido, correo, telefono) VALUES " +
+                        "('1','Pancho', 'Alejandro', 'alu.uabcs@gmail.com', '6121174106'),"+
+                        "('2','Ramses', 'Accesible', 'ramses@ramses.com', '6121185436'),"+
+                        "('3','Zumaya', 'Zumaya', 'bioshock_4@2023.com', '6124564106'),"+
+                        "('4','Oreo', 'Stan', 'poop_tart@gmail.com', '6123344566');";
+
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
 

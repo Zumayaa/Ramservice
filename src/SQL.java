@@ -116,11 +116,11 @@ public class SQL {
             PreparedStatement ps = null;
             String columnas_de_insercion[] = nombres_de_columnas(tabla_nombre);
             try{
-                String query = "INSERT INTO `"+tabla_nombre+"` ("+columnas_de_insercion[0]+") VALUES ("+columnas_de_insercion[1]+");";
+                String query = "INSERT IGNORE INTO `"+tabla_nombre+"` ("+columnas_de_insercion[0]+") VALUES ("+columnas_de_insercion[1]+");";
                 ps = conexion.prepareStatement(query);
                 ps.setString(1, null);
                 int pos = 0;
-                for (int i = 2; i<datos_a_insertar.length; i++){
+                for (int i = 2; i<=datos_a_insertar.length; i++){
                     ps.setString(i,datos_a_insertar[pos++]);
                 }
                 ps.executeUpdate();
@@ -129,13 +129,16 @@ public class SQL {
             }
         }
     }
-    public static void editar_tabla(String datos_a_actualizar[], String query) {
+    public static void editar_tabla(String datos_a_actualizar[], String nombre_tabla ,String columnas_a_modificar, String discriminador, int id) {
         try (Connection conexion = dbConnect.getConnection()) {
-            String consulta = query;
+            /*if (columnas_a_modificar.equals("Todo")){
+                String nombres
+                columnas_a_modificar = nombres_de_columnas(nombre_tabla);
+            }*/
+            String consulta = "UPDATE "+nombre_tabla+" SET "+columnas_a_modificar+" WHERE "+discriminador+" = " + id;
             PreparedStatement ps = conexion.prepareStatement(consulta);
-            ps.setString(1,null);
-            for (int i = 2; i<= datos_a_actualizar.length; i++){
-                ps.setString(i,datos_a_actualizar[i-2]);
+            for (int i = 1; i<= datos_a_actualizar.length; i++){
+                ps.setString(i,datos_a_actualizar[i-1]);
             }
             ps.executeUpdate();
         } catch (SQLException e) {

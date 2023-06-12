@@ -63,7 +63,12 @@ public class Clientes_Service {
         }
         else if(fecha_de_caducidad.isEmpty() && numero_de_tarjeta.isEmpty() && cvv.isEmpty() // verifica que los campos de la tarjeta estén vacios
                 && (!nombre.isEmpty() && !apellido.isEmpty() && !correo.isEmpty() && !telefono.isEmpty())){ // verifica que la informacion del cliente no estén vacios
-            mensaje = "Permitido sin tarjeta";
+                if (!correo_existe){
+                    mensaje = "Permitido sin tarjeta";
+                }
+                else{
+                    mensaje += "El correo ya se encuentra registrado\n";
+                }
         }
         else{
             if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || telefono.isEmpty() ||
