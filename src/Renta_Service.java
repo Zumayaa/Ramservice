@@ -47,31 +47,40 @@ public class Renta_Service {
         Rentas_DAO.borrar_renta_por_id(id_renta);
     }
     // funciones para hacer validaciones
-    public static String comprobar_fechas(int id_auto, String fecha_de_renta, String fecha_de_devolucion, String fecha_de_caducidad){
+    public static String comprobar_fechas(int id_auto, String fecha_de_renta, String fecha_de_devolucion, String fecha_de_caducidad, String numero_tarjeta, String cvv){
         String mensaje = "";
-        if (!Rentas_DAO.conflicto_entre_fechas(id_auto, fecha_de_renta, fecha_de_devolucion)
-                && Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")
-                && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
-            mensaje = "Permitido";
-        }
-        else {
-            if (Rentas_DAO.conflicto_entre_fechas(id_auto, fecha_de_renta, fecha_de_devolucion)){
-                mensaje += "Fecha no disponible\n";
-            }
-            if (!Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")){
-                mensaje += "Fecha ilegal\n";
-            }
-            if (!Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
-                mensaje += "Fecha de tarjeta caducada\n";
+            if(!fecha_de_renta.isEmpty() && !fecha_de_devolucion.isEmpty() && !fecha_de_caducidad.isEmpty() && !cvv.isEmpty() && !numero_tarjeta.isEmpty()){
+
+                if (!Rentas_DAO.conflicto_entre_fechas(id_auto, fecha_de_renta, fecha_de_devolucion)
+                        && Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")
+                        && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
+                    mensaje = "Permitido";
+                }
+                else {
+                    if (Rentas_DAO.conflicto_entre_fechas(id_auto, fecha_de_renta, fecha_de_devolucion)){
+                        mensaje += "Fecha no disponible\n";
+                    }
+                    if (!Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")){
+                        mensaje += "Fecha ilegal\n";
+                    }
+                    if (!Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
+                        mensaje += "Fecha de tarjeta caducada\n";
+                    }
             }
 
         }
-        return mensaje;
+            else{
+                mensaje += "Rellene todos los campos\n";
+            }
+
+            return mensaje;
     }
 
-    public static String comprobar_fechas_editar(int id_de_renta_a_editar,int id_auto, String fecha_de_renta, String fecha_de_devolucion, String fecha_de_caducidad){
+    public static String comprobar_fechas_editar(int id_de_renta_a_editar,int id_auto, String fecha_de_renta, String fecha_de_devolucion, String fecha_de_caducidad, String numero_tarjeta, String cvv){
         String mensaje = "";
-        if(!Rentas_DAO.conflicto_entre_fechas(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion)
+
+        if(!fecha_de_renta.isEmpty() && !fecha_de_devolucion.isEmpty() && !fecha_de_caducidad.isEmpty() && !cvv.isEmpty() && !numero_tarjeta.isEmpty()){
+            if(!Rentas_DAO.conflicto_entre_fechas(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion)
                 && Fechas.verificarLegalidadDeFechas(fecha_de_renta,fecha_de_devolucion, "RENTAR")
                 && Fechas.verificarLegalidadDeFechas(Fechas.obtenerFechaActual(),fecha_de_caducidad, "CADUCIDAD")){
             mensaje = "Permitido";
@@ -87,8 +96,11 @@ public class Renta_Service {
                 mensaje += "Fecha de tarjeta caducada\n";
             }
         }
-
-        return mensaje;
+    }
+        else{
+            mensaje += "Rellene todos los campos\n";
+        }
+            return mensaje;
     }
 
     // funciones generales

@@ -38,9 +38,10 @@ public class Ventana extends JFrame {
     public Ventana() throws SQLException {
         Conexion.crearBaseDeDatosSiNoExiste();
         Conexion.crearTablasSiNoExisten();
+        /*
         String[] dasd = {"4", "EAAA", "Marca1", "Categoria1", "10000", "10000.00", "src/img/auto1"};
 
-        /*
+
         FuncionesSQL.insertar_a_tabla(dasd, "autos");
         FuncionesSQL.borrar_registro("autos", "id_de_auto", 5);
         String[] dasd2 = {"3", "3", "edit", "10000", "10000.00", "src/img/auto1"};
@@ -1936,7 +1937,13 @@ public class Ventana extends JFrame {
                 String id_cl [] = (String.valueOf(idClientesCB.getSelectedItem()).split(":"));
                 id_cl[0] = id_cl[0].replace(" ", "");
                 Clientes_Service.eliminar_cliente(Integer.parseInt(id_cl[0]));
-                Tarjetas_Service.eliminar_tarjeta(Integer.parseInt(Tarjetas_Service.obtener_celda("SELECT id_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = '" + id_cl[0] + "'")));
+                try {
+                    if (Tarjetas_Service.existencia_de_tarjeta_con_usuario(Integer.parseInt(id_cl[0]))){
+                        Tarjetas_Service.eliminar_tarjeta(Integer.parseInt(Tarjetas_Service.obtener_celda("SELECT id_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = '" + id_cl[0] + "'")));
+                    };
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 //idClientesCB.removeItem(idClientesCB.getSelectedItem());
                 DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTablaClientes,"SELECT * FROM clientes");
                     tabla_clientes.setModel(dtm);
@@ -2388,7 +2395,7 @@ public class Ventana extends JFrame {
             String fecha_caducidad = fechaCadTF.getText();
             String cvv = cvvTF.getText();
                 try {
-                    String estado_de_registro = Renta_Service.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad);
+                    String estado_de_registro = Renta_Service.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad, numero_tarjeta, cvv);
                     switch (estado_de_registro){
                         case "Permitido":
                             Renta_Service.crearRenta(
@@ -2755,7 +2762,7 @@ public class Ventana extends JFrame {
                 String fecha_caducidad = fechaCadTF.getText();
                 String cvv = cvvTF.getText();
                 try {
-                    String estado_de_registro = Renta_Service.comprobar_fechas_editar(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion,fecha_caducidad);
+                    String estado_de_registro = Renta_Service.comprobar_fechas_editar(id_de_renta_a_editar,id_auto, fecha_de_renta, fecha_de_devolucion,fecha_caducidad, numero_tarjeta, cvv);
                     switch (estado_de_registro){
                         case "Permitido":
                             JOptionPane.showMessageDialog(null, "Edición exitosa", "Bien!", JOptionPane.INFORMATION_MESSAGE);
