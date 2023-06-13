@@ -129,16 +129,28 @@ public class SQL {
             }
         }
     }
+
     public static void editar_tabla(String datos_a_actualizar[], String nombre_tabla ,String columnas_a_modificar, String discriminador, int id) {
         try (Connection conexion = dbConnect.getConnection()) {
-            /*if (columnas_a_modificar.equals("Todo")){
-                String nombres
-                columnas_a_modificar = nombres_de_columnas(nombre_tabla);
-            }*/
             String consulta = "UPDATE "+nombre_tabla+" SET "+columnas_a_modificar+" WHERE "+discriminador+" = " + id;
             PreparedStatement ps = conexion.prepareStatement(consulta);
             for (int i = 1; i<= datos_a_actualizar.length; i++){
                 ps.setString(i,datos_a_actualizar[i-1]);
+            }
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void editar_toda_tabla(String datos_a_actualizar[], String nombre_tabla, String discriminador, int id) {
+        try (Connection conexion = dbConnect.getConnection()) {
+            String [] columnas = nombres_de_columnas_editar(nombre_tabla);
+            String consulta = "UPDATE "+nombre_tabla+" SET "+columnas[0]+" WHERE "+discriminador+" = " + id;
+            System.out.println(columnas[0]);
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setInt(1,id);
+            for (int i = 2; i<= datos_a_actualizar.length+1; i++){
+                ps.setString(i,datos_a_actualizar[i-2]);
             }
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -176,5 +188,28 @@ public class SQL {
             e.printStackTrace();
         }
         return nombres_columnas;
+    }
+    public static String[] nombres_de_columnas_editar(String nombreTabla){
+        String nombres_columnas[] = new String[2];
+
+        try (Connection conexion = dbConnect.getConnection()) {
+            DatabaseMetaData metaData = conexion.getMetaData();
+            ResultSet resultSet = metaData.getColumns(null, null, nombreTabla, null);
+            ArrayList<String> nombresColumnasAL = new ArrayList<>();
+            while (resultSet.next()) {
+                String nombreColumna = resultSet.getString("COLUMN_NAME");
+                nombresColumnasAL.add("`"+nombreColumna+"` = ?");
+            }
+            String[] arregloColumnas = nombresColumnasAL.toArray(new String[0]);
+            nombres_columnas[0] = String.join(",", arregloColumnas);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nombres_columnas;
+    }
+    static void fusionar_signos(String [] arreglo, String fusion){
+        for (int i = 0; i<arreglo.length;i++){
+            arreglo[i] = arreglo[i] + fusion;
+        }
     }
 }

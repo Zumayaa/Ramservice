@@ -13,7 +13,12 @@ public class FuncionesSQL {
     }
     static void actualizar_tabla(String datos_a_ingresar[], String nombre_tabla ,String columnas_a_modificar, String discriminador, int id){
         SQL.editar_tabla(datos_a_ingresar, nombre_tabla, columnas_a_modificar, discriminador, id);
-    }
+    }// se ocupa especificar que columna se va a modificar asi "nombre_col1 = ?, nombre_col2 = ?"
+    // el discriminador es la columna por la cual se va a identificar que fila se debe de actualizar generalmente son los id
+    static void actualizar_tabla_completa(String datos_a_ingresar[], String nombre_tabla, String discriminador, int id){
+        SQL.editar_toda_tabla(datos_a_ingresar, nombre_tabla, discriminador, id);
+    } // no se ocupa especificar que columnas se van a actualizar
+    // el discriminador es la columna por la cual se va a identificar que fila se debe de actualizar generalmente son los id
     static void borrar_registro(String tabla_nombre, String discriminador ,int id){
         SQL.eliminar_registro(tabla_nombre,discriminador,id);
     }
