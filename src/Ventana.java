@@ -16,6 +16,29 @@ import java.util.List;
 import java.util.Map;
 
 public class Ventana extends JFrame {
+
+
+    public ArrayList<JPanel> autos = new ArrayList<>();
+
+    public ArrayList<JPanel> marcas = new ArrayList<>();
+
+    public ArrayList<JPanel> categorias = new ArrayList<>();
+
+    public ArrayList<JPanel> autosEditar = new ArrayList<>();
+
+    public ArrayList<JPanel> marcasEditar = new ArrayList<>();
+
+    public ArrayList<JPanel> categoriasEditar = new ArrayList<>();
+
+    public ArrayList<JButton> botoneslista = new ArrayList<>();
+
+    public ArrayList<JTextField> textosAutos = new ArrayList<>();
+
+    public ArrayList<JPanel> autosEdistar = new ArrayList<>();
+
+    public ArrayList<JPanel> autosEditdar = new ArrayList<>();
+
+    private int panelCatX=84,panelCatY=75,panelMarcX=84,panelMarcY=75;
     public JPanel panel = null;
     private String anterior = "cargaPantalla";
     private String actual = "login";
@@ -75,9 +98,12 @@ public class Ventana extends JFrame {
         JButton regresarBtn = new JButton();
         regresarBtn.setLocation(940,panelActualLbl.getY()+20);
         regresarBtn.setSize(40,40);
+        regresarBtn.setBackground(Color.white);
         ImageIcon regresarBotonIcon = new ImageIcon("src/img/botonRegresarIcon.png");
         regresarBtn.setIcon(regresarBotonIcon);
         regresarBtn.setVisible(true);
+        regresarBtn.setFocusPainted(false);
+        regresarBtn.setBorderPainted(false);
         regresarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -2881,6 +2907,7 @@ public class Ventana extends JFrame {
     public JPanel categorias() {
         anterior = "home";
 
+
         JPanel categoriasPanel = new JPanel();
         categoriasPanel.setForeground(Color.BLACK);
         categoriasPanel.setSize(1000, 800);
@@ -2888,37 +2915,41 @@ public class Ventana extends JFrame {
         categoriasPanel.setLayout(null);
         categoriasPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JTextArea txtrLosSuvsDeportivos = new JTextArea();
-        txtrLosSuvsDeportivos.setText("Los SUVs deportivos son \r\nvehículos versátiles que \r\ncombinan el rendimiento\r\n deportivo con la practicidad\r\n y el espacio de carga adicional");
-        txtrLosSuvsDeportivos.setOpaque(false);
-        txtrLosSuvsDeportivos.setForeground(Color.BLACK);
-        txtrLosSuvsDeportivos.setFont(new Font("Tahoma", Font.BOLD, 18));
-        txtrLosSuvsDeportivos.setEditable(false);
-        txtrLosSuvsDeportivos.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        txtrLosSuvsDeportivos.setBounds(345, 449, 291, 143);
-        categoriasPanel.add(txtrLosSuvsDeportivos);
+        JButton crearCategorias = new JButton("Crear categoría");
+        crearCategorias.setBackground(Color.decode("#38b6ff"));
+        crearCategorias.setSize(300,30);
+        crearCategorias.setLocation(350,20);
+        crearCategorias.setFocusPainted(false);
+        crearCategorias.setForeground(Color.white);
+        crearCategorias.setBorderPainted(false);
+        crearCategorias.setFont(new Font("Tahoma", Font.BOLD, 18));
+        categoriasPanel.add(crearCategorias);
 
-        JTextArea txtrEstaCategoraIncluye = new JTextArea();
-        txtrEstaCategoraIncluye.setForeground(Color.BLACK);
-        txtrEstaCategoraIncluye.setOpaque(false);
-        txtrEstaCategoraIncluye.setEditable(false);
-        txtrEstaCategoraIncluye.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        txtrEstaCategoraIncluye.setFont(new Font("Tahoma", Font.BOLD, 18));
-        txtrEstaCategoraIncluye.setText("Esta categoría incluye \r\nvehículos elegantes y \r\ncómodos, ideales para\r\nclientes que buscan un\r\nviaje sofisticado y de alto nivel");
-        txtrEstaCategoraIncluye.setBounds(345, 131, 291, 115);
-        categoriasPanel.add(txtrEstaCategoraIncluye);
 
-        JLabel lblNewLabel_4_2 = new JLabel("SUVs deportivos");
-        lblNewLabel_4_2.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_4_2.setForeground(Color.BLACK);
-        lblNewLabel_4_2.setFont(new Font("Tahoma", Font.BOLD, 17));
-        lblNewLabel_4_2.setBounds(133, 562, 166, 30);
-        categoriasPanel.add(lblNewLabel_4_2);
+        JPanel panelCat = new JPanel();
+        panelCat.setOpaque(true);
+        panelCat.setLayout(null);
+        panelCat.setBackground(Color.LIGHT_GRAY);
+        panelCat.setBounds(panelCatX, panelCatY, 826, 232);
+        categoriasPanel.add(panelCat);
 
-        JLabel lblNewLabel_2_1 = new JLabel("");
-        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/image 11.png"));
-        lblNewLabel_2_1.setBounds(109, 424, 226, 140);
-        categoriasPanel.add(lblNewLabel_2_1);
+
+     //   panelY+=314;
+
+
+
+        JTextArea sedanLujo = new JTextArea();
+        sedanLujo.setForeground(Color.BLACK);
+        sedanLujo.setOpaque(false);
+        sedanLujo.setEditable(false);
+        sedanLujo.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        sedanLujo.setFont(new Font("Tahoma", Font.BOLD, 18));
+        sedanLujo.setText("Esta categoría incluye vehículos elegantes y cómodos, ideales para clientes que buscan un viaje sofisticado y de alto nivel");
+        sedanLujo.setBounds(268, 54, 291, 115);
+        sedanLujo.setLineWrap(true);
+        panelCat.add(sedanLujo);
+
+
 
         JButton btnEliminar = new JButton("Eliminar");
         btnEliminar.setForeground(Color.WHITE);
@@ -2926,11 +2957,32 @@ public class Ventana extends JFrame {
         btnEliminar.setFocusPainted(false);
         btnEliminar.setBorderPainted(false);
         btnEliminar.setBackground(Color.decode("#BF0000"));
-        btnEliminar.setBounds(658, 206, 226, 53);
-        categoriasPanel.add(btnEliminar);
+        btnEliminar.setBounds(585, 131, 226, 53);
+        panelCat.add(btnEliminar);
 
-        JButton btnNewButton = new JButton("Consultar");
-        btnNewButton.addActionListener(new ActionListener() {
+        JButton consultarCat = new JButton("Consultar");
+
+        consultarCat.setFocusPainted(false);
+        consultarCat.setForeground(Color.WHITE);
+        consultarCat.setFont(new Font("Tahoma", Font.BOLD, 16));
+        consultarCat.setBorderPainted(false);
+        consultarCat.setBackground(Color.BLACK);
+        consultarCat.setBounds(585, 41, 226, 55);
+        panelCat.add(consultarCat);
+
+        JLabel nombCat = new JLabel("Sedanes de lujo");
+        nombCat.setForeground(Color.BLACK);
+        nombCat.setHorizontalAlignment(SwingConstants.CENTER);
+        nombCat.setFont(new Font("Tahoma", Font.BOLD, 17));
+        nombCat.setBounds(56, 175, 166, 30);
+        panelCat.add(nombCat);
+
+        JLabel imgCat = new JLabel("");
+        imgCat.setIcon(new ImageIcon("src/img/image 12.png"));
+        imgCat.setBounds(32, 29, 226, 140);
+        panelCat.add(imgCat);
+
+        consultarCat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
                 actual ="consultarCategorias";
@@ -2945,64 +2997,9 @@ public class Ventana extends JFrame {
 
             }
         });
-        btnNewButton.setFocusPainted(false);
-        btnNewButton.setForeground(Color.WHITE);
-        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnNewButton.setBorderPainted(false);
-        btnNewButton.setBackground(Color.BLACK);
-        btnNewButton.setBounds(658, 116, 226, 55);
-        categoriasPanel.add(btnNewButton);
-
-        JLabel lblNewLabel_4 = new JLabel("Sedanes de lujo");
-        lblNewLabel_4.setForeground(Color.BLACK);
-        lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 17));
-        lblNewLabel_4.setBounds(133, 248, 166, 30);
-        categoriasPanel.add(lblNewLabel_4);
-
-        JLabel lblNewLabel_2 = new JLabel("");
-        lblNewLabel_2.setIcon(new ImageIcon("src/img/image 12.png"));
-        lblNewLabel_2.setBounds(109, 110, 226, 140);
-        categoriasPanel.add(lblNewLabel_2);
 
 
-        JLabel lblNewLabel = new JLabel("");
-        lblNewLabel.setOpaque(true);
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBackground(Color.LIGHT_GRAY);
-        lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-        lblNewLabel.setBounds(84, 75, 826, 232);
-        categoriasPanel.add(lblNewLabel);
 
-        JButton btnEliminar_1 = new JButton("Eliminar");
-        btnEliminar_1.setForeground(Color.WHITE);
-        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnEliminar_1.setFocusPainted(false);
-        btnEliminar_1.setBorderPainted(false);
-        btnEliminar_1.setBackground(new Color(191, 0, 0));
-        btnEliminar_1.setBounds(658, 520, 226, 53);
-        categoriasPanel.add(btnEliminar_1);
-
-        JButton btnNewButton_1 = new JButton("Consultar");
-        btnNewButton_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-        btnNewButton_1.setForeground(Color.WHITE);
-        btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnNewButton_1.setFocusPainted(false);
-        btnNewButton_1.setBorderPainted(false);
-        btnNewButton_1.setBackground(Color.BLACK);
-        btnNewButton_1.setBounds(658, 430, 226, 55);
-        categoriasPanel.add(btnNewButton_1);
-
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
-        lblNewLabel_1.setOpaque(true);
-        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
-        lblNewLabel_1.setBounds(84, 389, 826, 232);
-        categoriasPanel.add(lblNewLabel_1);
 
         return categoriasPanel;
     }
@@ -3010,87 +3007,93 @@ public class Ventana extends JFrame {
     public JPanel consultarCategorias() {
         anterior = "categorias";
 
-        JPanel consultarCar = new JPanel();
-        consultarCar.setForeground(Color.BLACK);
-        consultarCar.setSize(1000, 681);
-        consultarCar.setLocation(0, 80);
-        consultarCar.setLayout(null);
-        consultarCar.setBackground(Color.decode("#FFFFFF"));
+        JPanel consultarCat = new JPanel();
+        consultarCat.setForeground(Color.BLACK);
+        consultarCat.setSize(1000, 681);
+        consultarCat.setLocation(0, 80);
+        consultarCat.setLayout(null);
+        consultarCat.setBackground(Color.decode("#FFFFFF"));
 
-        JButton lblNewLabel_3 = new JButton("");
-        lblNewLabel_3.setBorderPainted(false);
-        lblNewLabel_3.setContentAreaFilled(false);
-        lblNewLabel_3.setFocusPainted(false);
-        lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_3.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        lblNewLabel_3.setBounds(652, 424, 271, 92);
-        consultarCar.add(lblNewLabel_3);
+        JButton imgConsultarCat = new JButton("");
+        imgConsultarCat.setBorderPainted(false);
+        imgConsultarCat.setContentAreaFilled(false);
+        imgConsultarCat.setFocusPainted(false);
+        imgConsultarCat.setHorizontalAlignment(SwingConstants.CENTER);
+        imgConsultarCat.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
+        imgConsultarCat.setBounds(652, 424, 271, 92);
+        consultarCat.add(imgConsultarCat);
 
-        JTextField textField_1 = new JTextField();
-        textField_1.setBorder(null);
-        textField_1.setColumns(10);
-        textField_1.setBackground(SystemColor.menu);
-        textField_1.setBounds(670, 173, 236, 219);
-        consultarCar.add(textField_1);
+        JTextArea camDescCat = new JTextArea("");
+        camDescCat.setBorder(null);
+        camDescCat.setLineWrap(true);
+        camDescCat.setBackground(SystemColor.menu);
+        camDescCat.setBounds(670, 173, 236, 219);
+        consultarCat.add(camDescCat);
 
-        JTextField textField = new JTextField();
-        textField.setBorder(null);
-        textField.setBackground(SystemColor.menu);
-        textField.setBounds(670, 84, 236, 29);
-        consultarCar.add(textField);
-        textField.setColumns(10);
+        JTextField cambNomCat = new JTextField("");
+        cambNomCat.setBorder(null);
+        cambNomCat.setBackground(SystemColor.menu);
+        cambNomCat.setBounds(670, 84, 236, 29);
+        consultarCat.add(cambNomCat);
+        cambNomCat.setColumns(10);
 
-        JLabel lblNewLabel_2_2 = new JLabel("Descripción");
-        lblNewLabel_2_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-        lblNewLabel_2_2.setBounds(670, 144, 154, 23);
-        consultarCar.add(lblNewLabel_2_2);
+        JLabel descCat = new JLabel("Descripción");
+        descCat.setFont(new Font("Tahoma", Font.BOLD, 14));
+        descCat.setBounds(670, 144, 154, 23);
+        consultarCat.add(descCat);
 
-        JLabel lblNewLabel_2 = new JLabel("Nombre de categoría");
-        lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-        lblNewLabel_2.setBounds(670, 59, 154, 23);
-        consultarCar.add(lblNewLabel_2);
+        JLabel nomActCat = new JLabel("Nombre de categoría");
+        nomActCat.setFont(new Font("Tahoma", Font.BOLD, 14));
+        nomActCat.setBounds(670, 59, 154, 23);
+        consultarCat.add(nomActCat);
 
-        JTextArea txtrLosSuvsDeportivos = new JTextArea();
-        txtrLosSuvsDeportivos.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed\r\ndo eiusmod tempor incididunt ut labore et dolore magna \r\naliqua. Ut enim ad minim veniam, quis nostrud exercitation\r\n ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\nDuis aute irure dolor in reprehenderit in voluptate velit esse \r\ncillum dolore eu fugiat nulla pariatur.");
-        txtrLosSuvsDeportivos.setOpaque(false);
-        txtrLosSuvsDeportivos.setForeground(Color.BLACK);
-        txtrLosSuvsDeportivos.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        txtrLosSuvsDeportivos.setBounds(47, 469, 497, 152);
-        consultarCar.add(txtrLosSuvsDeportivos);
+        JTextArea descActCat = new JTextArea();
+        descActCat.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
+        descActCat.setOpaque(false);
+        descActCat.setLineWrap(true);
+        descActCat.setForeground(Color.BLACK);
+        descActCat.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        descActCat.setBounds(47, 469, 497, 152);
+        consultarCat.add(descActCat);
 
-        JLabel lblNewLabel_2_1 = new JLabel("");
+        JLabel imgActCat = new JLabel("");
+        imgActCat.setHorizontalAlignment(SwingConstants.CENTER);
+        imgActCat.setIcon(new ImageIcon("src/img/image 15.png"));
+        imgActCat.setBounds(68, 134, 449, 269);
+        consultarCat.add(imgActCat);
 
-        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/image 15.png"));
-        lblNewLabel_2_1.setBounds(68, 134, 449, 269);
-        consultarCar.add(lblNewLabel_2_1);
+        JButton editBotCat = new JButton("Editar");
+        editBotCat.setForeground(Color.WHITE);
+        editBotCat.setFont(new Font("Tahoma", Font.BOLD, 16));
+        editBotCat.setFocusPainted(false);
+        editBotCat.setBorderPainted(false);
+        editBotCat.setBackground(Color.decode("#38B6FF"));
+        editBotCat.setBounds(657, 547, 260, 53);
+        consultarCat.add(editBotCat);
 
-        getContentPane().add(consultarCar);
+        JLabel cuadroEditCat = new JLabel();
+        cuadroEditCat.setVerticalAlignment(SwingConstants.BOTTOM);
+        cuadroEditCat.setOpaque(true);
+        cuadroEditCat.setHorizontalAlignment(SwingConstants.CENTER);
+        cuadroEditCat.setBackground(SystemColor.controlShadow);
+        cuadroEditCat.setBounds(632, 24, 307, 597);
+        consultarCat.add(cuadroEditCat);
 
-        JButton btnEliminar_1 = new JButton("Editar");
-        btnEliminar_1.setForeground(Color.WHITE);
-        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnEliminar_1.setFocusPainted(false);
-        btnEliminar_1.setBorderPainted(false);
-        btnEliminar_1.setBackground(Color.decode("#38B6FF"));
-        btnEliminar_1.setBounds(657, 547, 260, 53);
-        consultarCar.add(btnEliminar_1);
+        JLabel nombreActCat = new JLabel("Sedanes de lujo");
+        nombreActCat.setFont(new Font("Tahoma", Font.BOLD, 25));
+        nombreActCat.setHorizontalAlignment(SwingConstants.CENTER);
+        nombreActCat.setBounds(170, 24, 282, 58);
+        consultarCat.add(nombreActCat);
 
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
-        lblNewLabel_1.setOpaque(true);
-        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1.setBackground(SystemColor.controlShadow);
-        lblNewLabel_1.setBounds(632, 24, 307, 597);
-        consultarCar.add(lblNewLabel_1);
+        JLabel fondoDesc = new JLabel("");
+        fondoDesc.setVerticalAlignment(SwingConstants.BOTTOM);
+        fondoDesc.setOpaque(true);
+        fondoDesc.setHorizontalAlignment(SwingConstants.CENTER);
+        fondoDesc.setBackground(SystemColor.controlShadow);
+        fondoDesc.setBounds(35, 460, 517, 154);
+        consultarCat.add(fondoDesc);
 
-        JLabel lblNewLabel = new JLabel("Sedanes de lujo");
-        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBounds(170, 24, 282, 58);
-        consultarCar.add(lblNewLabel);
-
-        return consultarCar;
+        return consultarCat;
     }
 
     public JPanel marcas() {
@@ -3103,31 +3106,39 @@ public class Ventana extends JFrame {
         marcasPanel.setLayout(null);
         marcasPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JTextArea txtrLosSuvsDeportivos = new JTextArea();
-        txtrLosSuvsDeportivos.setText("Mercedes-Benz es una \r\nmarca de automóviles \r\nconocida por su lujo, calidad \r\ny elegancia. Sus vehículos \r\n,ofrecen un alto nivel de confort\r\ntecnología avanzada y un diseño\r\n sofisticado");
-        txtrLosSuvsDeportivos.setOpaque(false);
-        txtrLosSuvsDeportivos.setForeground(Color.BLACK);
-        txtrLosSuvsDeportivos.setFont(new Font("Tahoma", Font.BOLD, 18));
-        txtrLosSuvsDeportivos.setEditable(false);
-        txtrLosSuvsDeportivos.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        txtrLosSuvsDeportivos.setBounds(341, 424, 307, 162);
-        marcasPanel.add(txtrLosSuvsDeportivos);
+        JButton crearMarcas = new JButton("Crear marca");
+        crearMarcas.setBackground(Color.decode("#38b6ff"));
+        crearMarcas.setSize(300,30);
+        crearMarcas.setLocation(350,20);
+        crearMarcas.setFocusPainted(false);
+        crearMarcas.setForeground(Color.white);
+        crearMarcas.setBorderPainted(false);
+        crearMarcas.setFont(new Font("Tahoma", Font.BOLD, 18));
+        marcasPanel.add(crearMarcas);
 
-        JTextArea txtrEstaCategoraIncluye = new JTextArea();
-        txtrEstaCategoraIncluye.setForeground(Color.BLACK);
-        txtrEstaCategoraIncluye.setOpaque(false);
-        txtrEstaCategoraIncluye.setEditable(false);
-        txtrEstaCategoraIncluye.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        txtrEstaCategoraIncluye.setFont(new Font("Tahoma", Font.BOLD, 18));
-        txtrEstaCategoraIncluye.setText("BMW es una marca de \r\nautomóviles de prestigio\r\nque se destaca por su \r\nrendimiento y estilo. Sus\r\n vehículos combinan la \r\ndeportividad con el lujo y \r\nla elegancia");
-        txtrEstaCategoraIncluye.setBounds(345, 110, 291, 162);
-        marcasPanel.add(txtrEstaCategoraIncluye);
 
-        JLabel lblNewLabel_2_1 = new JLabel("");
-        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/image 11 (1).png"));
-        lblNewLabel_2_1.setBounds(109, 424, 226, 140);
-        marcasPanel.add(lblNewLabel_2_1);
+        JPanel panelMarc = new JPanel();
+        panelMarc.setOpaque(true);
+        panelMarc.setLayout(null);
+        panelMarc.setBackground(Color.LIGHT_GRAY);
+        panelMarc.setBounds(panelMarcX, panelMarcY, 826, 232);
+        marcasPanel.add(panelMarc);
+
+
+    //    panelY+=314;
+
+
+        JTextArea BMW = new JTextArea();
+        BMW.setForeground(Color.BLACK);
+        BMW.setOpaque(false);
+        BMW.setEditable(false);
+        BMW.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        BMW.setFont(new Font("Tahoma", Font.BOLD, 18));
+        BMW.setText("BMW es una marca de automóviles de prestigio que se destaca por su rendimiento y estilo. Sus vehículos combinan la deportividad con el lujo y la elegancia");
+        BMW.setBounds(268, 54, 291, 130);
+        BMW.setLineWrap(true);
+        panelMarc.add(BMW);
+
 
         JButton btnEliminar = new JButton("Eliminar");
         btnEliminar.setForeground(Color.WHITE);
@@ -3135,14 +3146,30 @@ public class Ventana extends JFrame {
         btnEliminar.setFocusPainted(false);
         btnEliminar.setBorderPainted(false);
         btnEliminar.setBackground(Color.decode("#BF0000"));
-        btnEliminar.setBounds(658, 206, 226, 53);
-        marcasPanel.add(btnEliminar);
+        btnEliminar.setBounds(585, 131, 226, 53);
+        panelMarc.add(btnEliminar);
 
-        JButton btnNewButton = new JButton("Consultar");
-        btnNewButton.addActionListener(new ActionListener() {
+        JButton consultarMarc = new JButton("Consultar");
+        consultarMarc.setFocusPainted(false);
+        consultarMarc.setForeground(Color.WHITE);
+        consultarMarc.setFont(new Font("Tahoma", Font.BOLD, 16));
+        consultarMarc.setBorderPainted(false);
+        consultarMarc.setBackground(Color.BLACK);
+        consultarMarc.setBounds(585, 41, 226, 55);
+        panelMarc.add(consultarMarc);
+
+
+
+        JLabel imgMarc = new JLabel("");
+        imgMarc.setHorizontalAlignment(SwingConstants.CENTER);
+        imgMarc.setIcon(new ImageIcon("src/img/13.png"));
+        imgMarc.setBounds(32, 32, 226, 140);
+        panelMarc.add(imgMarc);
+
+        consultarMarc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 anterior = actual;
-                actual = "consultarMarcas";
+                actual ="consultarMarcas";
                 try {
                     limpiarVentana();
                 } catch (SQLException ex) {
@@ -3151,61 +3178,9 @@ public class Ventana extends JFrame {
 
                 revalidate();
                 repaint();
-            }
-        });
-        btnNewButton.setFocusPainted(false);
-        btnNewButton.setForeground(Color.WHITE);
-        btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnNewButton.setBorderPainted(false);
-        btnNewButton.setBackground(Color.BLACK);
-        btnNewButton.setBounds(658, 116, 226, 55);
-        marcasPanel.add(btnNewButton);
-
-        JLabel lblNewLabel_2 = new JLabel("");
-        lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_2.setIcon(new ImageIcon("src/img/13.png"));
-        lblNewLabel_2.setBounds(109, 110, 226, 140);
-        marcasPanel.add(lblNewLabel_2);
-
-
-        JLabel lblNewLabel = new JLabel("");
-        lblNewLabel.setOpaque(true);
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBackground(Color.LIGHT_GRAY);
-        lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-        lblNewLabel.setBounds(84, 75, 826, 232);
-        marcasPanel.add(lblNewLabel);
-
-        JButton btnEliminar_1 = new JButton("Eliminar");
-        btnEliminar_1.setForeground(Color.WHITE);
-        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnEliminar_1.setFocusPainted(false);
-        btnEliminar_1.setBorderPainted(false);
-        btnEliminar_1.setBackground(new Color(191, 0, 0));
-        btnEliminar_1.setBounds(658, 520, 226, 53);
-        marcasPanel.add(btnEliminar_1);
-
-        JButton btnNewButton_1 = new JButton("Consultar");
-        btnNewButton_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
 
             }
         });
-        btnNewButton_1.setForeground(Color.WHITE);
-        btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnNewButton_1.setFocusPainted(false);
-        btnNewButton_1.setBorderPainted(false);
-        btnNewButton_1.setBackground(Color.BLACK);
-        btnNewButton_1.setBounds(658, 430, 226, 55);
-        marcasPanel.add(btnNewButton_1);
-
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
-        lblNewLabel_1.setOpaque(true);
-        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1.setBackground(Color.LIGHT_GRAY);
-        lblNewLabel_1.setBounds(84, 389, 826, 232);
-        marcasPanel.add(lblNewLabel_1);
 
         return marcasPanel;
     }
@@ -3214,87 +3189,91 @@ public class Ventana extends JFrame {
         anterior = "marcas";
 
         JPanel consultarMarcas = new JPanel();
-        consultarMarcas.setRequestFocusEnabled(false);
         consultarMarcas.setForeground(Color.BLACK);
         consultarMarcas.setSize(1000, 681);
         consultarMarcas.setLocation(0, 80);
         consultarMarcas.setLayout(null);
         consultarMarcas.setBackground(Color.decode("#FFFFFF"));
 
-        JButton lblNewLabel_3 = new JButton("");
-        lblNewLabel_3.setBorderPainted(false);
-        lblNewLabel_3.setRequestFocusEnabled(false);
-        lblNewLabel_3.setFocusPainted(false);
-        lblNewLabel_3.setContentAreaFilled(false);
-        lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_3.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        lblNewLabel_3.setBounds(652, 424, 271, 92);
-        consultarMarcas.add(lblNewLabel_3);
+        JButton imgConsultarMarc = new JButton("");
+        imgConsultarMarc.setBorderPainted(false);
+        imgConsultarMarc.setContentAreaFilled(false);
+        imgConsultarMarc.setFocusPainted(false);
+        imgConsultarMarc.setHorizontalAlignment(SwingConstants.CENTER);
+        imgConsultarMarc.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
+        imgConsultarMarc.setBounds(652, 424, 271, 92);
+        consultarMarcas.add(imgConsultarMarc);
 
-        JTextField textField_1 = new JTextField();
-        textField_1.setHorizontalAlignment(SwingConstants.LEFT);
-        textField_1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        textField_1.setBorder(null);
-        textField_1.setColumns(10);
-        textField_1.setBackground(SystemColor.menu);
-        textField_1.setBounds(670, 173, 236, 219);
-        consultarMarcas.add(textField_1);
+        JTextArea camDescMarc = new JTextArea("");
+        camDescMarc.setBorder(null);
+        camDescMarc.setLineWrap(true);
+        camDescMarc.setBackground(SystemColor.menu);
+        camDescMarc.setBounds(670, 173, 236, 219);
+        consultarMarcas.add(camDescMarc);
 
-        JTextField textField = new JTextField();
-        textField.setBorder(null);
-        textField.setBackground(SystemColor.menu);
-        textField.setBounds(670, 84, 236, 29);
-        consultarMarcas.add(textField);
-        textField.setColumns(10);
+        JTextField cambNomMarc = new JTextField("");
+        cambNomMarc.setBorder(null);
+        cambNomMarc.setBackground(SystemColor.menu);
+        cambNomMarc.setBounds(670, 84, 236, 29);
+        consultarMarcas.add(cambNomMarc);
+        cambNomMarc.setColumns(10);
 
-        JLabel lblNewLabel_2_2 = new JLabel("Descripción");
-        lblNewLabel_2_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-        lblNewLabel_2_2.setBounds(670, 144, 154, 23);
-        consultarMarcas.add(lblNewLabel_2_2);
+        JLabel descMarc = new JLabel("Descripción");
+        descMarc.setFont(new Font("Tahoma", Font.BOLD, 14));
+        descMarc.setBounds(670, 144, 154, 23);
+        consultarMarcas.add(descMarc);
 
-        JLabel lblNewLabel_2 = new JLabel("Nombre de marca");
-        lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-        lblNewLabel_2.setBounds(670, 59, 154, 23);
-        consultarMarcas.add(lblNewLabel_2);
+        JLabel nomActMarc = new JLabel("Nombre de marca");
+        nomActMarc.setFont(new Font("Tahoma", Font.BOLD, 14));
+        nomActMarc.setBounds(670, 59, 154, 23);
+        consultarMarcas.add(nomActMarc);
 
-        JTextArea txtrLosSuvsDeportivos = new JTextArea();
-        txtrLosSuvsDeportivos.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed\r\ndo eiusmod tempor incididunt ut labore et dolore magna \r\naliqua. Ut enim ad minim veniam, quis nostrud exercitation\r\n ullamco laboris nisi ut aliquip ex ea commodo consequat. \r\nDuis aute irure dolor in reprehenderit in voluptate velit esse \r\ncillum dolore eu fugiat nulla pariatur.");
-        txtrLosSuvsDeportivos.setOpaque(false);
-        txtrLosSuvsDeportivos.setForeground(Color.BLACK);
-        txtrLosSuvsDeportivos.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        txtrLosSuvsDeportivos.setBounds(59, 469, 497, 152);
-        consultarMarcas.add(txtrLosSuvsDeportivos);
+        JTextArea descActMarc = new JTextArea();
+        descActMarc.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
+        descActMarc.setOpaque(false);
+        descActMarc.setLineWrap(true);
+        descActMarc.setForeground(Color.BLACK);
+        descActMarc.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        descActMarc.setBounds(47, 469, 497, 152);
+        consultarMarcas.add(descActMarc);
 
-        JLabel lblNewLabel_2_1 = new JLabel("");
-        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_2_1.setIcon(new ImageIcon("src/img/logomercedes.png"));
-        lblNewLabel_2_1.setBounds(79, 107, 456, 298);
-        consultarMarcas.add(lblNewLabel_2_1);
+        JLabel imgActMarc = new JLabel("");
+        imgActMarc.setHorizontalAlignment(SwingConstants.CENTER);
+        imgActMarc.setIcon(new ImageIcon("src/img/bmwlogo.png"));
+        imgActMarc.setBounds(79, 107, 456, 298);
+        consultarMarcas.add(imgActMarc);
 
+        JButton editBotMarc = new JButton("Editar");
+        editBotMarc.setForeground(Color.WHITE);
+        editBotMarc.setFont(new Font("Tahoma", Font.BOLD, 16));
+        editBotMarc.setFocusPainted(false);
+        editBotMarc.setBorderPainted(false);
+        editBotMarc.setBackground(Color.decode("#38B6FF"));
+        editBotMarc.setBounds(657, 547, 260, 53);
+        consultarMarcas.add(editBotMarc);
 
-        JButton btnEliminar_1 = new JButton("Editar");
-        btnEliminar_1.setForeground(Color.WHITE);
-        btnEliminar_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnEliminar_1.setFocusPainted(false);
-        btnEliminar_1.setBorderPainted(false);
-        btnEliminar_1.setBackground(Color.decode("#38B6FF"));
-        btnEliminar_1.setBounds(657, 547, 260, 53);
-        consultarMarcas.add(btnEliminar_1);
+        JLabel cuadroEditMarc = new JLabel();
+        cuadroEditMarc.setVerticalAlignment(SwingConstants.BOTTOM);
+        cuadroEditMarc.setOpaque(true);
+        cuadroEditMarc.setHorizontalAlignment(SwingConstants.CENTER);
+        cuadroEditMarc.setBackground(SystemColor.controlShadow);
+        cuadroEditMarc.setBounds(632, 24, 307, 597);
+        consultarMarcas.add(cuadroEditMarc);
 
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
-        lblNewLabel_1.setOpaque(true);
-        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel_1.setBackground(SystemColor.controlShadow);
-        lblNewLabel_1.setBounds(632, 24, 307, 597);
-        consultarMarcas.add(lblNewLabel_1);
+        JLabel nombreActMarc = new JLabel("BMW");
+        nombreActMarc.setFont(new Font("Tahoma", Font.BOLD, 25));
+        nombreActMarc.setHorizontalAlignment(SwingConstants.CENTER);
+        nombreActMarc.setBounds(170, 24, 282, 58);
+        consultarMarcas.add(nombreActMarc);
 
-        JLabel lblNewLabel = new JLabel("Mercedes-Benz");
-        lblNewLabel.setForeground(Color.BLACK);
-        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setBounds(166, 24, 282, 58);
-        consultarMarcas.add(lblNewLabel);
+        JLabel fondoDesc = new JLabel("");
+        fondoDesc.setVerticalAlignment(SwingConstants.BOTTOM);
+        fondoDesc.setOpaque(true);
+        fondoDesc.setHorizontalAlignment(SwingConstants.CENTER);
+        fondoDesc.setBackground(SystemColor.controlShadow);
+        fondoDesc.setBounds(35, 460, 517, 154);
+        consultarMarcas.add(fondoDesc);
+
 
         return consultarMarcas;
     }
