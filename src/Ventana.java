@@ -98,6 +98,22 @@ public class Ventana extends JFrame {
                 String tmp = anterior;
                 anterior = actual;
                 actual = tmp;
+                if (marcasPaneles.size()>0){
+                    for (int i = 0; i<marcasPaneles.size();i++){
+                        remove(marcasPaneles.get(i));
+                    }
+                }
+                if (categorias.size()>0){
+                    for (int i = 0; i<categorias.size();i++){
+                        remove(categorias.get(i));
+                    }
+                }
+                if (vehiculosPaneles.size()>0){
+                    for (int i = 0; i<vehiculosPaneles.size();i++){
+                        remove(vehiculosPaneles.get(i));
+                    }
+                }
+
                 try {
                     limpiarVentana();
                 } catch (SQLException ex) {
@@ -691,6 +707,14 @@ public class Ventana extends JFrame {
     public JPanel vehiculos() {
         anterior = "home";
 
+        vehiculosPaneles.clear();
+
+        panelCarrY = 75;
+        a = 0;
+        b = 0;
+        c = 0;
+
+        JPanel panelactual;
 
         JPanel vehiculosPanel = new JPanel();
         vehiculosPanel.setSize(1000, 800);
@@ -698,146 +722,312 @@ public class Ventana extends JFrame {
         vehiculosPanel.setLayout(null);
         vehiculosPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JButton crearVehiculos = new JButton("Crear vehículos");
-        crearVehiculos.setBackground(Color.decode("#38b6ff"));
-        crearVehiculos.setSize(300,30);
-        crearVehiculos.setLocation(350,20);
-        crearVehiculos.setFocusPainted(false);
-        crearVehiculos.setForeground(Color.white);
-        crearVehiculos.setBorderPainted(false);
-        crearVehiculos.setFont(new Font("Tahoma", Font.BOLD, 18));
-        vehiculosPanel.add(crearVehiculos);
+        panelactual = vehiculosPanel;
+        vehiculosPaneles.add(vehiculosPanel);
 
-        JPanel fondoCarr = new JPanel();
-        fondoCarr.setOpaque(true);
-        fondoCarr.setLayout(null);
-        fondoCarr.setBackground(Color.LIGHT_GRAY);
-        fondoCarr.setBounds(panelCarrX, panelCarrY, 826, 232);
-        vehiculosPanel.add(fondoCarr);
 
-        JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.setForeground(Color.WHITE);
-        btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnEliminar.setFocusPainted(false);
-        btnEliminar.setBorderPainted(false);
-        btnEliminar.setBackground(Color.decode("#BF0000"));
-        btnEliminar.setBounds(570, 151, 226, 53);
-        fondoCarr.add(btnEliminar);
+        String[][] datosTabla = SQL.seleccionar_datosString("SELECT * FROM vehiculos", "vehiculos");
 
-        JButton consultarCarr = new JButton("Consultar");
-        consultarCarr.setFocusPainted(false);
-        consultarCarr.setForeground(Color.WHITE);
-        consultarCarr.setFont(new Font("Tahoma", Font.BOLD, 16));
-        consultarCarr.setBorderPainted(false);
-        consultarCarr.setBackground(Color.BLACK);
-        consultarCarr.setBounds(570, 82, 226, 55);
-        fondoCarr.add(consultarCarr);
+        int numVehiculos = SQL.contarFilasTabla("vehiculos");
 
-        JLabel precioCarr = new JLabel("$204 USD por día");
-        precioCarr.setForeground(Color.BLACK);
-        precioCarr.setOpaque(true);
-        precioCarr.setBackground(Color.decode("#38B6FF"));
-        precioCarr.setFont(new Font("Tahoma", Font.BOLD, 16));
-        precioCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        precioCarr.setBounds(570, 16, 226, 55);
-        fondoCarr.add(precioCarr);
 
-        JLabel añoCarr = new JLabel("2021");
-        añoCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        añoCarr.setForeground(Color.BLACK);
-        añoCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
-        añoCarr.setBounds(267, 123, 166, 30);
-        fondoCarr.add(añoCarr);
 
-        JLabel gasCarr = new JLabel("Gasolina");
-        gasCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        gasCarr.setForeground(Color.BLACK);
-        gasCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
-        gasCarr.setBounds(282, 174, 166, 30);
-        fondoCarr.add(gasCarr);
+        for (int i = 0; i < numVehiculos; i++) {
 
-        JLabel modoCarr = new JLabel("Estándar");
-        modoCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        modoCarr.setForeground(Color.BLACK);
-        modoCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
-        modoCarr.setBounds(282, 75, 166, 30);
-        fondoCarr.add(modoCarr);
+            if (b == 2) {
 
-        JLabel tipoCarr = new JLabel("Coupé");
-        tipoCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        tipoCarr.setForeground(Color.BLACK);
-        tipoCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
-        tipoCarr.setBounds(272, 20, 166, 30);
-        fondoCarr.add(tipoCarr);
+                JPanel vehiculosPanel2 = new JPanel();
+                vehiculosPanel2.setForeground(Color.BLACK);
+                vehiculosPanel2.setSize(1000, 800);
+                vehiculosPanel2.setLocation(0, 80);
+                vehiculosPanel2.setLayout(null);
+                vehiculosPanel2.setBackground(Color.decode("#FFFFFF"));
+                vehiculosPaneles.add(vehiculosPanel2);
+                c++;
+                panelactual = vehiculosPaneles.get(c);
 
-        JLabel cajaCarr = new JLabel("");
-        cajaCarr.setIcon(new ImageIcon("src/img/Gearbox.png"));
-        cajaCarr.setBounds(287, 63, 35, 53);
-        fondoCarr.add(cajaCarr);
-
-        JLabel nomCarr = new JLabel("BMW Rey X");
-        nomCarr.setForeground(Color.BLACK);
-        nomCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        nomCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
-        nomCarr.setBounds(45, 174, 166, 30);
-        fondoCarr.add(nomCarr);
-
-        JLabel vectCarr = new JLabel("");
-        vectCarr.setIcon(new ImageIcon("src/img/Vector.png"));
-        vectCarr.setBounds(289, 11, 48, 53);
-        fondoCarr.add(vectCarr);
-
-        JLabel gasImgCarr = new JLabel("");
-        gasImgCarr.setIcon(new ImageIcon("src/img/Local gas station.png"));
-        gasImgCarr.setBounds(289, 164, 35, 53);
-        fondoCarr.add(gasImgCarr);
-
-        JLabel calCarr = new JLabel("");
-        calCarr.setIcon(new ImageIcon("src/img/Calendar today.png"));
-        calCarr.setBounds(289, 112, 35, 53);
-        fondoCarr.add(calCarr);
-
-        JLabel imgCarr = new JLabel("");
-        imgCarr.setIcon(new ImageIcon("src/img/image 10.png"));
-        imgCarr.setBounds(35, 24, 226, 140);
-        fondoCarr.add(imgCarr);
-
-        consultarCarr.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "consultarVehiculo";
-
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                repaint();
-                revalidate();
+                b = 0;
             }
-        });
-        crearVehiculos.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                anterior = actual;
-                actual = "crearVehiculo";
+            JButton crearVehiculos = new JButton("Crear vehículos");
+            crearVehiculos.setBackground(Color.decode("#38b6ff"));
+            crearVehiculos.setSize(300,30);
+            crearVehiculos.setLocation(350,20);
+            crearVehiculos.setFocusPainted(false);
+            crearVehiculos.setForeground(Color.white);
+            crearVehiculos.setBorderPainted(false);
+            crearVehiculos.setFont(new Font("Tahoma", Font.BOLD, 18));
+            vehiculosPanel.add(crearVehiculos);
 
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            JPanel fondoCarr = new JPanel();
+            fondoCarr.setOpaque(true);
+            fondoCarr.setLayout(null);
+            fondoCarr.setBackground(Color.LIGHT_GRAY);
+            fondoCarr.setBounds(panelCarrX, panelCarrY, 826, 232);
+            vehiculosPanel.add(fondoCarr);
+            panelactual.add(fondoCarr);
 
-                repaint();
-                revalidate();
+
+            JButton btnEliminar = new JButton("Eliminar");
+            btnEliminar.setForeground(Color.WHITE);
+            btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
+            btnEliminar.setFocusPainted(false);
+            btnEliminar.setBorderPainted(false);
+            btnEliminar.setBackground(Color.decode("#BF0000"));
+            btnEliminar.setBounds(570, 151, 226, 53);
+            fondoCarr.add(btnEliminar);
+
+            JButton consultarCarr = new JButton("Consultar");
+            consultarCarr.setFocusPainted(false);
+            consultarCarr.setForeground(Color.WHITE);
+            consultarCarr.setFont(new Font("Tahoma", Font.BOLD, 16));
+            consultarCarr.setBorderPainted(false);
+            consultarCarr.setBackground(Color.BLACK);
+            consultarCarr.setBounds(570, 82, 226, 55);
+            fondoCarr.add(consultarCarr);
+
+            JLabel precioCarr = new JLabel( "$"+datosTabla[i][7]+" USD por día");
+            precioCarr.setForeground(Color.BLACK);
+            precioCarr.setOpaque(true);
+            precioCarr.setBackground(Color.decode("#38B6FF"));
+            precioCarr.setFont(new Font("Tahoma", Font.BOLD, 16));
+            precioCarr.setHorizontalAlignment(SwingConstants.CENTER);
+            precioCarr.setBounds(570, 16, 226, 55);
+            fondoCarr.add(precioCarr);
+
+            JLabel añoCarr = new JLabel(datosTabla[i][5]);
+            añoCarr.setHorizontalAlignment(SwingConstants.CENTER);
+            añoCarr.setForeground(Color.BLACK);
+            añoCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
+            añoCarr.setBounds(267, 123, 166, 30);
+            fondoCarr.add(añoCarr);
+
+            JLabel gasCarr = new JLabel(datosTabla[i][6]);
+            gasCarr.setHorizontalAlignment(SwingConstants.CENTER);
+            gasCarr.setForeground(Color.BLACK);
+            gasCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
+            gasCarr.setBounds(282, 174, 166, 30);
+            fondoCarr.add(gasCarr);
+
+            JLabel modoCarr = new JLabel(datosTabla[i][4]);
+            modoCarr.setHorizontalAlignment(SwingConstants.CENTER);
+            modoCarr.setForeground(Color.BLACK);
+            modoCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
+            modoCarr.setBounds(282, 75, 166, 30);
+            fondoCarr.add(modoCarr);
+
+            JLabel tipoCarr = new JLabel(datosTabla[i][3]);
+            tipoCarr.setHorizontalAlignment(SwingConstants.CENTER);
+            tipoCarr.setForeground(Color.BLACK);
+            tipoCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
+            tipoCarr.setBounds(300, 20, 166, 30);
+            fondoCarr.add(tipoCarr);
+
+            JLabel cajaCarr = new JLabel("");
+            cajaCarr.setIcon(new ImageIcon("src/img/Gearbox.png"));
+            cajaCarr.setBounds(287, 63, 35, 53);
+            fondoCarr.add(cajaCarr);
+
+            JLabel nomCarr = new JLabel(datosTabla[i][8]+" "+datosTabla[i][2]);
+            nomCarr.setForeground(Color.BLACK);
+            nomCarr.setHorizontalAlignment(SwingConstants.CENTER);
+            nomCarr.setFont(new Font("Tahoma", Font.BOLD, 17));
+            nomCarr.setBounds(45, 174, 166, 30);
+            fondoCarr.add(nomCarr);
+
+            JLabel vectCarr = new JLabel("");
+            vectCarr.setIcon(new ImageIcon("src/img/Vector.png"));
+            vectCarr.setBounds(289, 11, 48, 53);
+            fondoCarr.add(vectCarr);
+
+            JLabel gasImgCarr = new JLabel("");
+            gasImgCarr.setIcon(new ImageIcon("src/img/Local gas station.png"));
+            gasImgCarr.setBounds(289, 164, 35, 53);
+            fondoCarr.add(gasImgCarr);
+
+            JLabel calCarr = new JLabel("");
+            calCarr.setIcon(new ImageIcon("src/img/Calendar today.png"));
+            calCarr.setBounds(289, 112, 35, 53);
+            fondoCarr.add(calCarr);
+
+            JLabel imgCarr = new JLabel("");
+            imgCarr.setIcon(new ImageIcon(datosTabla[i][1]));
+            imgCarr.setBounds(35, 24, 226, 140);
+            fondoCarr.add(imgCarr);
+
+            JButton atras = new JButton("");
+            atras.setBorderPainted(false);
+            atras.setContentAreaFilled(false);
+            atras.setIcon(new ImageIcon("src/img/botonRegresarIcon.png"));
+            atras.setBounds(409, 620, 66, 56);
+
+
+            JButton sig = new JButton("");
+            sig.setContentAreaFilled(false);
+            sig.setBorderPainted(false);
+            sig.setIcon(new ImageIcon("src/img/botonRegresarIconder.png"));
+            sig.setBounds(500, 620, 66, 56);
+
+            vehiculosPanel.add(crearVehiculos);
+
+            if (a+1<= vehiculosPaneles.size()-1){
+                vehiculosPanel.add(sig);
             }
-        });
+
+            sig.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    remove(vehiculosPaneles.get(a));
+                    a++;
+                    add(vehiculosPaneles.get(a));
+
+
+                    if (a+1<= vehiculosPaneles.size()-1){
+                        vehiculosPaneles.get(a).add(sig);
+                    }
+
+                    vehiculosPaneles.get(a).add(atras);
+
+
+
+                    vehiculosPaneles.get(a).add(crearVehiculos);
+
+                    repaint();
+                    revalidate();
+                }
+            });
+
+            atras.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    remove(vehiculosPaneles.get(a));
+                    a--;
+                    add(vehiculosPaneles.get(a));
+
+                    vehiculosPaneles.get(a).add(sig);
+
+                    if (a+ vehiculosPaneles.size()-1>= vehiculosPaneles.size()){
+                        vehiculosPaneles.get(a).add(atras);
+                    }
+                    vehiculosPaneles.get(a).add(crearVehiculos);
+
+                    repaint();
+                    revalidate();
+                }
+            });
+
+
+            int finalI = i;
+            consultarCarr.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    anterior = actual;
+                    actual = "consultarVehiculo";
+
+                    if (marcasPaneles.size()>0){
+                        for (int i = 0; i<marcasPaneles.size();i++){
+                            remove(marcasPaneles.get(i));
+                        }
+                    }
+                    if (categorias.size()>0){
+                        for (int i = 0; i<categorias.size();i++){
+                            remove(categorias.get(i));
+                        }
+                    }
+                    if (vehiculosPaneles.size()>0){
+                        for (int i = 0; i<vehiculosPaneles.size();i++){
+                            remove(vehiculosPaneles.get(i));
+                        }
+                    }
+
+                    String[] hola=nomCarr.getText().split(" ");
+
+                    id_Vehiculo=datosTabla[finalI][0];
+                    if(hola.length>1) {
+                        nombreVehiculo = hola[1];
+                        marcaVehiculo=hola[0];
+                    }
+                    rutaVehiculo=imgCarr.getText();
+                    precioVehiculo=precioCarr.getText();
+                    categoriaVehiculo=tipoCarr.getText();
+                    combustibleVehiculo= gasCarr.getText();
+                    transmisionVehiculo=modoCarr.getText();
+
+                    añoVehiculo=añoCarr.getText();
+
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+
+                }
+            });
+
+
+
+
+
+            crearVehiculos.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    actual = "crearVehiculo";
+
+                    if (marcasPaneles.size()>0){
+                        for (int i = 0; i<marcasPaneles.size();i++){
+                            remove(marcasPaneles.get(i));
+                        }
+                    }
+                    if (categorias.size()>0){
+                        for (int i = 0; i<categorias.size();i++){
+                            remove(categorias.get(i));
+                        }
+                    }
+                    if (vehiculosPaneles.size()>0){
+                        for (int i = 0; i<vehiculosPaneles.size();i++){
+                            remove(vehiculosPaneles.get(i));
+                        }
+                    }
+
+                    try {
+                        remove(vehiculosPaneles.get(a));
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+                }
+            });
+
+
+            if (panelCarrY == 75) {
+                panelCarrY += 314;
+
+            } else {
+                panelCarrY = 75;
+            }
+
+
+            b++;
+
+        }
+
+
+
+        repaint();
+        revalidate();
+
+
 
 
         return vehiculosPanel;
     }
+
     private JPanel crearVehiculo() {
         anterior = "vehiculos";
 
@@ -892,14 +1082,16 @@ public class Ventana extends JFrame {
         transmisionCarr.setBounds(153, 114, 119, 23);
         fondoeditCarr.add(transmisionCarr);
 
+
         JComboBox gasTipoCarr = new JComboBox();
-        gasTipoCarr.setModel(new DefaultComboBoxModel(new String[] {"Gasolina"}));
+        gasTipoCarr.setModel(new DefaultComboBoxModel(new String[]{"Gasolina","Diesel"}));
         gasTipoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
         gasTipoCarr.setBounds(36, 327, 236, 29);
         fondoeditCarr.add(gasTipoCarr);
 
+        String[] tiposCarro=FuncionesSQL.obtener_columna("SELECT nombre_categorias FROM categorias");
         JComboBox catTipoCarr = new JComboBox();
-        catTipoCarr.setModel(new DefaultComboBoxModel(new String[] {"Coupé"}));
+        catTipoCarr.setModel(new DefaultComboBoxModel(tiposCarro));
         catTipoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
         catTipoCarr.setBounds(36, 264, 236, 29);
         fondoeditCarr.add(catTipoCarr);
@@ -929,15 +1121,19 @@ public class Ventana extends JFrame {
         añoCarr.setBounds(36, 180, 154, 23);
         fondoeditCarr.add(añoCarr);
 
+
         JComboBox transmisionCambCarr = new JComboBox();
         transmisionCambCarr.setFont(new Font("Tahoma", Font.BOLD, 11));
         transmisionCambCarr.setBounds(172, 141, 100, 29);
+        transmisionCambCarr.setModel(new DefaultComboBoxModel(new String[]{"Estándar","Automático"}));
         fondoeditCarr.add(transmisionCambCarr);
 
+
+        String[] marcasCarros=FuncionesSQL.obtener_columna("SELECT nombre_marca FROM marcas");
         JComboBox marcasCambCarr = new JComboBox();
         marcasCambCarr.setForeground(Color.BLACK);
         marcasCambCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
-        marcasCambCarr.setModel(new DefaultComboBoxModel(new String[] {"BMW"}));
+        marcasCambCarr.setModel(new DefaultComboBoxModel(marcasCarros));
         marcasCambCarr.setBounds(36, 141, 100, 29);
         fondoeditCarr.add(marcasCambCarr);
 
@@ -959,15 +1155,16 @@ public class Ventana extends JFrame {
         costoDiaCarr.setBounds(153, 25, 119, 23);
         fondoeditCarr.add(costoDiaCarr);
 
-        JButton cambiarImgCarr = new JButton("");
-        cambiarImgCarr.setBorderPainted(false);
-        cambiarImgCarr.setRequestFocusEnabled(false);
-        cambiarImgCarr.setFocusPainted(false);
-        cambiarImgCarr.setContentAreaFilled(false);
-        cambiarImgCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        cambiarImgCarr.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        cambiarImgCarr.setBounds(18, 363, 271, 92);
-        fondoeditCarr.add(cambiarImgCarr);
+        JLabel rutaImg = new JLabel("Ruta de imagen");
+        rutaImg.setFont(new Font("Tahoma", Font.BOLD, 14));
+        rutaImg.setBounds(36, 354, 154, 23);
+        fondoeditCarr.add(rutaImg);
+
+        JTextField imgConsultarCat = new JTextField("");
+        imgConsultarCat.setBorder(null);
+        imgConsultarCat.setBackground(SystemColor.menu);
+        imgConsultarCat.setBounds(36, 380, 236, 29);
+        fondoeditCarr.add(imgConsultarCat);
 
         JTextField cambModeloCarr = new JTextField("");
         cambModeloCarr.setBorder(null);
@@ -1034,7 +1231,7 @@ public class Ventana extends JFrame {
         JLabel modoActCarr = new JLabel("");
         modoActCarr.setForeground(Color.BLACK);
         modoActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
-        modoActCarr.setBounds(185, 409, 93, 38);
+        modoActCarr.setBounds(182, 409, 105, 38);
         crearVehi.add(modoActCarr);
 
         JLabel añoActCarr = new JLabel("");
@@ -1049,7 +1246,7 @@ public class Ventana extends JFrame {
         gasActCarr.setBounds(455, 409, 100, 38);
         crearVehi.add(gasActCarr);
 
-        JLabel precioActCarr = new JLabel("$ / día");
+        JLabel precioActCarr = new JLabel(" / día");
         precioActCarr.setForeground(new Color(0, 128, 0));
         precioActCarr.setBackground(Color.GREEN);
         precioActCarr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1063,10 +1260,53 @@ public class Ventana extends JFrame {
         imgCarr.setBounds(22, 100, 552, 298);
         crearVehi.add(imgCarr);
 
+        btnVisualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                nombActCarr.setText(marcasCambCarr.getSelectedItem()+" "+cambModeloCarr.getText());
+                imgCarr.setIcon(new ImageIcon(imgConsultarCat.getText()));
+                precioActCarr.setText("$"+precioNuevoCarr.getText()+" / día");
+                modoActCarr.setText((String) transmisionCambCarr.getSelectedItem());
+                gasActCarr.setText((String) gasTipoCarr.getSelectedItem());
+                tipoActCarr.setText((String) catTipoCarr.getSelectedItem());
+                añoActCarr.setText(añoCarrCamb.getText());
+
+
+            }
+        });
+        editBoton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String vehiculoimg=imgConsultarCat.getText();
+                String nombreVehiculo=cambModeloCarr.getText();
+                String categoriaVehiculo= (String) catTipoCarr.getSelectedItem();
+                String transmisionVehiculo= (String) transmisionCambCarr.getSelectedItem();
+                String añoVehiculo = añoCarrCamb.getText();
+                String gasVehiculo = (String) gasTipoCarr.getSelectedItem();
+                String precioVehiculo = precioNuevoCarr.getText();
+                String marcaVehiculo = (String) marcasCambCarr.getSelectedItem();
+                String[]datosvehiculoBase={vehiculoimg,nombreVehiculo,categoriaVehiculo,transmisionVehiculo,añoVehiculo,gasVehiculo,precioVehiculo,marcaVehiculo};
+
+
+                try {
+                    FuncionesSQL.insertar_a_tabla(datosvehiculoBase,"vehiculos");
+                    JOptionPane.showMessageDialog(null,"Vehiculo creado correctamente","Vehiculo creado",JOptionPane.INFORMATION_MESSAGE);
+                    actual = "vehiculos";
+                    limpiarVentana();
+
+                    repaint();
+                    revalidate();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
         return crearVehi;
     }
+
     public JPanel consultarVehiculo() {
         anterior = "vehiculos";
 
@@ -1096,6 +1336,17 @@ public class Ventana extends JFrame {
         precioNuevoCarr.setBounds(179, 49, 93, 29);
         fondoeditCarr.add(precioNuevoCarr);
 
+        JLabel rutaImg = new JLabel("Ruta de imagen");
+        rutaImg.setFont(new Font("Tahoma", Font.BOLD, 14));
+        rutaImg.setBounds(36, 354, 154, 23);
+        fondoeditCarr.add(rutaImg);
+
+        JTextField imgConsultarCat = new JTextField();
+        imgConsultarCat.setBorder(null);
+        imgConsultarCat.setBackground(SystemColor.menu);
+        imgConsultarCat.setBounds(36, 380, 236, 29);
+        fondoeditCarr.add(imgConsultarCat);
+
         JLabel gasImg = new JLabel("");
         gasImg.setIcon(new ImageIcon("src/img/gasg.png"));
         gasImg.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1122,13 +1373,16 @@ public class Ventana extends JFrame {
         fondoeditCarr.add(transmisionCarr);
 
         JComboBox gasTipoCarr = new JComboBox();
-        gasTipoCarr.setModel(new DefaultComboBoxModel(new String[] {"Gasolina"}));
+
+        gasTipoCarr.setModel(new DefaultComboBoxModel(new String[]{"Gasolina","Diesel"}));
         gasTipoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
         gasTipoCarr.setBounds(36, 327, 236, 29);
         fondoeditCarr.add(gasTipoCarr);
 
+        String[] tiposCarro=FuncionesSQL.obtener_columna("SELECT nombre_categorias FROM categorias");
         JComboBox catTipoCarr = new JComboBox();
-        catTipoCarr.setModel(new DefaultComboBoxModel(new String[] {"Coupé"}));
+
+        catTipoCarr.setModel(new DefaultComboBoxModel(tiposCarro));
         catTipoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
         catTipoCarr.setBounds(36, 264, 236, 29);
         fondoeditCarr.add(catTipoCarr);
@@ -1159,14 +1413,19 @@ public class Ventana extends JFrame {
         fondoeditCarr.add(añoCarr);
 
         JComboBox transmisionCambCarr = new JComboBox();
+
         transmisionCambCarr.setFont(new Font("Tahoma", Font.BOLD, 11));
+        transmisionCambCarr.setModel(new DefaultComboBoxModel(new String[]{"Estándar","Automático"}));
         transmisionCambCarr.setBounds(172, 141, 100, 29);
         fondoeditCarr.add(transmisionCambCarr);
 
+
+        String[] marcasCarros=FuncionesSQL.obtener_columna("SELECT nombre_marca FROM marcas");
         JComboBox marcasCambCarr = new JComboBox();
+
         marcasCambCarr.setForeground(Color.BLACK);
         marcasCambCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
-        marcasCambCarr.setModel(new DefaultComboBoxModel(new String[] {"BMW"}));
+        marcasCambCarr.setModel(new DefaultComboBoxModel(marcasCarros));
         marcasCambCarr.setBounds(36, 141, 100, 29);
         fondoeditCarr.add(marcasCambCarr);
 
@@ -1188,15 +1447,7 @@ public class Ventana extends JFrame {
         costoDiaCarr.setBounds(153, 25, 119, 23);
         fondoeditCarr.add(costoDiaCarr);
 
-        JButton cambiarImgCarr = new JButton("");
-        cambiarImgCarr.setBorderPainted(false);
-        cambiarImgCarr.setRequestFocusEnabled(false);
-        cambiarImgCarr.setFocusPainted(false);
-        cambiarImgCarr.setContentAreaFilled(false);
-        cambiarImgCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        cambiarImgCarr.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        cambiarImgCarr.setBounds(18, 390, 271, 92);
-        fondoeditCarr.add(cambiarImgCarr);
+
 
         JTextField cambModeloCarr = new JTextField("");
         cambModeloCarr.setBorder(null);
@@ -1231,7 +1482,7 @@ public class Ventana extends JFrame {
 
 
 
-        JLabel nombActCarr = new JLabel("BMW Rey X");
+        JLabel nombActCarr = new JLabel(marcaVehiculo+" "+nombreVehiculo);
         nombActCarr.setForeground(Color.BLACK);
         nombActCarr.setFont(new Font("Tahoma", Font.BOLD, 25));
         nombActCarr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1245,31 +1496,31 @@ public class Ventana extends JFrame {
         vectorImg.setBounds(7, 409, 58, 38);
         consultarVehi.add(vectorImg);
 
-        JLabel tipoActCarr = new JLabel("Coupé");
+        JLabel tipoActCarr = new JLabel(categoriaVehiculo);
         tipoActCarr.setForeground(Color.BLACK);
         tipoActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
         tipoActCarr.setBounds(60, 409, 76, 38);
         consultarVehi.add(tipoActCarr);
 
-        JLabel modoActCarr = new JLabel("Estándar");
+        JLabel modoActCarr = new JLabel(transmisionVehiculo);
         modoActCarr.setForeground(Color.BLACK);
         modoActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
-        modoActCarr.setBounds(185, 409, 93, 38);
+        modoActCarr.setBounds(182, 409, 105, 38);
         consultarVehi.add(modoActCarr);
 
-        JLabel añoActCarr = new JLabel("2021");
+        JLabel añoActCarr = new JLabel(añoVehiculo);
         añoActCarr.setForeground(Color.BLACK);
         añoActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
         añoActCarr.setBounds(329, 409, 76, 38);
         consultarVehi.add(añoActCarr);
 
-        JLabel gasActCarr = new JLabel("Gasolina");
+        JLabel gasActCarr = new JLabel(combustibleVehiculo);
         gasActCarr.setForeground(Color.BLACK);
         gasActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
         gasActCarr.setBounds(455, 409, 100, 38);
         consultarVehi.add(gasActCarr);
 
-        JLabel precioActCarr = new JLabel("$204 / día");
+        JLabel precioActCarr = new JLabel(precioVehiculo+" / día");
         precioActCarr.setForeground(new Color(0, 128, 0));
         precioActCarr.setBackground(Color.GREEN);
         precioActCarr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1279,9 +1530,36 @@ public class Ventana extends JFrame {
 
         JLabel imgCarr = new JLabel("");
         imgCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        imgCarr.setIcon(new ImageIcon("src/img/carrograndeazul.png"));
+        imgCarr.setIcon(new ImageIcon(rutaVehiculo));
         imgCarr.setBounds(22, 100, 552, 298);
         consultarVehi.add(imgCarr);
+
+        editBoton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String id_vehiculoo = id_Vehiculo;
+                String vehiculoimg=imgConsultarCat.getText();
+                String nombreVehiculo=cambModeloCarr.getText();
+                String categoriaVehiculo= (String) catTipoCarr.getSelectedItem();
+                String transmisionVehiculo= (String) transmisionCambCarr.getSelectedItem();
+                String añoVehiculo = añoCarrCamb.getText();
+                String gasVehiculo = (String) gasTipoCarr.getSelectedItem();
+                String precioVehiculo = "$"+precioNuevoCarr.getText();
+                String marcaVehiculo = (String) marcasCambCarr.getSelectedItem();
+                String[]datosvehiculoBase={vehiculoimg,nombreVehiculo,categoriaVehiculo,transmisionVehiculo,añoVehiculo,gasVehiculo,precioVehiculo,marcaVehiculo};
+
+                FuncionesSQL.actualizar_tabla_completa(datosvehiculoBase,"vehiculos","id_vehiculo", Integer.parseInt(id_vehiculoo));
+                JOptionPane.showMessageDialog(null,"Vehiculo editado correctamente","Editado",JOptionPane.INFORMATION_MESSAGE);
+                actual="vehiculos";
+
+                try {
+                    limpiarVentana();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
 
         return consultarVehi;
@@ -3249,6 +3527,22 @@ public class Ventana extends JFrame {
                     rutaCategoria=imgCat.getText();
                     id_categoria=datosTabla[finalI][0];
 
+                    if (marcasPaneles.size()>0){
+                        for (int i = 0; i<marcasPaneles.size();i++){
+                            remove(marcasPaneles.get(i));
+                        }
+                    }
+                    if (categorias.size()>0){
+                        for (int i = 0; i<categorias.size();i++){
+                            remove(categorias.get(i));
+                        }
+                    }
+                    if (vehiculosPaneles.size()>0){
+                        for (int i = 0; i<vehiculosPaneles.size();i++){
+                            remove(vehiculosPaneles.get(i));
+                        }
+                    }
+
                     try {
                         limpiarVentana();
                     } catch (SQLException ex) {
@@ -3268,6 +3562,21 @@ public class Ventana extends JFrame {
                 public void actionPerformed(ActionEvent e) {
 
                     actual = "crearCategorias";
+                    if (marcasPaneles.size()>0){
+                        for (int i = 0; i<marcasPaneles.size();i++){
+                            remove(marcasPaneles.get(i));
+                        }
+                    }
+                    if (categorias.size()>0){
+                        for (int i = 0; i<categorias.size();i++){
+                            remove(categorias.get(i));
+                        }
+                    }
+                    if (vehiculosPaneles.size()>0){
+                        for (int i = 0; i<vehiculosPaneles.size();i++){
+                            remove(vehiculosPaneles.get(i));
+                        }
+                    }
                     try {
                         remove(categorias.get(a));
                         limpiarVentana();
@@ -3724,6 +4033,21 @@ public class Ventana extends JFrame {
                     anterior = actual;
                     actual = "consultarMarcas";
 
+                    if (marcasPaneles.size()>0){
+                        for (int i = 0; i<marcasPaneles.size();i++){
+                            remove(marcasPaneles.get(i));
+                        }
+                    }
+                    if (categorias.size()>0){
+                        for (int i = 0; i<categorias.size();i++){
+                            remove(categorias.get(i));
+                        }
+                    }
+                    if (vehiculosPaneles.size()>0){
+                        for (int i = 0; i<vehiculosPaneles.size();i++){
+                            remove(vehiculosPaneles.get(i));
+                        }
+                    }
 
                     descripcionMarca=descMarc.getText();
                     nombreMarca=datosTabla[finalI1][2];
