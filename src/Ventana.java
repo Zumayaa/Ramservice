@@ -6,6 +6,8 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.RoundRectangle2D;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -1738,21 +1740,26 @@ public class Ventana extends JFrame {
         consultarHistorialClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                id_cliente_a_consultar = Integer.parseInt(id_cliente[idClientesCB.getSelectedIndex()]);
-                String [] datos = Clientes_Service.obtener_fila("SELECT * FROM clientes WHERE id_de_cliente = " + id_cliente_a_consultar);
-                nombre_cliente = datos[1];
-                email_cliente = datos[3];
-                telefono_cliente = datos[4];
-                anterior = actual;
-                actual = "consultarHistorialClienteSeleccionado";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                int indice = idClientesCB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "No hay clientes para consultar", "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    id_cliente_a_consultar = Integer.parseInt(id_cliente[idClientesCB.getSelectedIndex()]);
+                    String [] datos = Clientes_Service.obtener_fila("SELECT * FROM clientes WHERE id_de_cliente = " + id_cliente_a_consultar);
+                    nombre_cliente = datos[1];
+                    email_cliente = datos[3];
+                    telefono_cliente = datos[4];
+                    anterior = actual;
+                    actual = "consultarHistorialClienteSeleccionado";
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
-                repaint();
-                revalidate();
+                    repaint();
+                    revalidate();
+                }
             }
         });
 
@@ -1892,6 +1899,24 @@ public class Ventana extends JFrame {
         nombresTF.setLocation(x,y);
         nombresTF.setSize(200,30);
         crearClientesPNL.add(nombresTF);
+        nombresTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (!Character.isLetter(e.getKeyChar()) && !(e.getKeyChar() == KeyEvent.VK_SPACE) && !(e.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel ApellidosLbl = new JLabel("Apellidos");
@@ -1905,7 +1930,24 @@ public class Ventana extends JFrame {
         apellidosTF.setLocation(x,y);
         apellidosTF.setSize(200,30);
         crearClientesPNL.add(apellidosTF);
+        apellidosTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (!Character.isLetter(e.getKeyChar()) && !(e.getKeyChar() == KeyEvent.VK_SPACE) && !(e.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
+                    e.consume();
+                }
+            }
 
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel telefonoLbl = new JLabel("Teléfono");
@@ -1919,6 +1961,32 @@ public class Ventana extends JFrame {
         telefonoTF.setLocation(x,y);
         telefonoTF.setSize(200,30);
         crearClientesPNL.add(telefonoTF);
+        telefonoTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(telefonoTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel correoLbl = new JLabel("Correo electronico");
@@ -1952,6 +2020,32 @@ public class Ventana extends JFrame {
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
         crearClientesPNL.add(numTarjetaTF);
+        numTarjetaTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(numTarjetaTF.getText().length() >= 16)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
@@ -1964,6 +2058,32 @@ public class Ventana extends JFrame {
         //fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
+        fechaCadTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(fechaCadTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         fechaCadTF.setDocument(new Fechas.NumericDocument());
             AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaCadTF.getDocument();
@@ -1986,6 +2106,32 @@ public class Ventana extends JFrame {
         cvvTF.setLocation(x,y);
         cvvTF.setSize(100,30);
         crearClientesPNL.add(cvvTF);
+        cvvTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(cvvTF.getText().length() >= 3)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
 
         JButton cancelarBtn = new JButton();
@@ -2025,48 +2171,83 @@ public class Ventana extends JFrame {
                 String numero_de_tarjeta = numTarjetaTF.getText();
                 String fecha_de_caducidad = fechaCadTF.getText();
                 String cvv = cvvTF.getText();
-                String mensaje = Clientes_Service.verificar_campos_de_registro(
-                        nombre, apellidos, correo, telefono,
-                        numero_de_tarjeta, fecha_de_caducidad,
-                        cvv, "");
-                if (mensaje.equals("Permitido")){
-                    try {
-                        Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
-                        Tarjetas_Service.crear_tarjeta(nombre, apellidos, Clientes_Service.obtener_celda
-                                ("SELECT id_de_cliente FROM clientes WHERE correo = '" +correo +"'"),
-                                numero_de_tarjeta, fecha_de_caducidad, cvv);
+                if(nombresTF.getText().equals("") && apellidosTF.getText().equals("") &&
+                        telefonoTF.getText().equals("") && correoTF.getText().equals("") &&
+                        numTarjetaTF.getText().equals("") && fechaCadTF.getText().equals("") &&
+                        cvvTF.getText().equals(""))
+                {
+                    JOptionPane.showMessageDialog(null, "Datos vacíos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    if(nombre.length()<2){
+                        JOptionPane.showMessageDialog(null, "Nombre demasiado corto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        if(apellidos.length()<2){
+                            JOptionPane.showMessageDialog(null, "Apellido demasiado corto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }else{
+                            if(telefono.length()<10){
+                                JOptionPane.showMessageDialog(null, "Telefono demasiado corto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }else{
+                                if (!correo.contains("@") && (!correo.contains(".com") || !correo.contains(".net") || !correo.contains(".mx"))) {
+                                    JOptionPane.showMessageDialog(null, "Email incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                } else {
+                                    if(numTarjetaTF.getText().equals("") || numero_de_tarjeta.length() < 10){
+                                        JOptionPane.showMessageDialog(null, "Número de tarjeta vacío o incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    }else{
+                                        if(fechaCadTF.getText().equals("")){
+                                            JOptionPane.showMessageDialog(null, "Fecha de caducidad vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                        }else{
+                                            if(cvvTF.getText().equals("") || cvv.length() < 3){
+                                                JOptionPane.showMessageDialog(null, "CVV vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                            }else{
 
-                        JOptionPane.showMessageDialog(null, "Registro exitoso", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+                                                String mensaje = Clientes_Service.verificar_campos_de_registro(
+                                                        nombre, apellidos, correo, telefono,
+                                                        numero_de_tarjeta, fecha_de_caducidad,
+                                                        cvv, "");
+                                                if (mensaje.equals("Permitido")) {
+                                                    try {
+                                                        Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
+                                                        Tarjetas_Service.crear_tarjeta(nombre, apellidos, Clientes_Service.obtener_celda
+                                                                        ("SELECT id_de_cliente FROM clientes WHERE correo = '" + correo + "'"),
+                                                                numero_de_tarjeta, fecha_de_caducidad, cvv);
 
-                        anterior = actual;
-                        actual = "clientes";
-                        try {
-                            limpiarVentana();
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
+                                                        JOptionPane.showMessageDialog(null, "Registro exitoso", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+
+                                                        anterior = actual;
+                                                        actual = "clientes";
+                                                        try {
+                                                            limpiarVentana();
+                                                        } catch (SQLException ex) {
+                                                            throw new RuntimeException(ex);
+                                                        }
+                                                    } catch (SQLException ex) {
+                                                        throw new RuntimeException(ex);
+                                                    }
+                                                } else if (mensaje.equals("Permitido sin tarjeta")) {
+                                                    try {
+                                                        Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
+                                                        JOptionPane.showMessageDialog(null, "Registro exitoso sin tarjeta", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+
+                                                        anterior = actual;
+                                                        actual = "clientes";
+                                                        try {
+                                                            limpiarVentana();
+                                                        } catch (SQLException ex) {
+                                                            throw new RuntimeException(ex);
+                                                        }
+                                                    } catch (SQLException ex) {
+                                                        throw new RuntimeException(ex);
+                                                    }
+                                                } else {
+                                                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
                     }
-                }
-                else if (mensaje.equals("Permitido sin tarjeta")){
-                    try {
-                        Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
-                        JOptionPane.showMessageDialog(null, "Registro exitoso sin tarjeta", "Registrado", JOptionPane.INFORMATION_MESSAGE);
-
-                        anterior = actual;
-                        actual = "clientes";
-                        try {
-                            limpiarVentana();
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -2113,18 +2294,23 @@ public class Ventana extends JFrame {
         editarClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "editarClienteSeleccionado";
-                id_cliente_a_editar = Integer.parseInt(ids[idClientesCB.getSelectedIndex()]);
+                int indice = idClientesCB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "No hay clientes para editar", "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    anterior = actual;
+                    actual = "editarClienteSeleccionado";
+                    id_cliente_a_editar = Integer.parseInt(ids[idClientesCB.getSelectedIndex()]);
 
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    repaint();
+                    revalidate();
                 }
-
-                repaint();
-                revalidate();
             }
         });
 
@@ -2398,24 +2584,28 @@ public class Ventana extends JFrame {
         eliminarClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id_cl [] = (String.valueOf(idClientesCB.getSelectedItem()).split(":"));
-                id_cl[0] = id_cl[0].replace(" ", "");
-                Clientes_Service.eliminar_cliente(Integer.parseInt(id_cl[0]));
-                try {
-                    if (Tarjetas_Service.existencia_de_tarjeta_con_usuario(Integer.parseInt(id_cl[0]))){
-                        Tarjetas_Service.eliminar_tarjeta(Integer.parseInt(Tarjetas_Service.obtener_celda("SELECT id_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = '" + id_cl[0] + "'")));
-                    };
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-                //idClientesCB.removeItem(idClientesCB.getSelectedItem());
-                DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTablaClientes,"SELECT * FROM clientes");
+                int indice = idClientesCB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "No hay clientes para borrar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    String id_cl [] = (String.valueOf(idClientesCB.getSelectedItem()).split(":"));
+                    id_cl[0] = id_cl[0].replace(" ", "");
+                    Clientes_Service.eliminar_cliente(Integer.parseInt(id_cl[0]));
+                    try {
+                        if (Tarjetas_Service.existencia_de_tarjeta_con_usuario(Integer.parseInt(id_cl[0]))){
+                            Tarjetas_Service.eliminar_tarjeta(Integer.parseInt(Tarjetas_Service.obtener_celda("SELECT id_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = '" + id_cl[0] + "'")));
+                        };
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    //idClientesCB.removeItem(idClientesCB.getSelectedItem());
+                    DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTablaClientes,"SELECT * FROM clientes");
                     tabla_clientes.setModel(dtm);
                     TablasRamservice.crear_tabla(tabla_clientes);
                     idClientesCB.removeItemAt(idClientesCB.getSelectedIndex());
-                repaint();
-                revalidate();
-
+                    repaint();
+                    revalidate();
+                }
             }
         });
         eliminarPanel.add(idClientesCB);
@@ -2536,16 +2726,21 @@ public class Ventana extends JFrame {
         borrarBTN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual; //creo q nomas cambiando el actual jala mejor o no se xd
-                actual = "eliminarRenta";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                String ids[] = Clientes_Service.obtener_columna("SELECT id_de_renta FROM rentas ORDER BY id_de_renta");
+                if(ids.length == 0){
+                    JOptionPane.showMessageDialog(null, "No hay rentas para borrar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    anterior = actual; //creo q nomas cambiando el actual jala mejor o no se xd
+                    actual = "eliminarRenta";
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
-                repaint();
-                revalidate();
+                    repaint();
+                    revalidate();
+                }
             }
         });
         String[] columnasTabla =TablasRamservice.obtener_nombres_columnas("RENTAS");;
@@ -2702,11 +2897,37 @@ public class Ventana extends JFrame {
         fechaInicioLbl.setSize(200,40);
         crearRentaPNL.add(fechaInicioLbl);
         y += 50;
-        JTextField fechaInicioTF = new JTextField("2023-01-01");
+        JTextField fechaInicioTF = new JTextField("");
         fechaInicioTF.setBorder(roundedBorder);
         fechaInicioTF.setLocation(x,y);
         fechaInicioTF.setSize(200,30);
         crearRentaPNL.add(fechaInicioTF);
+        fechaInicioTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(fechaInicioTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel fechaDeDevolucionLbl = new JLabel("Fecha de devolución");
@@ -2715,11 +2936,37 @@ public class Ventana extends JFrame {
         fechaDeDevolucionLbl.setSize(200,40);
         crearRentaPNL.add(fechaDeDevolucionLbl);
         y += 50;
-        JTextField fechaDeDevolucionTF = new JTextField("2023-01-01");
+        JTextField fechaDeDevolucionTF = new JTextField("");
         fechaDeDevolucionTF.setBorder(roundedBorder);
         fechaDeDevolucionTF.setLocation(x,y);
         fechaDeDevolucionTF.setSize(200,30);
         crearRentaPNL.add(fechaDeDevolucionTF);
+        fechaDeDevolucionTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(fechaDeDevolucionTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         x +=300;
         y = 20;
@@ -2730,11 +2977,37 @@ public class Ventana extends JFrame {
         numTarjetaLbl.setSize(200,40);
         crearRentaPNL.add(numTarjetaLbl);
         y += 50;
-        JTextField numTarjetaTF = new JTextField("a");
+        JTextField numTarjetaTF = new JTextField("");
         numTarjetaTF.setBorder(roundedBorder);
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
         crearRentaPNL.add(numTarjetaTF);
+        numTarjetaTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(numTarjetaTF.getText().length() >= 16)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
@@ -2743,11 +3016,37 @@ public class Ventana extends JFrame {
         fechaCadLbl.setSize(200,40);
         crearRentaPNL.add(fechaCadLbl);
         y += 50;
-        JTextField fechaCadTF = new JTextField("2023-06-01");
+        JTextField fechaCadTF = new JTextField("");
         fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
         crearRentaPNL.add(fechaCadTF);
+        fechaCadTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(fechaCadTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
 
@@ -2764,6 +3063,32 @@ public class Ventana extends JFrame {
         cvvTF.setLocation(x,y);
         cvvTF.setSize(100,30);
         crearRentaPNL.add(cvvTF);
+        cvvTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(cvvTF.getText().length() >= 3)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         x = 250;
         y = 300;
@@ -2833,55 +3158,127 @@ public class Ventana extends JFrame {
         calcularCostoBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
-                double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
-                int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
-                String costo_total = String.valueOf(costo_auto*dias);
-                if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
-                    costoEstimadoVisualLbl.setText(costo_total+ " Pesos MXN");
+                String numero_de_tarjeta = numTarjetaTF.getText();
+                String cvv = cvvTF.getText();
+                int indice = id_cliente_con_nombre_CB.getSelectedIndex();
+
+                if(fechaInicioTF.getText().equals("") && fechaDeDevolucionTF.getText().equals("") &&
+                        numTarjetaTF.getText().equals("") && fechaCadTF.getText().equals("") &&
+                        cvvTF.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Datos vacíos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    if(indice == -1){
+                        JOptionPane.showMessageDialog(null, "Selecciona un usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        if(numero_de_tarjeta.length()<16){
+                            JOptionPane.showMessageDialog(null, "Números insuficientes en la tarjeta", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }else{
+                            if(cvv.length()<3){
+                                JOptionPane.showMessageDialog(null, "Números insuficientes CVV", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }else{
+                                if(fechaInicioTF.getText().equals("")){
+                                    JOptionPane.showMessageDialog(null, "Fecha de inicio vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                }else{
+                                    if(fechaDeDevolucionTF.getText().equals("")){
+                                        JOptionPane.showMessageDialog(null, "Fecha de devolución vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    }else{
+                                        if(numTarjetaTF.getText().equals("")){
+                                            JOptionPane.showMessageDialog(null, "Número de tarjeta vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                        }else{
+                                            if(fechaCadTF.getText().equals("")){
+                                                JOptionPane.showMessageDialog(null, "Fecha de caducidad vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                            }else{
+                                                if(cvvTF.getText().equals("")){
+                                                    JOptionPane.showMessageDialog(null, "CVV vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                                }else{
+                                                    int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
+                                                    double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
+                                                    int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
+                                                    String costo_total = String.valueOf(costo_auto*dias);
+                                                    if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
+                                                        costoEstimadoVisualLbl.setText(costo_total+ " Pesos MXN");
+                                                    }else{
+                                                        JOptionPane.showMessageDialog(null, "Las fechas son incorrectas", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         });
         crearRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
+                String numero_de_tarjeta = numTarjetaTF.getText();
+                String cvvv = cvvTF.getText();
 
-            String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
-                int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
-                String nombre_cliente = cliente_elegido_id_nombre[1];
-                String cliente = nombre_cliente;
-                int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
-                String nombre_auto = nombres_autos[carros_id_con_nombre_CB.getSelectedIndex()];
-            String fecha_de_renta = fechaInicioTF.getText();
-            String fecha_de_devolucion = fechaDeDevolucionTF.getText();
-            String numero_tarjeta = numTarjetaTF.getText();
-            String fecha_caducidad = fechaCadTF.getText();
-            String cvv = cvvTF.getText();
-                try {
-                    String estado_de_registro = Renta_Service.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad, numero_tarjeta, cvv);
-                    switch (estado_de_registro){
-                        case "Permitido":
-                            Renta_Service.crearRenta(
-                                identificador_cliente, cliente,
-                                id_auto, nombre_auto, fecha_de_renta,
-                                fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
-                            );
-                            JOptionPane.showMessageDialog(null, "Renta creada", "Bien!", JOptionPane.INFORMATION_MESSAGE);
-                            anterior = actual;
-                            actual = "rentas";
-                            try {
-                                limpiarVentana();
-                            } catch (SQLException ex) {
-                                throw new RuntimeException(ex);
+                if(fechaInicioTF.getText().equals("") && fechaDeDevolucionTF.getText().equals("") &&
+                        numTarjetaTF.getText().equals("") && fechaCadTF.getText().equals("") &&
+                        cvvTF.getText().equals("") ){
+                    JOptionPane.showMessageDialog(null, "Datos vacíos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    if(fechaInicioTF.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Fecha de inicio vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        if(fechaDeDevolucionTF.getText().equals("")){
+                            JOptionPane.showMessageDialog(null, "Fecha de devolución vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }else{
+                            if(numTarjetaTF.getText().equals("") || numero_de_tarjeta.length() < 16){
+                                JOptionPane.showMessageDialog(null, "Número de tarjeta vacío o números insuficientes", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }else{
+                                if(fechaCadTF.getText().equals("")){
+                                    JOptionPane.showMessageDialog(null, "Fecha de caducidad vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                }else{
+                                    if(cvvTF.getText().equals("") || cvvv.length() < 3){
+                                        JOptionPane.showMessageDialog(null, "CVV vacío o números insuficientes", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    }else{
+                                        String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
+                                        String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
+                                        int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
+                                        String nombre_cliente = cliente_elegido_id_nombre[1];
+                                        String cliente = nombre_cliente;
+                                        int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
+                                        String nombre_auto = nombres_autos[carros_id_con_nombre_CB.getSelectedIndex()];
+                                        String fecha_de_renta = fechaInicioTF.getText();
+                                        String fecha_de_devolucion = fechaDeDevolucionTF.getText();
+                                        String numero_tarjeta = numTarjetaTF.getText();
+                                        String fecha_caducidad = fechaCadTF.getText();
+                                        String cvv = cvvTF.getText();
+                                        try {
+                                            String estado_de_registro = Renta_Service.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad, numero_tarjeta, cvv);
+                                            switch (estado_de_registro){
+                                                case "Permitido":
+                                                    Renta_Service.crearRenta(
+                                                            identificador_cliente, cliente,
+                                                            id_auto, nombre_auto, fecha_de_renta,
+                                                            fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
+                                                    );
+                                                    JOptionPane.showMessageDialog(null, "Renta creada", "Bien!", JOptionPane.INFORMATION_MESSAGE);
+                                                    anterior = actual;
+                                                    actual = "rentas";
+                                                    try {
+                                                        limpiarVentana();
+                                                    } catch (SQLException ex) {
+                                                        throw new RuntimeException(ex);
+                                                    }
+                                                    break;
+                                                default:
+                                                    JOptionPane.showMessageDialog(null, estado_de_registro, "Error", JOptionPane.ERROR_MESSAGE);
+                                                    break;
+                                            }
+                                        } catch (SQLException ex) {
+                                            throw new RuntimeException(ex);
+                                        }
+                                    }
+                                }
                             }
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(null, estado_de_registro, "Error", JOptionPane.ERROR_MESSAGE);
-                            break;
+                        }
                     }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -2946,18 +3343,23 @@ public class Ventana extends JFrame {
         editarRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "editarRentaSeleccionada";
-                id_renta_editar = Integer.parseInt(ids[id_rentas_CB.getSelectedIndex()]);
-                id_cliente_editando_renta = Integer.parseInt(Renta_Service.obtener_celda("SELECT * FROM rentas WHERE id_de_renta = "+ id_renta_editar));
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                int indice = id_rentas_CB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "Selecciona una renta para continuar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    anterior = actual;
+                    actual = "editarRentaSeleccionada";
+                    id_renta_editar = Integer.parseInt(ids[id_rentas_CB.getSelectedIndex()]);
+                    id_cliente_editando_renta = Integer.parseInt(Renta_Service.obtener_celda("SELECT * FROM rentas WHERE id_de_renta = "+ id_renta_editar));
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
-                repaint();
-                revalidate();
+                    repaint();
+                    revalidate();
+                }
             }
         });
 
@@ -3328,19 +3730,24 @@ public class Ventana extends JFrame {
         eliminarRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id_cl [] = (String.valueOf(idRentasCB.getSelectedItem()).split(":"));
-                id_cl[0] = id_cl[0].replace(" ", "");
-                Renta_Service.borrar_renta(Integer.parseInt(id_cl[0]));
+                int indice = idRentasCB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "No hay rentas para eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    String id_cl [] = (String.valueOf(idRentasCB.getSelectedItem()).split(":"));
+                    id_cl[0] = id_cl[0].replace(" ", "");
+                    Renta_Service.borrar_renta(Integer.parseInt(id_cl[0]));
 
-                DefaultTableModel dtm = new DefaultTableModel();
+                    DefaultTableModel dtm = new DefaultTableModel();
                     dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla, "SELECT * FROM rentas");
                     tabla_rentas.setModel(dtm);
 
-                TablasRamservice.crear_tabla(tabla_rentas);
+                    TablasRamservice.crear_tabla(tabla_rentas);
 
-                idRentasCB.removeItemAt(idRentasCB.getSelectedIndex());
-                repaint();
-                revalidate();
+                    idRentasCB.removeItemAt(idRentasCB.getSelectedIndex());
+                    repaint();
+                    revalidate();
+                }
             }
         });
 

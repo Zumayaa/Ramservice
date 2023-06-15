@@ -106,7 +106,12 @@ public class Renta_Service {
     // funciones generales
     public static DefaultTableModel crear_dtm_de_rentas(String [] nombres_columnas, String consulta){
         Object [][] datos = Rentas_DAO.seleccionar_datos(consulta);
-        DefaultTableModel dtm = new DefaultTableModel(datos,nombres_columnas);
+        DefaultTableModel dtm = new DefaultTableModel(datos, nombres_columnas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         return dtm;
     }
     public static String[] crear_arreglo_de_rentas(String [] nombres_columnas, String consulta){

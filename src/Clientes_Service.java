@@ -26,7 +26,12 @@ public class Clientes_Service {
     // funciones generales
     public static DefaultTableModel crear_dtm_de_clientes(String [] nombres_columnas, String consulta){
         Object [][] datos = Clientes_DAO.seleccionar_datos(consulta);
-        DefaultTableModel dtm = new DefaultTableModel(datos,nombres_columnas);
+        DefaultTableModel dtm = new DefaultTableModel(datos, nombres_columnas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         return dtm;
     }
     public static Object [][] crear_matriz_de_rentas(String consulta){
