@@ -14,6 +14,7 @@ import java.util.Map;
 public class Ventana extends JFrame {
 
 
+
     public String descripcionCategoria,rutaCategoria,nombreCategoria,id_categoria;
 
     public String rutaVehiculo,nombreVehiculo,id_Vehiculo,marcaVehiculo,combustibleVehiculo,añoVehiculo,precioVehiculo,transmisionVehiculo,categoriaVehiculo;
@@ -25,7 +26,7 @@ public class Ventana extends JFrame {
 
     public ArrayList<JPanel> categorias = new ArrayList<>();
 
-    public int a=0,b=0,c=0,d=0,e=0,f=0,g=0;
+    public int a=0,b=0,c=0;
     private int panelCatX=84,panelCatY=75,panelMarcX=84,panelMarcY=75,panelCarrX=84,panelCarrY=84;
     public JPanel panel = null;
     private String anterior = "cargaPantalla";
