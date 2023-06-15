@@ -31,7 +31,7 @@ public class Conexion {
                     "id_de_renta INT NOT NULL AUTO_INCREMENT,"+
                     "identificador_cliente INT NOT NULL REFERENCES clientes(id_de_cliente),"+
                     "cliente VARCHAR(255) NOT NULL,"+
-                    "identificador_auto INT NOT NULL REFERENCES autos(id_de_auto),"+
+                    "identificador_auto INT NOT NULL REFERENCES vehiculos(id_vehiculo),"+
                     "automovil VARCHAR(255) NOT NULL,"+
                     "fecha_de_renta DATE NOT NULL,"+
                     "fecha_de_devolucion DATE NOT NULL,"+
@@ -78,19 +78,6 @@ public class Conexion {
                 ps.executeUpdate();
 
                 query =
-                    "CREATE TABLE IF NOT EXISTS autos (" +
-                    "id_de_auto INT NOT NULL AUTO_INCREMENT," +
-                    "nombre_auto VARCHAR(255) NOT NULL, " +
-                    "marca VARCHAR(255) NOT NULL, " +
-                    "categoria VARCHAR(255) NOT NULL, " +
-                    "kilometraje VARCHAR(255), " +
-                    "costo FLOAT NOT NULL, " +
-                    "imagen_dir VARCHAR(255), "+
-                    "PRIMARY KEY (id_de_auto));";
-                ps = conexion.prepareStatement(query);
-                ps.executeUpdate();
-
-                query =
                         "CREATE TABLE IF NOT EXISTS tarjetas_de_clientes (" +
                                 "id_de_tarjeta INT NOT NULL AUTO_INCREMENT," +
                                 "identificador_cliente VARCHAR(255) NOT NULL REFERENCES clientes(id_de_cliente), " +
@@ -101,13 +88,6 @@ public class Conexion {
                                 "cvv VARCHAR(3) NOT NULL, " +
                                 "PRIMARY KEY (id_de_tarjeta)," +
                                 "UNIQUE KEY uk_id_cliente (identificador_cliente));";;
-                ps = conexion.prepareStatement(query);
-                ps.executeUpdate();
-
-
-                query = "INSERT IGNORE INTO autos " +
-                        "(id_de_auto,nombre_auto, marca, categoria, kilometraje, costo, imagen_dir) VALUES " +
-                        "('1','Auto1', 'Marca1', 'Categoria1', '10000', 10000.00, 'src/img/auto1'), ('2','Auto2', 'Marca2', 'Categoria2', '20000', 20000.00, 'src/img/auto1'), ('3','Auto3', 'Marca3', 'Categoria3', '30000', 30000.00, 'src/img/auto1');";
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
 
@@ -139,7 +119,9 @@ public class Conexion {
 
                 query = "INSERT IGNORE INTO vehiculos " +
                         "(id_vehiculo,img_vehiculo, nombre_vehiculo, categoria_vehiculo, transmision_vehiculo,año_vehiculo,combustible_vehiculo,precio_vehiculo,marca_vehiculo) VALUES " +
-                        "('1','src/img/13.png', 'Rey X', 'Sedán de lujo', 'Estándar','2021','Gasolinaa','$201','BMW');";
+                        "('1','src/img/13.png', 'Rey X', 'Sedán de lujo', 'Estándar','2021','Gasolinaa','$201','BMW'),"+
+                        "('2','src/img/image9.png', 'TQM Rey X', 'Carrito', 'Estándar','2021','Gasolinaa','$290','BMW')," +
+                        "('3','src/img/image10.png', 'Tacoma', 'Camioneta', 'Estándar','2021','Gasolinaa','$256','BMW');";
 
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();

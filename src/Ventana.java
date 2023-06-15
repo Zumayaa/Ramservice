@@ -474,7 +474,7 @@ public class Ventana extends JFrame {
         emailText.setForeground(Color.black);
         loginPanel.add(emailText);
 
-        JTextField correo = new JTextField();
+        JTextField correo = new JTextField("admin");
         correo.setSize(300, 36);
         correo.setLocation(75, 220);
         correo.setBorder(roundedBorder);
@@ -487,7 +487,7 @@ public class Ventana extends JFrame {
         passwordText.setForeground(Color.black);
         loginPanel.add(passwordText);
 
-        JPasswordField password = new JPasswordField();
+        JPasswordField password = new JPasswordField("admin");
         password.setSize(300, 36);
         password.setLocation(75, 320);
         password.setBorder(roundedBorder);
@@ -767,7 +767,7 @@ public class Ventana extends JFrame {
             crearVehiculos.setSize(300,30);
             crearVehiculos.setLocation(350,20);
             crearVehiculos.setFocusPainted(false);
-            crearVehiculos.setForeground(Color.white);
+            crearVehiculos.setForeground(Color.BLACK);
             crearVehiculos.setBorderPainted(false);
             crearVehiculos.setFont(new Font("Tahoma", Font.BOLD, 18));
             vehiculosPanel.add(crearVehiculos);
@@ -782,24 +782,20 @@ public class Ventana extends JFrame {
 
 
             JButton btnEliminar = new JButton("Eliminar");
-            btnEliminar.setForeground(Color.WHITE);
+            btnEliminar.setForeground(Color.BLACK);
             btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
-            btnEliminar.setFocusPainted(false);
-            btnEliminar.setBorderPainted(false);
             btnEliminar.setBackground(Color.decode("#BF0000"));
             btnEliminar.setBounds(570, 151, 226, 53);
             fondoCarr.add(btnEliminar);
 
             JButton consultarCarr = new JButton("Consultar");
-            consultarCarr.setFocusPainted(false);
-            consultarCarr.setForeground(Color.WHITE);
+            consultarCarr.setForeground(Color.BLACK);
             consultarCarr.setFont(new Font("Tahoma", Font.BOLD, 16));
-            consultarCarr.setBorderPainted(false);
             consultarCarr.setBackground(Color.BLACK);
             consultarCarr.setBounds(570, 82, 226, 55);
             fondoCarr.add(consultarCarr);
 
-            JLabel precioCarr = new JLabel( "$"+datosTabla[i][7]+" USD por día");
+            JLabel precioCarr = new JLabel( ""+datosTabla[i][7]+" USD por día");
             precioCarr.setForeground(Color.BLACK);
             precioCarr.setOpaque(true);
             precioCarr.setBackground(Color.decode("#38B6FF"));
@@ -1024,7 +1020,28 @@ public class Ventana extends JFrame {
             } else {
                 panelCarrY = 75;
             }
+            btnEliminar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
+                    id_Vehiculo=datosTabla[finalI][0];
+                    FuncionesSQL.borrar_registro("vehiculos","id_vehiculo", Integer.parseInt(id_Vehiculo));
+                    JOptionPane.showMessageDialog(null,"Vehiculo eliminado","Eliminada",JOptionPane.INFORMATION_MESSAGE);
+                    actual = "vehiculos";
+                    try {
+                        remove(vehiculosPaneles.get(a));
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+
+
+
+                }
+            });
 
             b++;
 
@@ -1115,6 +1132,7 @@ public class Ventana extends JFrame {
         añoCarrCamb.setBackground(SystemColor.menu);
         añoCarrCamb.setBounds(36, 203, 236, 29);
         fondoeditCarr.add(añoCarrCamb);
+        añoCarrCamb.setDocument(new Fechas.NumericDocument());
 
         JLabel combCarr = new JLabel("Combustible");
         combCarr.setForeground(Color.BLACK);
@@ -1150,11 +1168,10 @@ public class Ventana extends JFrame {
         marcasCambCarr.setBounds(36, 141, 100, 29);
         fondoeditCarr.add(marcasCambCarr);
 
-        JTextField signoPesos = new JTextField();
+        JTextField signoPesos = new JTextField("$");
         signoPesos.setEditable(false);
         signoPesos.setHorizontalAlignment(SwingConstants.LEFT);
         signoPesos.setFont(new Font("Tahoma", Font.BOLD, 13));
-        signoPesos.setText("$");
         signoPesos.setColumns(10);
         signoPesos.setBorder(null);
         signoPesos.setBackground(SystemColor.menu);
@@ -1201,19 +1218,17 @@ public class Ventana extends JFrame {
 
 
         JButton editBoton = new JButton("Crear vehiculo");
-        editBoton.setForeground(Color.WHITE);
+        editBoton.setForeground(Color.BLACK);
         editBoton.setFont(new Font("Tahoma", Font.BOLD, 16));
-        editBoton.setFocusPainted(false);
-        editBoton.setBorderPainted(false);
-        editBoton.setBackground(Color.decode("#38B6FF"));
+        //editBoton.setFocusPainted(false);
+        //editBoton.setBorderPainted(false);
+        //editBoton.setBackground(Color.decode("#38B6FF"));
         editBoton.setBounds(23, 528, 260, 53);
         fondoeditCarr.add(editBoton);
 
         JButton btnVisualizar = new JButton("Visualizar cambios");
-        btnVisualizar.setForeground(Color.WHITE);
+        btnVisualizar.setForeground(Color.BLACK);
         btnVisualizar.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnVisualizar.setFocusPainted(false);
-        btnVisualizar.setBorderPainted(false);
         btnVisualizar.setBackground(Color.BLUE);
         btnVisualizar.setBounds(23, 466, 260, 53);
         fondoeditCarr.add(btnVisualizar);
@@ -1276,7 +1291,6 @@ public class Ventana extends JFrame {
         btnVisualizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 nombActCarr.setText(marcasCambCarr.getSelectedItem()+" "+cambModeloCarr.getText());
                 imgCarr.setIcon(new ImageIcon(imgConsultarCat.getText()));
                 precioActCarr.setText("$"+precioNuevoCarr.getText()+" / día");
@@ -1302,7 +1316,9 @@ public class Ventana extends JFrame {
                 String marcaVehiculo = (String) marcasCambCarr.getSelectedItem();
                 String[]datosvehiculoBase={vehiculoimg,nombreVehiculo,categoriaVehiculo,transmisionVehiculo,añoVehiculo,gasVehiculo,precioVehiculo,marcaVehiculo};
 
-
+                if(!vehiculoimg.isEmpty() && !nombreVehiculo.isEmpty() && !categoriaVehiculo.isEmpty()
+                && !transmisionVehiculo.isEmpty() && !añoVehiculo.isEmpty() && !gasVehiculo.isEmpty()
+                && !precioVehiculo.isEmpty() && !marcaVehiculo.isEmpty()){
                 try {
                     FuncionesSQL.insertar_a_tabla(datosvehiculoBase,"vehiculos");
                     JOptionPane.showMessageDialog(null,"Vehiculo creado correctamente","Vehiculo creado",JOptionPane.INFORMATION_MESSAGE);
@@ -1315,8 +1331,15 @@ public class Ventana extends JFrame {
                     throw new RuntimeException(ex);
                 }
             }
+                else{
+                    JOptionPane.showMessageDialog(null,"Rellene todos los campos","Error",JOptionPane.ERROR_MESSAGE);
+
+                }
+        }
         });
 
+
+        precioNuevoCarr.setDocument(new Fechas.NumericDocument());
         return crearVehi;
     }
 
@@ -1348,6 +1371,7 @@ public class Ventana extends JFrame {
         precioNuevoCarr.setBackground(SystemColor.menu);
         precioNuevoCarr.setBounds(179, 49, 93, 29);
         fondoeditCarr.add(precioNuevoCarr);
+        precioNuevoCarr.setDocument(new Fechas.NumericDocument());
 
         JLabel rutaImg = new JLabel("Ruta de imagen");
         rutaImg.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1405,6 +1429,7 @@ public class Ventana extends JFrame {
         añoCarrCamb.setBorder(null);
         añoCarrCamb.setBackground(SystemColor.menu);
         añoCarrCamb.setBounds(36, 203, 236, 29);
+        añoCarrCamb.setDocument(new Fechas.NumericDocument());
         fondoeditCarr.add(añoCarrCamb);
 
         JLabel combCarr = new JLabel("Combustible");
@@ -1442,7 +1467,7 @@ public class Ventana extends JFrame {
         marcasCambCarr.setBounds(36, 141, 100, 29);
         fondoeditCarr.add(marcasCambCarr);
 
-        JTextField signoPesos = new JTextField();
+        JTextField signoPesos = new JTextField("$");
         signoPesos.setEditable(false);
         signoPesos.setHorizontalAlignment(SwingConstants.LEFT);
         signoPesos.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -1485,10 +1510,8 @@ public class Ventana extends JFrame {
 
 
         JButton editBoton = new JButton("Editar");
-        editBoton.setForeground(Color.WHITE);
+        editBoton.setForeground(Color.BLACK);
         editBoton.setFont(new Font("Tahoma", Font.BOLD, 16));
-        editBoton.setFocusPainted(false);
-        editBoton.setBorderPainted(false);
         editBoton.setBackground(Color.decode("#38B6FF"));
         editBoton.setBounds(23, 513, 260, 53);
         fondoeditCarr.add(editBoton);
@@ -1558,11 +1581,14 @@ public class Ventana extends JFrame {
                 String transmisionVehiculo= (String) transmisionCambCarr.getSelectedItem();
                 String añoVehiculo = añoCarrCamb.getText();
                 String gasVehiculo = (String) gasTipoCarr.getSelectedItem();
-                String precioVehiculo = "$"+precioNuevoCarr.getText();
+                String precioVehiculo = precioNuevoCarr.getText();
                 String marcaVehiculo = (String) marcasCambCarr.getSelectedItem();
-                String[]datosvehiculoBase={vehiculoimg,nombreVehiculo,categoriaVehiculo,transmisionVehiculo,añoVehiculo,gasVehiculo,precioVehiculo,marcaVehiculo};
+                if(!vehiculoimg.isEmpty() && !nombreVehiculo.isEmpty() && !categoriaVehiculo.isEmpty() && !transmisionVehiculo.isEmpty()
+                    && !añoVehiculo.isEmpty() && !gasVehiculo.isEmpty() && !marcaVehiculo.isEmpty() && !precioVehiculo.isEmpty()){
 
-                FuncionesSQL.actualizar_tabla_completa(datosvehiculoBase,"vehiculos","id_vehiculo", Integer.parseInt(id_vehiculoo));
+                precioVehiculo = "$"+precioNuevoCarr.getText();
+                String[]datosvehiculoBase={vehiculoimg,nombreVehiculo,categoriaVehiculo,transmisionVehiculo,añoVehiculo,gasVehiculo,precioVehiculo,marcaVehiculo};
+                    FuncionesSQL.actualizar_tabla_completa(datosvehiculoBase,"vehiculos","id_vehiculo", Integer.parseInt(id_vehiculoo));
                 JOptionPane.showMessageDialog(null,"Vehiculo editado correctamente","Editado",JOptionPane.INFORMATION_MESSAGE);
                 actual="vehiculos";
 
@@ -1571,6 +1597,10 @@ public class Ventana extends JFrame {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Rellene todos los campos","Error",JOptionPane.ERROR_MESSAGE);
+            }
             }
         });
 
@@ -1807,7 +1837,7 @@ public class Ventana extends JFrame {
         autoIdLbl.setSize(700,50);
         autoIdLbl.setLocation(50,75);
 
-        JLabel autoNombreLbl = new JLabel(" Auto: " + Autos_Service.obtener_celda("SELECT nombre_auto FROM AUTOS WHERE id_de_auto = " + id_auto_consultar));
+        JLabel autoNombreLbl = new JLabel(" Auto: " + Autos_Service.obtener_celda("SELECT nombre_vehiculo FROM vehiculos WHERE id_vehiculo = " + id_auto_consultar));
         autoNombreLbl.setFont(new Font("Arial", Font.BOLD, 24));
         autoNombreLbl.setSize(700,50);
         autoNombreLbl.setLocation(750,75);
@@ -2784,8 +2814,8 @@ public class Ventana extends JFrame {
         consultarCarPNL.add(bienvenido);
 
 
-        String nombres_completos [] = Clientes_Service.obtener_columna("SELECT nombre_auto FROM autos");
-        String ids_renta [] = Clientes_Service.obtener_columna("SELECT id_de_auto FROM autos");
+        String nombres_completos [] = Clientes_Service.obtener_columna("SELECT nombre_vehiculo FROM vehiculos");
+        String ids_renta [] = Clientes_Service.obtener_columna("SELECT id_vehiculo FROM vehiculos");
         String id_nombre_concatenado[] = concatenarArreglos(ids_renta, nombres_completos, " : ");
         JComboBox id_auto_a_consultar_CB = new JComboBox(id_nombre_concatenado);
         id_auto_a_consultar_CB.setSize(226,40);
@@ -2862,8 +2892,8 @@ public class Ventana extends JFrame {
 
         y += 50;
 
-        String nombres_autos [] = Autos_Service.obtener_columna("SELECT nombre_auto FROM autos");
-        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_de_auto FROM autos ORDER BY id_de_auto");
+        String nombres_autos [] = Autos_Service.obtener_columna("SELECT nombre_vehiculo FROM vehiculos");
+        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_vehiculo FROM vehiculos ORDER BY id_vehiculo");
         String id_nombres_autos[] = concatenarArreglos(ids_autos, nombres_autos, " : ");
 
         JComboBox carros_id_con_nombre_CB = new JComboBox(id_nombres_autos);
@@ -3202,7 +3232,9 @@ public class Ventana extends JFrame {
                                                     JOptionPane.showMessageDialog(null, "CVV vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
                                                 }else{
                                                     int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
-                                                    double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
+                                                    String precio = Autos_Service.obtener_celda("SELECT precio_vehiculo FROM vehiculos WHERE id_vehiculo = " + id_auto);
+                                                    precio = precio.replace("$", "");
+                                                    double costo_auto = Double.parseDouble(precio);
                                                     int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
                                                     String costo_total = String.valueOf(costo_auto*dias);
                                                     if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
@@ -3421,8 +3453,8 @@ public class Ventana extends JFrame {
 
         y += 50;
 
-        String nombres_autos [] = Autos_Service.obtener_columna("SELECT nombre_auto FROM autos");
-        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_de_auto FROM autos ORDER BY id_de_auto");
+        String nombres_autos [] = Autos_Service.obtener_columna("SELECT nombre_vehiculo FROM vehiculos");
+        String ids_autos[] = Autos_Service.obtener_columna("SELECT id_vehiculo FROM vehiculos ORDER BY id_vehiculo");
         String id_nombres_autos[] = concatenarArreglos(ids_autos, nombres_autos, " : ");
         String id_auto = Renta_Service.obtener_celda("SELECT identificador_auto FROM rentas WHERE id_de_renta = " + id_de_renta_a_editar);
         int index_carros = indexSeleccionado(ids_autos, String.valueOf(id_auto));
@@ -3511,7 +3543,10 @@ public class Ventana extends JFrame {
         numTarjetaTF.setBorder(roundedBorder);
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
+        numTarjetaTF.setDocument(new Fechas.NumericDocument());
+        numTarjetaTF.setText((Clientes_Service.obtener_celda("SELECT numero_tarjeta from rentas WHERE id_de_renta = " + id_de_renta_a_editar)));
         editarRentaSeleccionadaPNL.add(numTarjetaTF);
+
 
         y += 50;
         JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
@@ -3614,7 +3649,9 @@ public class Ventana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String auto_elegido = nombres_autos[carros_id_con_nombre_CB.getSelectedIndex()];
                 int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
-                double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
+                String precio = Autos_Service.obtener_celda("SELECT precio_vehiculo FROM vehiculos WHERE id_vehiculo = " + id_auto);
+                precio = precio.replace("$", "");
+                double costo_auto = Double.parseDouble(precio);
                 int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
                 String costo_total = String.valueOf(costo_auto*dias);
                 if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
@@ -3815,12 +3852,10 @@ public class Ventana extends JFrame {
             }
 
             JButton crearCategorias = new JButton("Crear categoría");
-            crearCategorias.setBackground(Color.decode("#38b6ff"));
+            crearCategorias.setBackground(Color.decode("#38B6FF"));
             crearCategorias.setSize(300, 30);
             crearCategorias.setLocation(350, 20);
-            crearCategorias.setFocusPainted(false);
-            crearCategorias.setForeground(Color.white);
-            crearCategorias.setBorderPainted(false);
+            crearCategorias.setForeground(Color.BLACK);
             crearCategorias.setFont(new Font("Tahoma", Font.BOLD, 18));
 
             JPanel panelCat = new JPanel();
@@ -3842,19 +3877,15 @@ public class Ventana extends JFrame {
             panelCat.add(sedanLujo);
 
             JButton btnEliminar = new JButton("Eliminar");
-            btnEliminar.setForeground(Color.WHITE);
+            btnEliminar.setForeground(Color.BLACK);
             btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
-            btnEliminar.setFocusPainted(false);
-            btnEliminar.setBorderPainted(false);
             btnEliminar.setBackground(Color.decode("#BF0000"));
             btnEliminar.setBounds(585, 131, 226, 53);
             panelCat.add(btnEliminar);
 
             JButton consultarCat = new JButton("Consultar");
-            consultarCat.setFocusPainted(false);
-            consultarCat.setForeground(Color.WHITE);
+            consultarCat.setForeground(Color.BLACK);
             consultarCat.setFont(new Font("Tahoma", Font.BOLD, 16));
-            consultarCat.setBorderPainted(false);
             consultarCat.setBackground(Color.BLACK);
             consultarCat.setBounds(585, 41, 226, 55);
             panelCat.add(consultarCat);
@@ -4014,7 +4045,28 @@ public class Ventana extends JFrame {
             } else {
                 panelCatY = 75;
             }
+            btnEliminar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
+                    id_categoria=datosTabla[finalI][0];
+                    FuncionesSQL.borrar_registro("categorias","id_categorias", Integer.parseInt(id_categoria));
+                    JOptionPane.showMessageDialog(null,"Categoría eliminada","Eliminada",JOptionPane.INFORMATION_MESSAGE);
+                    actual = "categorias";
+                    try {
+                        remove(categorias.get(a));
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+
+
+
+                }
+            });
 
             b++;
 
@@ -4102,19 +4154,15 @@ public class Ventana extends JFrame {
         crearCategoria.add(imgActCat);
 
         JButton crearCatBot = new JButton("Crear categoría");
-        crearCatBot.setForeground(Color.WHITE);
+        crearCatBot.setForeground(Color.BLACK);
         crearCatBot.setFont(new Font("Tahoma", Font.BOLD, 16));
-        crearCatBot.setFocusPainted(false);
-        crearCatBot.setBorderPainted(false);
         crearCatBot.setBackground(Color.decode("#38B6FF"));
         crearCatBot.setBounds(26, 520, 260, 53);
         cuadroEditCat.add(crearCatBot);
 
         JButton btnVisualizarCambios = new JButton("Visualizar cambios");
-        btnVisualizarCambios.setForeground(Color.WHITE);
+        btnVisualizarCambios.setForeground(Color.BLACK);
         btnVisualizarCambios.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnVisualizarCambios.setFocusPainted(false);
-        btnVisualizarCambios.setBorderPainted(false);
         btnVisualizarCambios.setBackground(Color.BLUE);
         btnVisualizarCambios.setBounds(26, 461, 260, 53);
         cuadroEditCat.add(btnVisualizarCambios);
@@ -4152,7 +4200,7 @@ public class Ventana extends JFrame {
                 String imgbase = imgConsultarCat.getText();
                 String[]datosmarcaBase={imgbase,nombremarcaBase,descripcionBase};
 
-
+            if (!descripcionBase.isEmpty() && !nombremarcaBase.isEmpty() && !imgbase.isEmpty()){
                 try {
                     FuncionesSQL.insertar_a_tabla(datosmarcaBase,"categorias");
                     JOptionPane.showMessageDialog(null,"Categoria creada correctamente","Categoria creada",JOptionPane.INFORMATION_MESSAGE);
@@ -4164,6 +4212,10 @@ public class Ventana extends JFrame {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Rellene todos los campos","Error",JOptionPane.ERROR_MESSAGE);
+            }
             }
         });
 
@@ -4236,10 +4288,8 @@ public class Ventana extends JFrame {
         consultarCat.add(imgActCat);
 
         JButton editBotCat = new JButton("Editar");
-        editBotCat.setForeground(Color.WHITE);
+        editBotCat.setForeground(Color.BLACK);
         editBotCat.setFont(new Font("Tahoma", Font.BOLD, 16));
-        editBotCat.setFocusPainted(false);
-        editBotCat.setBorderPainted(false);
         editBotCat.setBackground(Color.decode("#38B6FF"));
         editBotCat.setBounds(26, 520, 260, 53);
         cuadroEditCat.add(editBotCat);
@@ -4269,6 +4319,7 @@ public class Ventana extends JFrame {
                 String rutaCambio = imgConsultarCat.getText();
                 String id_cate= id_categoria;
                 String[] datosaTabla = {rutaCambio,nombreCambio,descCambio};
+                if (!nombreCambio.isEmpty() && !descCambio.isEmpty() && !rutaCambio.isEmpty()){
                 FuncionesSQL.actualizar_tabla_completa(datosaTabla,"categorias","id_categorias", Integer.parseInt(id_cate));
                 JOptionPane.showMessageDialog(null,"Categoría editada correctamente","Editado",JOptionPane.INFORMATION_MESSAGE);
                 actual="categorias";
@@ -4277,6 +4328,10 @@ public class Ventana extends JFrame {
                     limpiarVentana();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
+                }
+            }
+            else{
+                    JOptionPane.showMessageDialog(null,"Rellene todos los campos","Error",JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -4335,9 +4390,7 @@ public class Ventana extends JFrame {
             crearMarcas.setBackground(Color.decode("#38b6ff"));
             crearMarcas.setSize(300, 30);
             crearMarcas.setLocation(350, 20);
-            crearMarcas.setFocusPainted(false);
-            crearMarcas.setForeground(Color.white);
-            crearMarcas.setBorderPainted(false);
+            crearMarcas.setForeground(Color.BLACK);
             crearMarcas.setFont(new Font("Tahoma", Font.BOLD, 18));
 
             JPanel panelMarc = new JPanel();
@@ -4359,19 +4412,15 @@ public class Ventana extends JFrame {
             panelMarc.add(descMarc);
 
             JButton btnEliminar = new JButton("Eliminar");
-            btnEliminar.setForeground(Color.WHITE);
+            btnEliminar.setForeground(Color.BLACK);
             btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
-            btnEliminar.setFocusPainted(false);
-            btnEliminar.setBorderPainted(false);
             btnEliminar.setBackground(Color.decode("#BF0000"));
             btnEliminar.setBounds(585, 131, 226, 53);
             panelMarc.add(btnEliminar);
 
             JButton consultarMarc = new JButton("Consultar");
-            consultarMarc.setFocusPainted(false);
-            consultarMarc.setForeground(Color.WHITE);
+            consultarMarc.setForeground(Color.BLACK);
             consultarMarc.setFont(new Font("Tahoma", Font.BOLD, 16));
-            consultarMarc.setBorderPainted(false);
             consultarMarc.setBackground(Color.BLACK);
             consultarMarc.setBounds(585, 41, 226, 55);
             panelMarc.add(consultarMarc);
@@ -4511,7 +4560,28 @@ public class Ventana extends JFrame {
                 panelCatY = 75;
             }
 
+            btnEliminar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
 
+                    id_marca=datosTabla[finalI][0];
+                    FuncionesSQL.borrar_registro("marcas","id_marcas", Integer.parseInt(id_marca));
+                    JOptionPane.showMessageDialog(null,"Marca eliminada","Eliminada",JOptionPane.INFORMATION_MESSAGE);
+                    actual = "marcas";
+                    try {
+                        remove(marcasPaneles.get(a));
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+
+
+
+                }
+            });
             b++;
 
         }
@@ -4593,19 +4663,15 @@ public class Ventana extends JFrame {
         crearMarca.add(imgActMarc);
 
         JButton crearMarcaBot = new JButton("Crear marca");
-        crearMarcaBot.setForeground(Color.WHITE);
+        crearMarcaBot.setForeground(Color.BLACK);
         crearMarcaBot.setFont(new Font("Tahoma", Font.BOLD, 16));
-        crearMarcaBot.setFocusPainted(false);
-        crearMarcaBot.setBorderPainted(false);
         crearMarcaBot.setBackground(Color.decode("#38B6FF"));
         crearMarcaBot.setBounds(26, 520, 260, 53);
         cuadroEditMarc.add(crearMarcaBot);
 
         JButton btnVisualizarCambios = new JButton("Visualizar cambios");
-        btnVisualizarCambios.setForeground(Color.WHITE);
+        btnVisualizarCambios.setForeground(Color.BLACK);
         btnVisualizarCambios.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnVisualizarCambios.setFocusPainted(false);
-        btnVisualizarCambios.setBorderPainted(false);
         btnVisualizarCambios.setBackground(Color.BLUE);
         btnVisualizarCambios.setBounds(25, 458, 260, 53);
         cuadroEditMarc.add(btnVisualizarCambios);
@@ -4639,12 +4705,13 @@ public class Ventana extends JFrame {
                 String descripcionBase=camDescMarc.getText();
                 String nombremarcaBase=cambNomMarc.getText();
                 String imgbase = imgConsultarMarc.getText();
+                if (!descripcionBase.isEmpty() && !nombremarcaBase.isEmpty() && !imgbase.isEmpty()){
 
                 String[]datosmarcaBase={imgbase,nombremarcaBase,descripcionBase};
 
                 try {
                     FuncionesSQL.insertar_a_tabla(datosmarcaBase,"marcas");
-                    JOptionPane.showMessageDialog(null,"Marc creada correctamente","Marca creada",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Marca creada correctamente","Marca creada",JOptionPane.INFORMATION_MESSAGE);
                     actual = "marcas";
                     limpiarVentana();
 
@@ -4652,6 +4719,12 @@ public class Ventana extends JFrame {
                     revalidate();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
+
+                }
+
+            }
+                else{
+                    JOptionPane.showMessageDialog(null,"Rellene todos los campos","Error",JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -4726,10 +4799,8 @@ public class Ventana extends JFrame {
         consultarMarcas.add(imgActMarc);
 
         JButton editBotMarc = new JButton("Editar");
-        editBotMarc.setForeground(Color.WHITE);
+        editBotMarc.setForeground(Color.BLACK);
         editBotMarc.setFont(new Font("Tahoma", Font.BOLD, 16));
-        editBotMarc.setFocusPainted(false);
-        editBotMarc.setBorderPainted(false);
         editBotMarc.setBackground(Color.decode("#38B6FF"));
         editBotMarc.setBounds(26, 520, 260, 53);
         cuadroEditMarc.add(editBotMarc);
@@ -4752,19 +4823,30 @@ public class Ventana extends JFrame {
         editBotMarc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nombreCambio=nombreActMarc.getText();
-                String descCambio=descActMarc.getText();
-                String rutaCambio = imgActMarc.getText();
-                String id_marc= id_marca;
-                String[] datosaTabla = {rutaCambio,nombreCambio,descCambio};
-                FuncionesSQL.actualizar_tabla_completa(datosaTabla,"marcas","id_marcas", Integer.parseInt(id_marc));
-                JOptionPane.showMessageDialog(null,"Marca editada correctamente","Editado",JOptionPane.INFORMATION_MESSAGE);
-                actual="marcas";
+                String nombreCambio = nombreActMarc.getText();
+                String descCambio = descActMarc.getText();
+                String rutaCambio = imgConsultarMarc.getText();
+                String id_marc = id_marca;
+                String[] datosaTabla = {rutaCambio, nombreCambio, descCambio};
+                System.out.println(nombreCambio);
+                System.out.println(descCambio);
+                System.out.println(rutaCambio);
+                System.out.println(nombreCambio.isEmpty());
+                System.out.println(descCambio.isEmpty());
+                System.out.println(rutaCambio.isEmpty());
+                if (!nombreCambio.isEmpty() && !descCambio.isEmpty() && !rutaCambio.isEmpty()){
+                    FuncionesSQL.actualizar_tabla_completa(datosaTabla,"marcas","id_marcas", Integer.parseInt(id_marc));
+                    JOptionPane.showMessageDialog(null,"Marca editada correctamente","Editado",JOptionPane.INFORMATION_MESSAGE);
+                    actual="marcas";
 
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Rellene todos los campos","Error",JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

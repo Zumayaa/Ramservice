@@ -126,7 +126,8 @@ public class Rentas_Class {
     }
 
     public void setCosto() throws SQLException {
-        String costo_celda = Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + getIdentificador_auto());
+        String costo_celda = Autos_Service.obtener_celda("SELECT precio_vehiculo FROM vehiculos WHERE id_vehiculo = " + getIdentificador_auto());
+        costo_celda = costo_celda.replace("$", "");
         this.costo = Double.parseDouble(costo_celda);
     }
 }
