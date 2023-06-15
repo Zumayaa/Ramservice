@@ -1473,21 +1473,26 @@ public class Ventana extends JFrame {
         consultarHistorialClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                id_cliente_a_consultar = Integer.parseInt(id_cliente[idClientesCB.getSelectedIndex()]);
-                String [] datos = Clientes_Service.obtener_fila("SELECT * FROM clientes WHERE id_de_cliente = " + id_cliente_a_consultar);
-                nombre_cliente = datos[1];
-                email_cliente = datos[3];
-                telefono_cliente = datos[4];
-                anterior = actual;
-                actual = "consultarHistorialClienteSeleccionado";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                int indice = idClientesCB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "No hay clientes para consultar", "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    id_cliente_a_consultar = Integer.parseInt(id_cliente[idClientesCB.getSelectedIndex()]);
+                    String [] datos = Clientes_Service.obtener_fila("SELECT * FROM clientes WHERE id_de_cliente = " + id_cliente_a_consultar);
+                    nombre_cliente = datos[1];
+                    email_cliente = datos[3];
+                    telefono_cliente = datos[4];
+                    anterior = actual;
+                    actual = "consultarHistorialClienteSeleccionado";
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
-                repaint();
-                revalidate();
+                    repaint();
+                    revalidate();
+                }
             }
         });
 
@@ -2022,18 +2027,23 @@ public class Ventana extends JFrame {
         editarClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "editarClienteSeleccionado";
-                id_cliente_a_editar = Integer.parseInt(ids[idClientesCB.getSelectedIndex()]);
+                int indice = idClientesCB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "No hay clientes para editar", "Error", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    anterior = actual;
+                    actual = "editarClienteSeleccionado";
+                    id_cliente_a_editar = Integer.parseInt(ids[idClientesCB.getSelectedIndex()]);
 
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    repaint();
+                    revalidate();
                 }
-
-                repaint();
-                revalidate();
             }
         });
 
@@ -2307,24 +2317,28 @@ public class Ventana extends JFrame {
         eliminarClienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id_cl [] = (String.valueOf(idClientesCB.getSelectedItem()).split(":"));
-                id_cl[0] = id_cl[0].replace(" ", "");
-                Clientes_Service.eliminar_cliente(Integer.parseInt(id_cl[0]));
-                try {
-                    if (Tarjetas_Service.existencia_de_tarjeta_con_usuario(Integer.parseInt(id_cl[0]))){
-                        Tarjetas_Service.eliminar_tarjeta(Integer.parseInt(Tarjetas_Service.obtener_celda("SELECT id_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = '" + id_cl[0] + "'")));
-                    };
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-                //idClientesCB.removeItem(idClientesCB.getSelectedItem());
-                DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTablaClientes,"SELECT * FROM clientes");
+                int indice = idClientesCB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "No hay clientes para borrar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    String id_cl [] = (String.valueOf(idClientesCB.getSelectedItem()).split(":"));
+                    id_cl[0] = id_cl[0].replace(" ", "");
+                    Clientes_Service.eliminar_cliente(Integer.parseInt(id_cl[0]));
+                    try {
+                        if (Tarjetas_Service.existencia_de_tarjeta_con_usuario(Integer.parseInt(id_cl[0]))){
+                            Tarjetas_Service.eliminar_tarjeta(Integer.parseInt(Tarjetas_Service.obtener_celda("SELECT id_de_tarjeta FROM tarjetas_de_clientes WHERE identificador_cliente = '" + id_cl[0] + "'")));
+                        };
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    //idClientesCB.removeItem(idClientesCB.getSelectedItem());
+                    DefaultTableModel dtm = Clientes_Service.crear_dtm_de_clientes(columnasTablaClientes,"SELECT * FROM clientes");
                     tabla_clientes.setModel(dtm);
                     TablasRamservice.crear_tabla(tabla_clientes);
                     idClientesCB.removeItemAt(idClientesCB.getSelectedIndex());
-                repaint();
-                revalidate();
-
+                    repaint();
+                    revalidate();
+                }
             }
         });
         eliminarPanel.add(idClientesCB);
