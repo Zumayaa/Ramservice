@@ -502,16 +502,26 @@ public class Ventana extends JFrame {
         loginBTN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "home";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                char[] pass = password.getPassword();
+                String textPass = new String(pass);
+                if(correo.getText().equals("") && textPass.equals("")){
+                    JOptionPane.showMessageDialog(null, "Datos vacíos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    if(!correo.getText().equals("admin") || !textPass.equals("admin")){
+                        JOptionPane.showMessageDialog(null, "Uno o más datos incorrectos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        anterior = actual;
+                        actual = "home";
+                        try {
+                            limpiarVentana();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
 
-                repaint();
-                revalidate();
+                        repaint();
+                        revalidate();
+                    }
+                }
             }
         });
 
