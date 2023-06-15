@@ -8,6 +8,8 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.RoundRectangle2D;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -2435,11 +2437,37 @@ public class Ventana extends JFrame {
         fechaInicioLbl.setSize(200,40);
         crearRentaPNL.add(fechaInicioLbl);
         y += 50;
-        JTextField fechaInicioTF = new JTextField("2023-01-01");
+        JTextField fechaInicioTF = new JTextField("");
         fechaInicioTF.setBorder(roundedBorder);
         fechaInicioTF.setLocation(x,y);
         fechaInicioTF.setSize(200,30);
         crearRentaPNL.add(fechaInicioTF);
+        fechaInicioTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(fechaInicioTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel fechaDeDevolucionLbl = new JLabel("Fecha de devolución");
@@ -2448,11 +2476,37 @@ public class Ventana extends JFrame {
         fechaDeDevolucionLbl.setSize(200,40);
         crearRentaPNL.add(fechaDeDevolucionLbl);
         y += 50;
-        JTextField fechaDeDevolucionTF = new JTextField("2023-01-01");
+        JTextField fechaDeDevolucionTF = new JTextField("");
         fechaDeDevolucionTF.setBorder(roundedBorder);
         fechaDeDevolucionTF.setLocation(x,y);
         fechaDeDevolucionTF.setSize(200,30);
         crearRentaPNL.add(fechaDeDevolucionTF);
+        fechaDeDevolucionTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(fechaDeDevolucionTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         x +=300;
         y = 20;
@@ -2463,11 +2517,37 @@ public class Ventana extends JFrame {
         numTarjetaLbl.setSize(200,40);
         crearRentaPNL.add(numTarjetaLbl);
         y += 50;
-        JTextField numTarjetaTF = new JTextField("a");
+        JTextField numTarjetaTF = new JTextField("");
         numTarjetaTF.setBorder(roundedBorder);
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
         crearRentaPNL.add(numTarjetaTF);
+        numTarjetaTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(numTarjetaTF.getText().length() >= 16)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
@@ -2476,11 +2556,37 @@ public class Ventana extends JFrame {
         fechaCadLbl.setSize(200,40);
         crearRentaPNL.add(fechaCadLbl);
         y += 50;
-        JTextField fechaCadTF = new JTextField("2023-06-01");
+        JTextField fechaCadTF = new JTextField("");
         fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
         crearRentaPNL.add(fechaCadTF);
+        fechaCadTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(fechaCadTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
 
@@ -2497,6 +2603,32 @@ public class Ventana extends JFrame {
         cvvTF.setLocation(x,y);
         cvvTF.setSize(100,30);
         crearRentaPNL.add(cvvTF);
+        cvvTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(cvvTF.getText().length() >= 3)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         x = 250;
         y = 300;
@@ -2566,55 +2698,109 @@ public class Ventana extends JFrame {
         calcularCostoBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
-                double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
-                int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
-                String costo_total = String.valueOf(costo_auto*dias);
-                if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
-                    costoEstimadoVisualLbl.setText(costo_total+ " Pesos MXN");
+                if(fechaInicioTF.getText().equals("") && fechaDeDevolucionTF.getText().equals("") &&
+                        numTarjetaTF.getText().equals("") && fechaCadTF.getText().equals("") &&
+                        cvvTF.getText().equals("") ){
+                    JOptionPane.showMessageDialog(null, "Datos vacíos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    if(fechaInicioTF.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Fecha de inicio vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        if(fechaDeDevolucionTF.getText().equals("")){
+                            JOptionPane.showMessageDialog(null, "Fecha de devolución vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }else{
+                            if(numTarjetaTF.getText().equals("")){
+                                JOptionPane.showMessageDialog(null, "Número de tarjeta vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }else{
+                                if(fechaCadTF.getText().equals("")){
+                                    JOptionPane.showMessageDialog(null, "Fecha de caducidad vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                }else{
+                                    if(cvvTF.getText().equals("")){
+                                        JOptionPane.showMessageDialog(null, "CVV vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    }else{
+                                        int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
+                                        double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
+                                        int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
+                                        String costo_total = String.valueOf(costo_auto*dias);
+                                        if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
+                                            costoEstimadoVisualLbl.setText(costo_total+ " Pesos MXN");
+                                        }else{
+                                            JOptionPane.showMessageDialog(null, "Las fechas son incorrectas", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         });
         crearRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
+                if(fechaInicioTF.getText().equals("") && fechaDeDevolucionTF.getText().equals("") &&
+                        numTarjetaTF.getText().equals("") && fechaCadTF.getText().equals("") &&
+                        cvvTF.getText().equals("") ){
+                    JOptionPane.showMessageDialog(null, "Datos vacíos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    if(fechaInicioTF.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Fecha de inicio vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        if(fechaDeDevolucionTF.getText().equals("")){
+                            JOptionPane.showMessageDialog(null, "Fecha de devolución vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }else{
+                            if(numTarjetaTF.getText().equals("")){
+                                JOptionPane.showMessageDialog(null, "Número de tarjeta vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            }else{
+                                if(fechaCadTF.getText().equals("")){
+                                    JOptionPane.showMessageDialog(null, "Fecha de caducidad vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                }else{
+                                    if(cvvTF.getText().equals("")){
+                                        JOptionPane.showMessageDialog(null, "CVV vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    }else{
+                                        String cliente_elegido = (String) id_cliente_con_nombre_CB.getSelectedItem();
 
-            String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
-                int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
-                String nombre_cliente = cliente_elegido_id_nombre[1];
-                String cliente = nombre_cliente;
-                int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
-                String nombre_auto = nombres_autos[carros_id_con_nombre_CB.getSelectedIndex()];
-            String fecha_de_renta = fechaInicioTF.getText();
-            String fecha_de_devolucion = fechaDeDevolucionTF.getText();
-            String numero_tarjeta = numTarjetaTF.getText();
-            String fecha_caducidad = fechaCadTF.getText();
-            String cvv = cvvTF.getText();
-                try {
-                    String estado_de_registro = Renta_Service.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad, numero_tarjeta, cvv);
-                    switch (estado_de_registro){
-                        case "Permitido":
-                            Renta_Service.crearRenta(
-                                identificador_cliente, cliente,
-                                id_auto, nombre_auto, fecha_de_renta,
-                                fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
-                            );
-                            JOptionPane.showMessageDialog(null, "Renta creada", "Bien!", JOptionPane.INFORMATION_MESSAGE);
-                            anterior = actual;
-                            actual = "rentas";
-                            try {
-                                limpiarVentana();
-                            } catch (SQLException ex) {
-                                throw new RuntimeException(ex);
+                                        String cliente_elegido_id_nombre [] = cliente_elegido.split(":");
+                                        int identificador_cliente = Integer.parseInt(ids[id_cliente_con_nombre_CB.getSelectedIndex()]);
+                                        String nombre_cliente = cliente_elegido_id_nombre[1];
+                                        String cliente = nombre_cliente;
+                                        int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
+                                        String nombre_auto = nombres_autos[carros_id_con_nombre_CB.getSelectedIndex()];
+                                        String fecha_de_renta = fechaInicioTF.getText();
+                                        String fecha_de_devolucion = fechaDeDevolucionTF.getText();
+                                        String numero_tarjeta = numTarjetaTF.getText();
+                                        String fecha_caducidad = fechaCadTF.getText();
+                                        String cvv = cvvTF.getText();
+                                        try {
+                                            String estado_de_registro = Renta_Service.comprobar_fechas(id_auto, fecha_de_renta, fecha_de_devolucion, fecha_caducidad, numero_tarjeta, cvv);
+                                            switch (estado_de_registro){
+                                                case "Permitido":
+                                                    Renta_Service.crearRenta(
+                                                            identificador_cliente, cliente,
+                                                            id_auto, nombre_auto, fecha_de_renta,
+                                                            fecha_de_devolucion, numero_tarjeta, fecha_caducidad, cvv
+                                                    );
+                                                    JOptionPane.showMessageDialog(null, "Renta creada", "Bien!", JOptionPane.INFORMATION_MESSAGE);
+                                                    anterior = actual;
+                                                    actual = "rentas";
+                                                    try {
+                                                        limpiarVentana();
+                                                    } catch (SQLException ex) {
+                                                        throw new RuntimeException(ex);
+                                                    }
+                                                    break;
+                                                default:
+                                                    JOptionPane.showMessageDialog(null, estado_de_registro, "Error", JOptionPane.ERROR_MESSAGE);
+                                                    break;
+                                            }
+                                        } catch (SQLException ex) {
+                                            throw new RuntimeException(ex);
+                                        }
+                                    }
+                                }
                             }
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(null, estado_de_registro, "Error", JOptionPane.ERROR_MESSAGE);
-                            break;
+                        }
                     }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
                 }
             }
         });
