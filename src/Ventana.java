@@ -1892,7 +1892,13 @@ public class Ventana extends JFrame {
         guardarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = correoTF.getText();
+                String nombre = nombresTF.getText();
+                String apellidos = apellidosTF.getText();
+                String correo = correoTF.getText();
+                String telefono = telefonoTF.getText();
+                String numero_de_tarjeta = numTarjetaTF.getText();
+                String fecha_de_caducidad = fechaCadTF.getText();
+                String cvv = cvvTF.getText();
                 if(nombresTF.getText().equals("") && apellidosTF.getText().equals("") &&
                         telefonoTF.getText().equals("") && correoTF.getText().equals("") &&
                         numTarjetaTF.getText().equals("") && fechaCadTF.getText().equals("") &&
@@ -1900,65 +1906,71 @@ public class Ventana extends JFrame {
                 {
                     JOptionPane.showMessageDialog(null, "Datos vacíos", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }else {
-                    if (!email.contains("@") && (!email.contains(".com") || !email.contains(".net") || !email.contains(".mx"))) {
-                        JOptionPane.showMessageDialog(null, "Email incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        if(numTarjetaTF.getText().equals("")){
-                            JOptionPane.showMessageDialog(null, "Número de tarjeta vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    if(nombre.length()<2){
+                        JOptionPane.showMessageDialog(null, "Nombre", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        if(apellidos.length()<2){
+                            JOptionPane.showMessageDialog(null, "Apellido", "ERROR", JOptionPane.ERROR_MESSAGE);
                         }else{
-                            if(fechaCadTF.getText().equals("")){
-                                JOptionPane.showMessageDialog(null, "Fecha de caducidad vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            if(telefono.length()<10){
+                                JOptionPane.showMessageDialog(null, "Telefono", "ERROR", JOptionPane.ERROR_MESSAGE);
                             }else{
-                                if(cvvTF.getText().equals("")){
-                                    JOptionPane.showMessageDialog(null, "CVV vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                }else{
-                                    String nombre = nombresTF.getText();
-                                    String apellidos = apellidosTF.getText();
-                                    String correo = correoTF.getText();
-                                    String telefono = telefonoTF.getText();
-                                    String numero_de_tarjeta = numTarjetaTF.getText();
-                                    String fecha_de_caducidad = fechaCadTF.getText();
-                                    String cvv = cvvTF.getText();
-                                    String mensaje = Clientes_Service.verificar_campos_de_registro(
-                                            nombre, apellidos, correo, telefono,
-                                            numero_de_tarjeta, fecha_de_caducidad,
-                                            cvv, "");
-                                    if (mensaje.equals("Permitido")) {
-                                        try {
-                                            Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
-                                            Tarjetas_Service.crear_tarjeta(nombre, apellidos, Clientes_Service.obtener_celda
-                                                            ("SELECT id_de_cliente FROM clientes WHERE correo = '" + correo + "'"),
-                                                    numero_de_tarjeta, fecha_de_caducidad, cvv);
+                                if (!correo.contains("@") && (!correo.contains(".com") || !correo.contains(".net") || !correo.contains(".mx"))) {
+                                    JOptionPane.showMessageDialog(null, "Email incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                } else {
+                                    if(numTarjetaTF.getText().equals("") || numero_de_tarjeta.length() < 10){
+                                        JOptionPane.showMessageDialog(null, "Número de tarjeta vacío o incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    }else{
+                                        if(fechaCadTF.getText().equals("")){
+                                            JOptionPane.showMessageDialog(null, "Fecha de caducidad vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                        }else{
+                                            if(cvvTF.getText().equals("") || cvv.length() < 3){
+                                                JOptionPane.showMessageDialog(null, "CVV vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                            }else{
 
-                                            JOptionPane.showMessageDialog(null, "Registro exitoso", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+                                                String mensaje = Clientes_Service.verificar_campos_de_registro(
+                                                        nombre, apellidos, correo, telefono,
+                                                        numero_de_tarjeta, fecha_de_caducidad,
+                                                        cvv, "");
+                                                if (mensaje.equals("Permitido")) {
+                                                    try {
+                                                        Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
+                                                        Tarjetas_Service.crear_tarjeta(nombre, apellidos, Clientes_Service.obtener_celda
+                                                                        ("SELECT id_de_cliente FROM clientes WHERE correo = '" + correo + "'"),
+                                                                numero_de_tarjeta, fecha_de_caducidad, cvv);
 
-                                            anterior = actual;
-                                            actual = "clientes";
-                                            try {
-                                                limpiarVentana();
-                                            } catch (SQLException ex) {
-                                                throw new RuntimeException(ex);
+                                                        JOptionPane.showMessageDialog(null, "Registro exitoso", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+
+                                                        anterior = actual;
+                                                        actual = "clientes";
+                                                        try {
+                                                            limpiarVentana();
+                                                        } catch (SQLException ex) {
+                                                            throw new RuntimeException(ex);
+                                                        }
+                                                    } catch (SQLException ex) {
+                                                        throw new RuntimeException(ex);
+                                                    }
+                                                } else if (mensaje.equals("Permitido sin tarjeta")) {
+                                                    try {
+                                                        Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
+                                                        JOptionPane.showMessageDialog(null, "Registro exitoso sin tarjeta", "Registrado", JOptionPane.INFORMATION_MESSAGE);
+
+                                                        anterior = actual;
+                                                        actual = "clientes";
+                                                        try {
+                                                            limpiarVentana();
+                                                        } catch (SQLException ex) {
+                                                            throw new RuntimeException(ex);
+                                                        }
+                                                    } catch (SQLException ex) {
+                                                        throw new RuntimeException(ex);
+                                                    }
+                                                } else {
+                                                    JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+                                                }
                                             }
-                                        } catch (SQLException ex) {
-                                            throw new RuntimeException(ex);
                                         }
-                                    } else if (mensaje.equals("Permitido sin tarjeta")) {
-                                        try {
-                                            Clientes_Service.crear_cliente(nombre, apellidos, correo, telefono);
-                                            JOptionPane.showMessageDialog(null, "Registro exitoso sin tarjeta", "Registrado", JOptionPane.INFORMATION_MESSAGE);
-
-                                            anterior = actual;
-                                            actual = "clientes";
-                                            try {
-                                                limpiarVentana();
-                                            } catch (SQLException ex) {
-                                                throw new RuntimeException(ex);
-                                            }
-                                        } catch (SQLException ex) {
-                                            throw new RuntimeException(ex);
-                                        }
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
                                     }
                                 }
                             }
