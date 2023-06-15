@@ -2271,16 +2271,21 @@ public class Ventana extends JFrame {
         borrarBTN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual; //creo q nomas cambiando el actual jala mejor o no se xd
-                actual = "eliminarRenta";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                String ids[] = Clientes_Service.obtener_columna("SELECT id_de_renta FROM rentas ORDER BY id_de_renta");
+                if(ids.length == 0){
+                    JOptionPane.showMessageDialog(null, "No hay rentas para borrar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    anterior = actual; //creo q nomas cambiando el actual jala mejor o no se xd
+                    actual = "eliminarRenta";
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
-                repaint();
-                revalidate();
+                    repaint();
+                    revalidate();
+                }
             }
         });
         String[] columnasTabla =TablasRamservice.obtener_nombres_columnas("RENTAS");;
@@ -2865,18 +2870,23 @@ public class Ventana extends JFrame {
         editarRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "editarRentaSeleccionada";
-                id_renta_editar = Integer.parseInt(ids[id_rentas_CB.getSelectedIndex()]);
-                id_cliente_editando_renta = Integer.parseInt(Renta_Service.obtener_celda("SELECT * FROM rentas WHERE id_de_renta = "+ id_renta_editar));
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                int indice = id_rentas_CB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "Selecciona una renta para continuar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    anterior = actual;
+                    actual = "editarRentaSeleccionada";
+                    id_renta_editar = Integer.parseInt(ids[id_rentas_CB.getSelectedIndex()]);
+                    id_cliente_editando_renta = Integer.parseInt(Renta_Service.obtener_celda("SELECT * FROM rentas WHERE id_de_renta = "+ id_renta_editar));
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
-                repaint();
-                revalidate();
+                    repaint();
+                    revalidate();
+                }
             }
         });
 
@@ -3247,19 +3257,24 @@ public class Ventana extends JFrame {
         eliminarRentaBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id_cl [] = (String.valueOf(idRentasCB.getSelectedItem()).split(":"));
-                id_cl[0] = id_cl[0].replace(" ", "");
-                Renta_Service.borrar_renta(Integer.parseInt(id_cl[0]));
+                int indice = idRentasCB.getSelectedIndex();
+                if(indice == -1){
+                    JOptionPane.showMessageDialog(null, "No hay rentas para eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    String id_cl [] = (String.valueOf(idRentasCB.getSelectedItem()).split(":"));
+                    id_cl[0] = id_cl[0].replace(" ", "");
+                    Renta_Service.borrar_renta(Integer.parseInt(id_cl[0]));
 
-                DefaultTableModel dtm = new DefaultTableModel();
+                    DefaultTableModel dtm = new DefaultTableModel();
                     dtm = Renta_Service.crear_dtm_de_rentas(columnasTabla, "SELECT * FROM rentas");
                     tabla_rentas.setModel(dtm);
 
-                TablasRamservice.crear_tabla(tabla_rentas);
+                    TablasRamservice.crear_tabla(tabla_rentas);
 
-                idRentasCB.removeItemAt(idRentasCB.getSelectedIndex());
-                repaint();
-                revalidate();
+                    idRentasCB.removeItemAt(idRentasCB.getSelectedIndex());
+                    repaint();
+                    revalidate();
+                }
             }
         });
 
