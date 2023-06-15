@@ -862,6 +862,221 @@ public class Ventana extends JFrame {
         crearVehi.setLayout(null);
         crearVehi.setBackground(Color.decode("#FFFFFF"));
 
+        JPanel fondoeditCarr = new JPanel();
+        fondoeditCarr.setOpaque(true);
+        fondoeditCarr.setBackground(SystemColor.controlShadow);
+        fondoeditCarr.setLayout(null);
+        fondoeditCarr.setBounds(632, 24, 307, 597);
+        crearVehi.add(fondoeditCarr);
+
+        JTextField precioNuevoCarr = new JTextField();
+        precioNuevoCarr.setOpaque(false);
+        precioNuevoCarr.setHorizontalAlignment(SwingConstants.LEFT);
+        precioNuevoCarr.setFont(new Font("Tahoma", Font.BOLD, 13));
+        precioNuevoCarr.setColumns(10);
+        precioNuevoCarr.setBorder(null);
+        precioNuevoCarr.setBackground(SystemColor.menu);
+        precioNuevoCarr.setBounds(179, 49, 93, 29);
+        fondoeditCarr.add(precioNuevoCarr);
+
+        JLabel gasImg = new JLabel("");
+        gasImg.setIcon(new ImageIcon("src/img/gasg.png"));
+        gasImg.setHorizontalAlignment(SwingConstants.CENTER);
+        gasImg.setBounds(401, 409, 58, 38);
+        crearVehi.add(gasImg);
+
+        JLabel calImg = new JLabel("");
+        calImg.setIcon(new ImageIcon("src/img/calendarg.png"));
+        calImg.setHorizontalAlignment(SwingConstants.CENTER);
+        calImg.setBounds(276, 409, 58, 38);
+        crearVehi.add(calImg);
+
+        JLabel gearImg = new JLabel("");
+        gearImg.setIcon(new ImageIcon("src/img/gearg.png"));
+        gearImg.setHorizontalAlignment(SwingConstants.CENTER);
+        gearImg.setBounds(135, 409, 58, 38);
+        crearVehi.add(gearImg);
+
+        JLabel transmisionCarr = new JLabel("Transmisión");
+        transmisionCarr.setHorizontalAlignment(SwingConstants.RIGHT);
+        transmisionCarr.setForeground(Color.BLACK);
+        transmisionCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        transmisionCarr.setBounds(153, 114, 119, 23);
+        fondoeditCarr.add(transmisionCarr);
+
+        JComboBox gasTipoCarr = new JComboBox();
+        gasTipoCarr.setModel(new DefaultComboBoxModel(new String[] {"Gasolina"}));
+        gasTipoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        gasTipoCarr.setBounds(36, 327, 236, 29);
+        fondoeditCarr.add(gasTipoCarr);
+
+        JComboBox catTipoCarr = new JComboBox();
+        catTipoCarr.setModel(new DefaultComboBoxModel(new String[] {"Coupé"}));
+        catTipoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        catTipoCarr.setBounds(36, 264, 236, 29);
+        fondoeditCarr.add(catTipoCarr);
+
+
+        JTextField añoCarrCamb = new JTextField("");
+        añoCarrCamb.setBorder(null);
+        añoCarrCamb.setBackground(SystemColor.menu);
+        añoCarrCamb.setBounds(36, 203, 236, 29);
+        fondoeditCarr.add(añoCarrCamb);
+
+        JLabel combCarr = new JLabel("Combustible");
+        combCarr.setForeground(Color.BLACK);
+        combCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        combCarr.setBounds(36, 298, 154, 23);
+        fondoeditCarr.add(combCarr);
+
+        JLabel catCarr = new JLabel("Categoría");
+        catCarr.setForeground(Color.BLACK);
+        catCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        catCarr.setBounds(36, 240, 154, 23);
+        fondoeditCarr.add(catCarr);
+
+        JLabel añoCarr = new JLabel("Año");
+        añoCarr.setForeground(Color.BLACK);
+        añoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        añoCarr.setBounds(36, 180, 154, 23);
+        fondoeditCarr.add(añoCarr);
+
+        JComboBox transmisionCambCarr = new JComboBox();
+        transmisionCambCarr.setFont(new Font("Tahoma", Font.BOLD, 11));
+        transmisionCambCarr.setBounds(172, 141, 100, 29);
+        fondoeditCarr.add(transmisionCambCarr);
+
+        JComboBox marcasCambCarr = new JComboBox();
+        marcasCambCarr.setForeground(Color.BLACK);
+        marcasCambCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        marcasCambCarr.setModel(new DefaultComboBoxModel(new String[] {"BMW"}));
+        marcasCambCarr.setBounds(36, 141, 100, 29);
+        fondoeditCarr.add(marcasCambCarr);
+
+        JTextField signoPesos = new JTextField();
+        signoPesos.setEditable(false);
+        signoPesos.setHorizontalAlignment(SwingConstants.LEFT);
+        signoPesos.setFont(new Font("Tahoma", Font.BOLD, 13));
+        signoPesos.setText("$");
+        signoPesos.setColumns(10);
+        signoPesos.setBorder(null);
+        signoPesos.setBackground(SystemColor.menu);
+        signoPesos.setBounds(172, 49, 100, 29);
+        fondoeditCarr.add(signoPesos);
+
+        JLabel costoDiaCarr = new JLabel("Costo por día");
+        costoDiaCarr.setForeground(Color.BLACK);
+        costoDiaCarr.setHorizontalAlignment(SwingConstants.RIGHT);
+        costoDiaCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        costoDiaCarr.setBounds(153, 25, 119, 23);
+        fondoeditCarr.add(costoDiaCarr);
+
+        JButton cambiarImgCarr = new JButton("");
+        cambiarImgCarr.setBorderPainted(false);
+        cambiarImgCarr.setRequestFocusEnabled(false);
+        cambiarImgCarr.setFocusPainted(false);
+        cambiarImgCarr.setContentAreaFilled(false);
+        cambiarImgCarr.setHorizontalAlignment(SwingConstants.CENTER);
+        cambiarImgCarr.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
+        cambiarImgCarr.setBounds(18, 363, 271, 92);
+        fondoeditCarr.add(cambiarImgCarr);
+
+        JTextField cambModeloCarr = new JTextField("");
+        cambModeloCarr.setBorder(null);
+        cambModeloCarr.setBackground(SystemColor.menu);
+        cambModeloCarr.setBounds(36, 50, 100, 29);
+        fondoeditCarr.add(cambModeloCarr);
+
+
+        JLabel marcaCarr = new JLabel("Marca");
+        marcaCarr.setForeground(Color.BLACK);
+        marcaCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        marcaCarr.setBounds(36, 114, 154, 23);
+        fondoeditCarr.add(marcaCarr);
+
+        JLabel modCarr = new JLabel("Modelo");
+        modCarr.setForeground(Color.BLACK);
+        modCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        modCarr.setBounds(36, 25, 154, 23);
+        fondoeditCarr.add(modCarr);
+
+
+
+        JButton editBoton = new JButton("Crear vehiculo");
+        editBoton.setForeground(Color.WHITE);
+        editBoton.setFont(new Font("Tahoma", Font.BOLD, 16));
+        editBoton.setFocusPainted(false);
+        editBoton.setBorderPainted(false);
+        editBoton.setBackground(Color.decode("#38B6FF"));
+        editBoton.setBounds(23, 528, 260, 53);
+        fondoeditCarr.add(editBoton);
+
+        JButton btnVisualizar = new JButton("Visualizar cambios");
+        btnVisualizar.setForeground(Color.WHITE);
+        btnVisualizar.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnVisualizar.setFocusPainted(false);
+        btnVisualizar.setBorderPainted(false);
+        btnVisualizar.setBackground(Color.BLUE);
+        btnVisualizar.setBounds(23, 466, 260, 53);
+        fondoeditCarr.add(btnVisualizar);
+
+
+
+        JLabel nombActCarr = new JLabel("");
+        nombActCarr.setForeground(Color.BLACK);
+        nombActCarr.setFont(new Font("Tahoma", Font.BOLD, 25));
+        nombActCarr.setHorizontalAlignment(SwingConstants.CENTER);
+        nombActCarr.setBounds(166, 24, 282, 58);
+        crearVehi.add(nombActCarr);
+
+
+
+        JLabel vectorImg = new JLabel("");
+        vectorImg.setIcon(new ImageIcon("src/img/Vectorg.png"));
+        vectorImg.setHorizontalAlignment(SwingConstants.CENTER);
+        vectorImg.setBounds(7, 409, 58, 38);
+        crearVehi.add(vectorImg);
+
+        JLabel tipoActCarr = new JLabel("");
+        tipoActCarr.setForeground(Color.BLACK);
+        tipoActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
+        tipoActCarr.setBounds(60, 409, 76, 38);
+        crearVehi.add(tipoActCarr);
+
+        JLabel modoActCarr = new JLabel("");
+        modoActCarr.setForeground(Color.BLACK);
+        modoActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
+        modoActCarr.setBounds(185, 409, 93, 38);
+        crearVehi.add(modoActCarr);
+
+        JLabel añoActCarr = new JLabel("");
+        añoActCarr.setForeground(Color.BLACK);
+        añoActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
+        añoActCarr.setBounds(329, 409, 76, 38);
+        crearVehi.add(añoActCarr);
+
+        JLabel gasActCarr = new JLabel("");
+        gasActCarr.setForeground(Color.BLACK);
+        gasActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
+        gasActCarr.setBounds(455, 409, 100, 38);
+        crearVehi.add(gasActCarr);
+
+        JLabel precioActCarr = new JLabel("$ / día");
+        precioActCarr.setForeground(new Color(0, 128, 0));
+        precioActCarr.setBackground(Color.GREEN);
+        precioActCarr.setHorizontalAlignment(SwingConstants.CENTER);
+        precioActCarr.setFont(new Font("Tahoma", Font.BOLD, 18));
+        precioActCarr.setBounds(195, 77, 216, 37);
+        crearVehi.add(precioActCarr);
+
+        JLabel imgCarr = new JLabel("");
+        imgCarr.setHorizontalAlignment(SwingConstants.CENTER);
+        imgCarr.setIcon(new ImageIcon(""));
+        imgCarr.setBounds(22, 100, 552, 298);
+        crearVehi.add(imgCarr);
+
+
+
         return crearVehi;
     }
     public JPanel consultarVehiculo() {
@@ -876,6 +1091,13 @@ public class Ventana extends JFrame {
         consultarVehi.setLayout(null);
         consultarVehi.setBackground(Color.decode("#FFFFFF"));
 
+        JPanel fondoeditCarr = new JPanel();
+        fondoeditCarr.setOpaque(true);
+        fondoeditCarr.setBackground(SystemColor.controlShadow);
+        fondoeditCarr.setLayout(null);
+        fondoeditCarr.setBounds(632, 24, 307, 597);
+        consultarVehi.add(fondoeditCarr);
+
         JTextField precioNuevoCarr = new JTextField();
         precioNuevoCarr.setOpaque(false);
         precioNuevoCarr.setHorizontalAlignment(SwingConstants.LEFT);
@@ -883,8 +1105,8 @@ public class Ventana extends JFrame {
         precioNuevoCarr.setColumns(10);
         precioNuevoCarr.setBorder(null);
         precioNuevoCarr.setBackground(SystemColor.menu);
-        precioNuevoCarr.setBounds(813, 83, 93, 29);
-        consultarVehi.add(precioNuevoCarr);
+        precioNuevoCarr.setBounds(179, 49, 93, 29);
+        fondoeditCarr.add(precioNuevoCarr);
 
         JLabel gasImg = new JLabel("");
         gasImg.setIcon(new ImageIcon("src/img/gasg.png"));
@@ -908,44 +1130,57 @@ public class Ventana extends JFrame {
         transmisionCarr.setHorizontalAlignment(SwingConstants.RIGHT);
         transmisionCarr.setForeground(Color.BLACK);
         transmisionCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
-        transmisionCarr.setBounds(787, 148, 119, 23);
-        consultarVehi.add(transmisionCarr);
+        transmisionCarr.setBounds(153, 114, 119, 23);
+        fondoeditCarr.add(transmisionCarr);
 
         JComboBox gasTipoCarr = new JComboBox();
         gasTipoCarr.setModel(new DefaultComboBoxModel(new String[] {"Gasolina"}));
         gasTipoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
-        gasTipoCarr.setBounds(670, 331, 236, 29);
-        consultarVehi.add(gasTipoCarr);
+        gasTipoCarr.setBounds(36, 327, 236, 29);
+        fondoeditCarr.add(gasTipoCarr);
+
+        JComboBox catTipoCarr = new JComboBox();
+        catTipoCarr.setModel(new DefaultComboBoxModel(new String[] {"Coupé"}));
+        catTipoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        catTipoCarr.setBounds(36, 264, 236, 29);
+        fondoeditCarr.add(catTipoCarr);
+
 
         JTextField añoCarrCamb = new JTextField("");
         añoCarrCamb.setBorder(null);
         añoCarrCamb.setBackground(SystemColor.menu);
-        añoCarrCamb.setBounds(670, 257, 236, 29);
-        consultarVehi.add(añoCarrCamb);
+        añoCarrCamb.setBounds(36, 203, 236, 29);
+        fondoeditCarr.add(añoCarrCamb);
 
         JLabel combCarr = new JLabel("Combustible");
         combCarr.setForeground(Color.BLACK);
         combCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
-        combCarr.setBounds(670, 308, 154, 23);
-        consultarVehi.add(combCarr);
+        combCarr.setBounds(36, 298, 154, 23);
+        fondoeditCarr.add(combCarr);
+
+        JLabel catCarr = new JLabel("Categoría");
+        catCarr.setForeground(Color.BLACK);
+        catCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        catCarr.setBounds(36, 240, 154, 23);
+        fondoeditCarr.add(catCarr);
 
         JLabel añoCarr = new JLabel("Año");
         añoCarr.setForeground(Color.BLACK);
         añoCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
-        añoCarr.setBounds(670, 235, 154, 23);
-        consultarVehi.add(añoCarr);
+        añoCarr.setBounds(36, 180, 154, 23);
+        fondoeditCarr.add(añoCarr);
 
         JComboBox transmisionCambCarr = new JComboBox();
         transmisionCambCarr.setFont(new Font("Tahoma", Font.BOLD, 11));
-        transmisionCambCarr.setBounds(806, 175, 100, 29);
-        consultarVehi.add(transmisionCambCarr);
+        transmisionCambCarr.setBounds(172, 141, 100, 29);
+        fondoeditCarr.add(transmisionCambCarr);
 
         JComboBox marcasCambCarr = new JComboBox();
         marcasCambCarr.setForeground(Color.BLACK);
         marcasCambCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
         marcasCambCarr.setModel(new DefaultComboBoxModel(new String[] {"BMW"}));
-        marcasCambCarr.setBounds(670, 175, 100, 29);
-        consultarVehi.add(marcasCambCarr);
+        marcasCambCarr.setBounds(36, 141, 100, 29);
+        fondoeditCarr.add(marcasCambCarr);
 
         JTextField signoPesos = new JTextField();
         signoPesos.setEditable(false);
@@ -955,15 +1190,15 @@ public class Ventana extends JFrame {
         signoPesos.setColumns(10);
         signoPesos.setBorder(null);
         signoPesos.setBackground(SystemColor.menu);
-        signoPesos.setBounds(806, 83, 100, 29);
-        consultarVehi.add(signoPesos);
+        signoPesos.setBounds(172, 49, 100, 29);
+        fondoeditCarr.add(signoPesos);
 
         JLabel costoDiaCarr = new JLabel("Costo por día");
         costoDiaCarr.setForeground(Color.BLACK);
         costoDiaCarr.setHorizontalAlignment(SwingConstants.RIGHT);
         costoDiaCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
-        costoDiaCarr.setBounds(787, 59, 119, 23);
-        consultarVehi.add(costoDiaCarr);
+        costoDiaCarr.setBounds(153, 25, 119, 23);
+        fondoeditCarr.add(costoDiaCarr);
 
         JButton cambiarImgCarr = new JButton("");
         cambiarImgCarr.setBorderPainted(false);
@@ -972,36 +1207,29 @@ public class Ventana extends JFrame {
         cambiarImgCarr.setContentAreaFilled(false);
         cambiarImgCarr.setHorizontalAlignment(SwingConstants.CENTER);
         cambiarImgCarr.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        cambiarImgCarr.setBounds(652, 424, 271, 92);
-        consultarVehi.add(cambiarImgCarr);
+        cambiarImgCarr.setBounds(18, 390, 271, 92);
+        fondoeditCarr.add(cambiarImgCarr);
 
         JTextField cambModeloCarr = new JTextField("");
         cambModeloCarr.setBorder(null);
         cambModeloCarr.setBackground(SystemColor.menu);
-        cambModeloCarr.setBounds(670, 84, 100, 29);
-        consultarVehi.add(cambModeloCarr);
+        cambModeloCarr.setBounds(36, 50, 100, 29);
+        fondoeditCarr.add(cambModeloCarr);
 
 
-        JLabel catCarr = new JLabel("Categoría");
-        catCarr.setForeground(Color.BLACK);
-        catCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
-        catCarr.setBounds(670, 148, 154, 23);
-        consultarVehi.add(catCarr);
+        JLabel marcaCarr = new JLabel("Marca");
+        marcaCarr.setForeground(Color.BLACK);
+        marcaCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
+        marcaCarr.setBounds(36, 114, 154, 23);
+        fondoeditCarr.add(marcaCarr);
 
         JLabel modCarr = new JLabel("Modelo");
         modCarr.setForeground(Color.BLACK);
         modCarr.setFont(new Font("Tahoma", Font.BOLD, 14));
-        modCarr.setBounds(670, 59, 154, 23);
-        consultarVehi.add(modCarr);
+        modCarr.setBounds(36, 25, 154, 23);
+        fondoeditCarr.add(modCarr);
 
-        JTextArea descActCarr = new JTextArea();
-        descActCarr.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
-        descActCarr.setOpaque(false);
-        descActCarr.setLineWrap(true);
-        descActCarr.setForeground(Color.BLACK);
-        descActCarr.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        descActCarr.setBounds(24, 471, 487, 164);
-        consultarVehi.add(descActCarr);
+
 
 
         JButton editBoton = new JButton("Editar");
@@ -1010,17 +1238,10 @@ public class Ventana extends JFrame {
         editBoton.setFocusPainted(false);
         editBoton.setBorderPainted(false);
         editBoton.setBackground(Color.decode("#38B6FF"));
-        editBoton.setBounds(657, 547, 260, 53);
-        consultarVehi.add(editBoton);
+        editBoton.setBounds(23, 513, 260, 53);
+        fondoeditCarr.add(editBoton);
 
-        JLabel fondoeditCarr = new JLabel("");
-        fondoeditCarr.setHorizontalTextPosition(SwingConstants.CENTER);
-        fondoeditCarr.setVerticalAlignment(SwingConstants.BOTTOM);
-        fondoeditCarr.setOpaque(true);
-        fondoeditCarr.setHorizontalAlignment(SwingConstants.CENTER);
-        fondoeditCarr.setBackground(SystemColor.controlShadow);
-        fondoeditCarr.setBounds(632, 24, 307, 597);
-        consultarVehi.add(fondoeditCarr);
+
 
         JLabel nombActCarr = new JLabel("BMW Rey X");
         nombActCarr.setForeground(Color.BLACK);
@@ -1029,13 +1250,6 @@ public class Ventana extends JFrame {
         nombActCarr.setBounds(166, 24, 282, 58);
         consultarVehi.add(nombActCarr);
 
-        JLabel fondoActDesc = new JLabel("");
-        fondoActDesc.setVerticalAlignment(SwingConstants.BOTTOM);
-        fondoActDesc.setOpaque(true);
-        fondoActDesc.setHorizontalAlignment(SwingConstants.CENTER);
-        fondoActDesc.setBackground(SystemColor.controlShadow);
-        fondoActDesc.setBounds(17, 467, 517, 154);
-        consultarVehi.add(fondoActDesc);
 
         JLabel vectorImg = new JLabel("");
         vectorImg.setIcon(new ImageIcon("src/img/Vectorg.png"));
@@ -1080,6 +1294,7 @@ public class Ventana extends JFrame {
         imgCarr.setIcon(new ImageIcon("src/img/carrograndeazul.png"));
         imgCarr.setBounds(22, 100, 552, 298);
         consultarVehi.add(imgCarr);
+
 
         return consultarVehi;
     }
@@ -2998,6 +3213,96 @@ public class Ventana extends JFrame {
         crearCategoria.setLayout(null);
         crearCategoria.setBackground(Color.decode("#FFFFFF"));
 
+
+        JPanel cuadroEditCat = new JPanel();
+        cuadroEditCat.setOpaque(true);
+        cuadroEditCat.setLayout(null);
+        cuadroEditCat.setBackground(SystemColor.controlShadow);
+        cuadroEditCat.setBounds(632, 24, 307, 597);
+        crearCategoria.add(cuadroEditCat);
+
+        JButton imgConsultarCat = new JButton("");
+        imgConsultarCat.setBorderPainted(false);
+        imgConsultarCat.setContentAreaFilled(false);
+        imgConsultarCat.setFocusPainted(false);
+        imgConsultarCat.setHorizontalAlignment(SwingConstants.CENTER);
+        imgConsultarCat.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
+        imgConsultarCat.setBounds(18, 349, 271, 92);
+        cuadroEditCat.add(imgConsultarCat);
+
+        JTextArea camDescCat = new JTextArea("");
+        camDescCat.setBorder(null);
+        camDescCat.setLineWrap(true);
+        camDescCat.setBackground(SystemColor.menu);
+        camDescCat.setBounds(36, 125, 236, 219);
+        cuadroEditCat.add(camDescCat);
+
+        JTextField cambNomCat = new JTextField("");
+        cambNomCat.setBorder(null);
+        cambNomCat.setBackground(SystemColor.menu);
+        cambNomCat.setBounds(36, 56, 236, 29);
+        cuadroEditCat.add(cambNomCat);
+
+        JLabel descCat = new JLabel("Descripción");
+        descCat.setFont(new Font("Tahoma", Font.BOLD, 14));
+        descCat.setBounds(36, 96, 154, 23);
+        cuadroEditCat.add(descCat);
+
+        JLabel nomActCat = new JLabel("Nombre de categoría");
+        nomActCat.setFont(new Font("Tahoma", Font.BOLD, 14));
+        nomActCat.setBounds(36, 31, 154, 23);
+        cuadroEditCat.add(nomActCat);
+
+        JTextArea descActCat = new JTextArea();
+        descActCat.setOpaque(false);
+        descActCat.setLineWrap(true);
+        descActCat.setForeground(Color.BLACK);
+        descActCat.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        descActCat.setBounds(47, 469, 497, 152);
+        crearCategoria.add(descActCat);
+
+        JLabel imgActCat = new JLabel("");
+        imgActCat.setHorizontalAlignment(SwingConstants.CENTER);
+        imgActCat.setIcon(new ImageIcon(""));
+        imgActCat.setBounds(68, 134, 449, 269);
+        crearCategoria.add(imgActCat);
+
+        JButton editBotCat = new JButton("Crear categoría");
+        editBotCat.setForeground(Color.WHITE);
+        editBotCat.setFont(new Font("Tahoma", Font.BOLD, 16));
+        editBotCat.setFocusPainted(false);
+        editBotCat.setBorderPainted(false);
+        editBotCat.setBackground(Color.decode("#38B6FF"));
+        editBotCat.setBounds(26, 520, 260, 53);
+        cuadroEditCat.add(editBotCat);
+
+        JButton btnVisualizarCambios = new JButton("Visualizar cambios");
+        btnVisualizarCambios.setForeground(Color.WHITE);
+        btnVisualizarCambios.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnVisualizarCambios.setFocusPainted(false);
+        btnVisualizarCambios.setBorderPainted(false);
+        btnVisualizarCambios.setBackground(Color.BLUE);
+        btnVisualizarCambios.setBounds(26, 461, 260, 53);
+        cuadroEditCat.add(btnVisualizarCambios);
+
+
+
+        JLabel nombreActCat = new JLabel("");
+        nombreActCat.setFont(new Font("Tahoma", Font.BOLD, 25));
+        nombreActCat.setHorizontalAlignment(SwingConstants.CENTER);
+        nombreActCat.setBounds(170, 24, 282, 58);
+        crearCategoria.add(nombreActCat);
+
+        JLabel fondoDesc = new JLabel("");
+        fondoDesc.setVerticalAlignment(SwingConstants.BOTTOM);
+        fondoDesc.setOpaque(true);
+        fondoDesc.setHorizontalAlignment(SwingConstants.CENTER);
+        fondoDesc.setBackground(SystemColor.controlShadow);
+        fondoDesc.setBounds(35, 460, 517, 154);
+        crearCategoria.add(fondoDesc);
+
+
+
         return crearCategoria;
     }
     public JPanel consultarCategorias() {
@@ -3010,38 +3315,44 @@ public class Ventana extends JFrame {
         consultarCat.setLayout(null);
         consultarCat.setBackground(Color.decode("#FFFFFF"));
 
+        JPanel cuadroEditCat = new JPanel();
+        cuadroEditCat.setOpaque(true);
+        cuadroEditCat.setLayout(null);
+        cuadroEditCat.setBackground(SystemColor.controlShadow);
+        cuadroEditCat.setBounds(632, 24, 307, 597);
+        consultarCat.add(cuadroEditCat);
+
         JButton imgConsultarCat = new JButton("");
         imgConsultarCat.setBorderPainted(false);
         imgConsultarCat.setContentAreaFilled(false);
         imgConsultarCat.setFocusPainted(false);
         imgConsultarCat.setHorizontalAlignment(SwingConstants.CENTER);
         imgConsultarCat.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        imgConsultarCat.setBounds(652, 424, 271, 92);
-        consultarCat.add(imgConsultarCat);
+        imgConsultarCat.setBounds(17, 408, 271, 92);
+        cuadroEditCat.add(imgConsultarCat);
 
         JTextArea camDescCat = new JTextArea("");
         camDescCat.setBorder(null);
         camDescCat.setLineWrap(true);
         camDescCat.setBackground(SystemColor.menu);
-        camDescCat.setBounds(670, 173, 236, 219);
-        consultarCat.add(camDescCat);
+        camDescCat.setBounds(35, 157, 236, 219);
+        cuadroEditCat.add(camDescCat);
 
         JTextField cambNomCat = new JTextField("");
         cambNomCat.setBorder(null);
         cambNomCat.setBackground(SystemColor.menu);
-        cambNomCat.setBounds(670, 84, 236, 29);
-        consultarCat.add(cambNomCat);
-        cambNomCat.setColumns(10);
+        cambNomCat.setBounds(35, 68, 236, 29);
+        cuadroEditCat.add(cambNomCat);
 
         JLabel descCat = new JLabel("Descripción");
         descCat.setFont(new Font("Tahoma", Font.BOLD, 14));
-        descCat.setBounds(670, 144, 154, 23);
-        consultarCat.add(descCat);
+        descCat.setBounds(35, 128, 154, 23);
+        cuadroEditCat.add(descCat);
 
         JLabel nomActCat = new JLabel("Nombre de categoría");
         nomActCat.setFont(new Font("Tahoma", Font.BOLD, 14));
-        nomActCat.setBounds(670, 59, 154, 23);
-        consultarCat.add(nomActCat);
+        nomActCat.setBounds(35, 43, 154, 23);
+        cuadroEditCat.add(nomActCat);
 
         JTextArea descActCat = new JTextArea();
         descActCat.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
@@ -3064,16 +3375,10 @@ public class Ventana extends JFrame {
         editBotCat.setFocusPainted(false);
         editBotCat.setBorderPainted(false);
         editBotCat.setBackground(Color.decode("#38B6FF"));
-        editBotCat.setBounds(657, 547, 260, 53);
-        consultarCat.add(editBotCat);
+        editBotCat.setBounds(26, 520, 260, 53);
+        cuadroEditCat.add(editBotCat);
 
-        JLabel cuadroEditCat = new JLabel();
-        cuadroEditCat.setVerticalAlignment(SwingConstants.BOTTOM);
-        cuadroEditCat.setOpaque(true);
-        cuadroEditCat.setHorizontalAlignment(SwingConstants.CENTER);
-        cuadroEditCat.setBackground(SystemColor.controlShadow);
-        cuadroEditCat.setBounds(632, 24, 307, 597);
-        consultarCat.add(cuadroEditCat);
+
 
         JLabel nombreActCat = new JLabel("Sedanes de lujo");
         nombreActCat.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -3088,6 +3393,8 @@ public class Ventana extends JFrame {
         fondoDesc.setBackground(SystemColor.controlShadow);
         fondoDesc.setBounds(35, 460, 517, 154);
         consultarCat.add(fondoDesc);
+
+
 
         return consultarCat;
     }
@@ -3209,6 +3516,94 @@ public class Ventana extends JFrame {
         crearMarca.setLayout(null);
         crearMarca.setBackground(Color.decode("#FFFFFF"));
 
+        JPanel cuadroEditMarc = new JPanel();
+        cuadroEditMarc.setOpaque(true);
+        cuadroEditMarc.setLayout(null);
+        cuadroEditMarc.setBackground(SystemColor.controlShadow);
+        cuadroEditMarc.setBounds(632, 24, 307, 597);
+        crearMarca.add(cuadroEditMarc);
+
+        JButton imgConsultarMarc = new JButton("");
+        imgConsultarMarc.setBorderPainted(false);
+        imgConsultarMarc.setContentAreaFilled(false);
+        imgConsultarMarc.setFocusPainted(false);
+        imgConsultarMarc.setHorizontalAlignment(SwingConstants.CENTER);
+        imgConsultarMarc.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
+        imgConsultarMarc.setBounds(15, 346, 271, 92);
+        cuadroEditMarc.add(imgConsultarMarc);
+
+        JTextArea camDescMarc = new JTextArea("");
+        camDescMarc.setBorder(null);
+        camDescMarc.setLineWrap(true);
+        camDescMarc.setBackground(SystemColor.menu);
+        camDescMarc.setBounds(36, 116, 236, 219);
+        cuadroEditMarc.add(camDescMarc);
+
+        JTextField cambNomMarc = new JTextField("");
+        cambNomMarc.setBorder(null);
+        cambNomMarc.setBackground(SystemColor.menu);
+        cambNomMarc.setBounds(36, 47, 236, 29);
+        cuadroEditMarc.add(cambNomMarc);
+
+        JLabel descMarc = new JLabel("Descripción");
+        descMarc.setFont(new Font("Tahoma", Font.BOLD, 14));
+        descMarc.setBounds(36, 87, 154, 23);
+        cuadroEditMarc.add(descMarc);
+
+        JLabel nomActMarc = new JLabel("Nombre de categoría");
+        nomActMarc.setFont(new Font("Tahoma", Font.BOLD, 14));
+        nomActMarc.setBounds(36, 22, 154, 23);
+        cuadroEditMarc.add(nomActMarc);
+
+        JTextArea descActMarc = new JTextArea();
+        descActMarc.setText("");
+        descActMarc.setOpaque(false);
+        descActMarc.setLineWrap(true);
+        descActMarc.setForeground(Color.BLACK);
+        descActMarc.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        descActMarc.setBounds(47, 469, 497, 152);
+        crearMarca.add(descActMarc);
+
+        JLabel imgActMarc = new JLabel("");
+        imgActMarc.setHorizontalAlignment(SwingConstants.CENTER);
+        imgActMarc.setIcon(new ImageIcon(""));
+        imgActMarc.setBounds(65, 90, 449, 300);
+        crearMarca.add(imgActMarc);
+
+        JButton editBotMarc = new JButton("Editar");
+        editBotMarc.setForeground(Color.WHITE);
+        editBotMarc.setFont(new Font("Tahoma", Font.BOLD, 16));
+        editBotMarc.setFocusPainted(false);
+        editBotMarc.setBorderPainted(false);
+        editBotMarc.setBackground(Color.decode("#38B6FF"));
+        editBotMarc.setBounds(26, 520, 260, 53);
+        cuadroEditMarc.add(editBotMarc);
+
+        JButton btnVisualizarCambios = new JButton("Visualizar cambios");
+        btnVisualizarCambios.setForeground(Color.WHITE);
+        btnVisualizarCambios.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnVisualizarCambios.setFocusPainted(false);
+        btnVisualizarCambios.setBorderPainted(false);
+        btnVisualizarCambios.setBackground(Color.BLUE);
+        btnVisualizarCambios.setBounds(25, 458, 260, 53);
+        cuadroEditMarc.add(btnVisualizarCambios);
+
+
+
+        JLabel nombreActMarc = new JLabel("");
+        nombreActMarc.setFont(new Font("Tahoma", Font.BOLD, 25));
+        nombreActMarc.setHorizontalAlignment(SwingConstants.CENTER);
+        nombreActMarc.setBounds(154, 24, 282, 58);
+        crearMarca.add(nombreActMarc);
+
+        JLabel fondoDesc = new JLabel("");
+        fondoDesc.setVerticalAlignment(SwingConstants.BOTTOM);
+        fondoDesc.setOpaque(true);
+        fondoDesc.setHorizontalAlignment(SwingConstants.CENTER);
+        fondoDesc.setBackground(SystemColor.controlShadow);
+        fondoDesc.setBounds(35, 460, 517, 154);
+        crearMarca.add(fondoDesc);
+
         return crearMarca;
     }
     public JPanel consultarMarcas() {
@@ -3221,38 +3616,44 @@ public class Ventana extends JFrame {
         consultarMarcas.setLayout(null);
         consultarMarcas.setBackground(Color.decode("#FFFFFF"));
 
+        JPanel cuadroEditMarc = new JPanel();
+        cuadroEditMarc.setOpaque(true);
+        cuadroEditMarc.setLayout(null);
+        cuadroEditMarc.setBackground(SystemColor.controlShadow);
+        cuadroEditMarc.setBounds(632, 24, 307, 597);
+        consultarMarcas.add(cuadroEditMarc);
+
         JButton imgConsultarMarc = new JButton("");
         imgConsultarMarc.setBorderPainted(false);
         imgConsultarMarc.setContentAreaFilled(false);
         imgConsultarMarc.setFocusPainted(false);
         imgConsultarMarc.setHorizontalAlignment(SwingConstants.CENTER);
         imgConsultarMarc.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        imgConsultarMarc.setBounds(652, 424, 271, 92);
-        consultarMarcas.add(imgConsultarMarc);
+        imgConsultarMarc.setBounds(17, 408, 271, 92);
+        cuadroEditMarc.add(imgConsultarMarc);
 
         JTextArea camDescMarc = new JTextArea("");
         camDescMarc.setBorder(null);
         camDescMarc.setLineWrap(true);
         camDescMarc.setBackground(SystemColor.menu);
-        camDescMarc.setBounds(670, 173, 236, 219);
-        consultarMarcas.add(camDescMarc);
+        camDescMarc.setBounds(35, 157, 236, 219);
+        cuadroEditMarc.add(camDescMarc);
 
         JTextField cambNomMarc = new JTextField("");
         cambNomMarc.setBorder(null);
         cambNomMarc.setBackground(SystemColor.menu);
-        cambNomMarc.setBounds(670, 84, 236, 29);
-        consultarMarcas.add(cambNomMarc);
-        cambNomMarc.setColumns(10);
+        cambNomMarc.setBounds(35, 68, 236, 29);
+        cuadroEditMarc.add(cambNomMarc);
 
         JLabel descMarc = new JLabel("Descripción");
         descMarc.setFont(new Font("Tahoma", Font.BOLD, 14));
-        descMarc.setBounds(670, 144, 154, 23);
-        consultarMarcas.add(descMarc);
+        descMarc.setBounds(35, 128, 154, 23);
+        cuadroEditMarc.add(descMarc);
 
-        JLabel nomActMarc = new JLabel("Nombre de marca");
+        JLabel nomActMarc = new JLabel("Nombre de categoría");
         nomActMarc.setFont(new Font("Tahoma", Font.BOLD, 14));
-        nomActMarc.setBounds(670, 59, 154, 23);
-        consultarMarcas.add(nomActMarc);
+        nomActMarc.setBounds(35, 43, 154, 23);
+        cuadroEditMarc.add(nomActMarc);
 
         JTextArea descActMarc = new JTextArea();
         descActMarc.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
@@ -3266,7 +3667,7 @@ public class Ventana extends JFrame {
         JLabel imgActMarc = new JLabel("");
         imgActMarc.setHorizontalAlignment(SwingConstants.CENTER);
         imgActMarc.setIcon(new ImageIcon("src/img/bmwlogo.png"));
-        imgActMarc.setBounds(79, 107, 456, 298);
+        imgActMarc.setBounds(65, 90, 449, 300);
         consultarMarcas.add(imgActMarc);
 
         JButton editBotMarc = new JButton("Editar");
@@ -3275,21 +3676,14 @@ public class Ventana extends JFrame {
         editBotMarc.setFocusPainted(false);
         editBotMarc.setBorderPainted(false);
         editBotMarc.setBackground(Color.decode("#38B6FF"));
-        editBotMarc.setBounds(657, 547, 260, 53);
-        consultarMarcas.add(editBotMarc);
+        editBotMarc.setBounds(26, 520, 260, 53);
+        cuadroEditMarc.add(editBotMarc);
 
-        JLabel cuadroEditMarc = new JLabel();
-        cuadroEditMarc.setVerticalAlignment(SwingConstants.BOTTOM);
-        cuadroEditMarc.setOpaque(true);
-        cuadroEditMarc.setHorizontalAlignment(SwingConstants.CENTER);
-        cuadroEditMarc.setBackground(SystemColor.controlShadow);
-        cuadroEditMarc.setBounds(632, 24, 307, 597);
-        consultarMarcas.add(cuadroEditMarc);
 
         JLabel nombreActMarc = new JLabel("BMW");
         nombreActMarc.setFont(new Font("Tahoma", Font.BOLD, 25));
         nombreActMarc.setHorizontalAlignment(SwingConstants.CENTER);
-        nombreActMarc.setBounds(170, 24, 282, 58);
+        nombreActMarc.setBounds(154, 24, 282, 58);
         consultarMarcas.add(nombreActMarc);
 
         JLabel fondoDesc = new JLabel("");
