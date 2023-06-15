@@ -355,6 +355,15 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+        if (actual.equals("crearVehiculo")){
+            panelActualLbl.setText("Crear vehiculo");
+
+            panel = crearVehiculo();
+
+            this.add(panel,BorderLayout.CENTER);
+            this.repaint();
+            this.revalidate();
+        }
         if (actual.equals("consultarVehiculo")) {
 
             panelActualLbl.setText("Consultar vehículo");
@@ -366,11 +375,32 @@ public class Ventana extends JFrame {
             this.repaint();
             this.revalidate();
         }
+        if(actual.equals("crearCategorias")){
+
+            panelActualLbl.setText("Crear categoría");
+
+            panel = crearCategoria();
+
+            this.add(panel,BorderLayout.CENTER);
+
+            this.repaint();
+            this.revalidate();
+        }
         if (actual.equals("consultarCategorias")) {
 
             panelActualLbl.setText("Consultar categorías");
 
             panel = consultarCategorias();
+
+            this.add(panel,BorderLayout.CENTER);
+
+            this.repaint();
+            this.revalidate();
+        }
+        if(actual.equals("crearMarcas")){
+            panelActualLbl.setText("Crear marcas");
+
+            panel = crearMarca();
 
             this.add(panel,BorderLayout.CENTER);
 
@@ -389,6 +419,8 @@ public class Ventana extends JFrame {
             this.revalidate();
         }
     }
+
+
     public JPanel login() {
         anterior = actual;
         actual = "login";
@@ -681,9 +713,9 @@ public class Ventana extends JFrame {
         crearVehiculos.setBackground(Color.decode("#38b6ff"));
         crearVehiculos.setSize(300,30);
         crearVehiculos.setLocation(350,20);
-        crearVehiculos.setFocusPainted(false);
+        //crearVehiculos.setFocusPainted(false);
         crearVehiculos.setForeground(Color.white);
-        crearVehiculos.setBorderPainted(false);
+        //crearVehiculos.setBorderPainted(false);
         crearVehiculos.setFont(new Font("Tahoma", Font.BOLD, 18));
         vehiculosPanel.add(crearVehiculos);
 
@@ -797,11 +829,41 @@ public class Ventana extends JFrame {
                 revalidate();
             }
         });
+        crearVehiculos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                anterior = actual;
+                actual = "crearVehiculo";
+
+                try {
+                    limpiarVentana();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                repaint();
+                revalidate();
+            }
+        });
 
 
         return vehiculosPanel;
     }
+    private JPanel crearVehiculo() {
+        anterior = "vehiculos";
 
+        JPanel crearVehi = new JPanel();
+        crearVehi.setFont(new Font("Tahoma", Font.BOLD, 11));
+        crearVehi.setRequestFocusEnabled(false);
+        crearVehi.setForeground(Color.BLACK);
+        crearVehi.setSize(1000, 681);
+        crearVehi.setLocation(0, 80);
+        crearVehi.setLayout(null);
+        crearVehi.setBackground(Color.decode("#FFFFFF"));
+
+        return crearVehi;
+    }
     public JPanel consultarVehiculo() {
         anterior = "vehiculos";
 
@@ -2829,6 +2891,7 @@ public class Ventana extends JFrame {
         categoriasPanel.add(crearCategorias);
 
 
+
         JPanel panelCat = new JPanel();
         panelCat.setOpaque(true);
         panelCat.setLayout(null);
@@ -2902,11 +2965,41 @@ public class Ventana extends JFrame {
         });
 
 
+        crearCategorias.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                anterior = actual;
+                actual ="crearCategorias";
+                try {
+                    limpiarVentana();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                revalidate();
+                repaint();
+            }
+        });
 
 
         return categoriasPanel;
     }
 
+    private JPanel crearCategoria() {
+        anterior = "categorias";
+
+        JPanel crearCategoria = new JPanel();
+        crearCategoria.setFont(new Font("Tahoma", Font.BOLD, 11));
+        crearCategoria.setRequestFocusEnabled(false);
+        crearCategoria.setForeground(Color.BLACK);
+        crearCategoria.setSize(1000, 681);
+        crearCategoria.setLocation(0, 80);
+        crearCategoria.setLayout(null);
+        crearCategoria.setBackground(Color.decode("#FFFFFF"));
+
+        return crearCategoria;
+    }
     public JPanel consultarCategorias() {
         anterior = "categorias";
 
@@ -3084,10 +3177,40 @@ public class Ventana extends JFrame {
 
             }
         });
+        crearMarcas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                anterior = actual;
+                actual ="crearMarcas";
+                try {
+                    limpiarVentana();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                revalidate();
+                repaint();
+            }
+        });
 
         return marcasPanel;
     }
 
+    private JPanel crearMarca() {
+        anterior = "marcas";
+
+        JPanel crearMarca = new JPanel();
+        crearMarca.setFont(new Font("Tahoma", Font.BOLD, 11));
+        crearMarca.setRequestFocusEnabled(false);
+        crearMarca.setForeground(Color.BLACK);
+        crearMarca.setSize(1000, 681);
+        crearMarca.setLocation(0, 80);
+        crearMarca.setLayout(null);
+        crearMarca.setBackground(Color.decode("#FFFFFF"));
+
+        return crearMarca;
+    }
     public JPanel consultarMarcas() {
         anterior = "marcas";
 
