@@ -3550,7 +3550,7 @@ public class Ventana extends JFrame {
         descMarc.setBounds(36, 87, 154, 23);
         cuadroEditMarc.add(descMarc);
 
-        JLabel nomActMarc = new JLabel("Nombre de categoría");
+        JLabel nomActMarc = new JLabel("Nombre de marca");
         nomActMarc.setFont(new Font("Tahoma", Font.BOLD, 14));
         nomActMarc.setBounds(36, 22, 154, 23);
         cuadroEditMarc.add(nomActMarc);
@@ -3570,14 +3570,14 @@ public class Ventana extends JFrame {
         imgActMarc.setBounds(65, 90, 449, 300);
         crearMarca.add(imgActMarc);
 
-        JButton editBotMarc = new JButton("Editar");
-        editBotMarc.setForeground(Color.WHITE);
-        editBotMarc.setFont(new Font("Tahoma", Font.BOLD, 16));
-        editBotMarc.setFocusPainted(false);
-        editBotMarc.setBorderPainted(false);
-        editBotMarc.setBackground(Color.decode("#38B6FF"));
-        editBotMarc.setBounds(26, 520, 260, 53);
-        cuadroEditMarc.add(editBotMarc);
+        JButton crearMarcaBot = new JButton("Crear marca");
+        crearMarcaBot.setForeground(Color.WHITE);
+        crearMarcaBot.setFont(new Font("Tahoma", Font.BOLD, 16));
+        crearMarcaBot.setFocusPainted(false);
+        crearMarcaBot.setBorderPainted(false);
+        crearMarcaBot.setBackground(Color.decode("#38B6FF"));
+        crearMarcaBot.setBounds(26, 520, 260, 53);
+        cuadroEditMarc.add(crearMarcaBot);
 
         JButton btnVisualizarCambios = new JButton("Visualizar cambios");
         btnVisualizarCambios.setForeground(Color.WHITE);
@@ -3587,7 +3587,6 @@ public class Ventana extends JFrame {
         btnVisualizarCambios.setBackground(Color.BLUE);
         btnVisualizarCambios.setBounds(25, 458, 260, 53);
         cuadroEditMarc.add(btnVisualizarCambios);
-
 
 
         JLabel nombreActMarc = new JLabel("");
@@ -3603,6 +3602,27 @@ public class Ventana extends JFrame {
         fondoDesc.setBackground(SystemColor.controlShadow);
         fondoDesc.setBounds(35, 460, 517, 154);
         crearMarca.add(fondoDesc);
+
+        crearMarcaBot.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String descripcionBase=camDescMarc.getText();
+                String nombremarcaBase=cambNomMarc.getText();
+
+
+                System.out.println(camDescMarc.getText());
+                System.out.println(cambNomMarc.getText());
+                String imgbase = "src/img/13.png";
+                String[]datosmarcaBase={imgbase,nombremarcaBase,descripcionBase};
+
+
+                try {
+                    FuncionesSQL.insertar_a_tabla(datosmarcaBase,"marcas");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
         return crearMarca;
     }

@@ -55,6 +55,27 @@ public class Conexion {
                         "UNIQUE KEY uk_correo (correo));";
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
+
+                query =
+                        "CREATE TABLE IF NOT EXISTS marcas (" +
+                                "id_marcas INT NOT NULL AUTO_INCREMENT," +
+                                "img_marcas VARCHAR(255) NOT NULL, " +
+                                "nombre_marca VARCHAR(255) NOT NULL, " +
+                                "descripcion VARCHAR(255) NOT NULL, " +
+                                "PRIMARY KEY (id_marcas));";
+                ps = conexion.prepareStatement(query);
+                ps.executeUpdate();
+
+                query =
+                        "CREATE TABLE IF NOT EXISTS categorias (" +
+                                "id_categorias INT NOT NULL AUTO_INCREMENT," +
+                                "img_categorias VARCHAR(255) NOT NULL, " +
+                                "nombre_categorias VARCHAR(255) NOT NULL, " +
+                                "descripcion VARCHAR(255) NOT NULL, " +
+                                "PRIMARY KEY (id_categorias));";
+                ps = conexion.prepareStatement(query);
+                ps.executeUpdate();
+
                 query =
                     "CREATE TABLE IF NOT EXISTS autos (" +
                     "id_de_auto INT NOT NULL AUTO_INCREMENT," +
@@ -94,6 +115,20 @@ public class Conexion {
                         "('2','Ramses', 'Accesible', 'ramses@ramses.com', '6121185436'),"+
                         "('3','Zumaya', 'Zumaya', 'bioshock_4@2023.com', '6124564106'),"+
                         "('4','Oreo', 'Stan', 'poop_tart@gmail.com', '6123344566');";
+
+                ps = conexion.prepareStatement(query);
+                ps.executeUpdate();
+
+                query = "INSERT IGNORE INTO marcas " +
+                        "(id_marcas, img_marcas, nombre_marca, descripcion) VALUES " +
+                        "('1','src/img/13.png', 'BMW' , 'BMW es una marca de automóviles de prestigio que se destaca por su rendimiento y estilo. Sus vehículos combinan la deportividad con el lujo y la elegancia');";
+
+                ps = conexion.prepareStatement(query);
+                ps.executeUpdate();
+
+                query = "INSERT IGNORE INTO categorias " +
+                        "(id_categorias, img_categorias, nombre_categorias, descripcion) VALUES " +
+                        "('1','src/img/12.png', 'Sedán de lujo' , 'Sedanes de lujo');";
 
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
