@@ -66,6 +66,7 @@ public class Conexion {
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
 
+
                 query =
                         "CREATE TABLE IF NOT EXISTS categorias (" +
                                 "id_categorias INT NOT NULL AUTO_INCREMENT," +
@@ -103,6 +104,7 @@ public class Conexion {
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();
 
+
                 query = "INSERT IGNORE INTO autos " +
                         "(id_de_auto,nombre_auto, marca, categoria, kilometraje, costo, imagen_dir) VALUES " +
                         "('1','Auto1', 'Marca1', 'Categoria1', '10000', 10000.00, 'src/img/auto1'), ('2','Auto2', 'Marca2', 'Categoria2', '20000', 20000.00, 'src/img/auto1'), ('3','Auto3', 'Marca3', 'Categoria3', '30000', 30000.00, 'src/img/auto1');";
@@ -115,6 +117,29 @@ public class Conexion {
                         "('2','Ramses', 'Accesible', 'ramses@ramses.com', '6121185436'),"+
                         "('3','Zumaya', 'Zumaya', 'bioshock_4@2023.com', '6124564106'),"+
                         "('4','Oreo', 'Stan', 'poop_tart@gmail.com', '6123344566');";
+
+                ps = conexion.prepareStatement(query);
+                ps.executeUpdate();
+
+
+                query =
+                        "CREATE TABLE IF NOT EXISTS vehiculos (" +
+                                "id_vehiculo INT NOT NULL AUTO_INCREMENT," +
+                                "img_vehiculo VARCHAR(255) NOT NULL, " +
+                                "nombre_vehiculo VARCHAR(255) NOT NULL, " +
+                                "categoria_vehiculo VARCHAR(255) NOT NULL, " +
+                                "transmision_vehiculo VARCHAR(255) NOT NULL, " +
+                                "año_vehiculo VARCHAR(255) NOT NULL, " +
+                                "combustible_vehiculo VARCHAR(255) NOT NULL, " +
+                                "precio_vehiculo VARCHAR(255) NOT NULL, " +
+                                "marca_vehiculo VARCHAR(255) NOT NULL, " +
+                                "PRIMARY KEY (id_vehiculo));";
+                ps = conexion.prepareStatement(query);
+                ps.executeUpdate();
+
+                query = "INSERT IGNORE INTO vehiculos " +
+                        "(id_vehiculo,img_vehiculo, nombre_vehiculo, categoria_vehiculo, transmision_vehiculo,año_vehiculo,combustible_vehiculo,precio_vehiculo,marca_vehiculo) VALUES " +
+                        "('1','src/img/13.png', 'Rey X', 'Sedán de lujo', 'Estándar','2021','Gasolinaa','$201','BMW');";
 
                 ps = conexion.prepareStatement(query);
                 ps.executeUpdate();

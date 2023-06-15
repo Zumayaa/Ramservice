@@ -1,7 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.*;
@@ -11,33 +9,23 @@ import java.awt.event.ActionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 public class Ventana extends JFrame {
 
 
-    public ArrayList<JPanel> autos = new ArrayList<>();
+    public String descripcionCategoria,rutaCategoria,nombreCategoria,id_categoria;
 
-    public ArrayList<JPanel> marcas = new ArrayList<>();
+    public String rutaVehiculo,nombreVehiculo,id_Vehiculo,marcaVehiculo,combustibleVehiculo,añoVehiculo,precioVehiculo,transmisionVehiculo,categoriaVehiculo;
+
+    public String descripcionMarca,rutaMarca,nombreMarca,id_marca;
+    public ArrayList<JPanel> vehiculosPaneles = new ArrayList<>();
+
+    public ArrayList<JPanel> marcasPaneles = new ArrayList<>();
 
     public ArrayList<JPanel> categorias = new ArrayList<>();
 
-    public ArrayList<JPanel> autosEditar = new ArrayList<>();
-
-    public ArrayList<JPanel> marcasEditar = new ArrayList<>();
-
-    public ArrayList<JPanel> categoriasEditar = new ArrayList<>();
-
-    public ArrayList<JButton> botoneslista = new ArrayList<>();
-
-    public ArrayList<JTextField> textosAutos = new ArrayList<>();
-
-    public ArrayList<JPanel> autosEdistar = new ArrayList<>();
-
-    public ArrayList<JPanel> autosEditdar = new ArrayList<>();
-
+    public int a=0,b=0,c=0,d=0,e=0,f=0,g=0;
     private int panelCatX=84,panelCatY=75,panelMarcX=84,panelMarcY=75,panelCarrX=84,panelCarrY=84;
     public JPanel panel = null;
     private String anterior = "cargaPantalla";
@@ -703,6 +691,229 @@ public class Ventana extends JFrame {
     public JPanel vehiculos() {
         anterior = "home";
 
+        categorias.clear();
+
+        panelCatY = 75;
+        a = 0;
+        b = 0;
+        c = 0;
+
+        JPanel panelactual;
+
+        JPanel categoriasPanel = new JPanel();
+        categoriasPanel.setForeground(Color.BLACK);
+        categoriasPanel.setSize(1000, 800);
+        categoriasPanel.setLocation(0, 80);
+        categoriasPanel.setLayout(null);
+        categoriasPanel.setBackground(Color.decode("#FFFFFF"));
+
+        panelactual = categoriasPanel;
+        categorias.add(categoriasPanel);
+
+
+        String[][] datosTabla = SQL.seleccionar_datosString("SELECT * FROM categorias", "categorias");
+
+        int numCategorias = SQL.contarFilasTabla("categorias");
+
+
+
+        for (int i = 0; i < numCategorias; i++) {
+
+            if (b == 2) {
+
+                JPanel categoriasPanel2 = new JPanel();
+                categoriasPanel2.setForeground(Color.BLACK);
+                categoriasPanel2.setSize(1000, 800);
+                categoriasPanel2.setLocation(0, 80);
+                categoriasPanel2.setLayout(null);
+                categoriasPanel2.setBackground(Color.decode("#FFFFFF"));
+                categorias.add(categoriasPanel2);
+                c++;
+                panelactual = categorias.get(c);
+
+                b = 0;
+            }
+
+            JButton crearCategorias = new JButton("Crear categoría");
+            crearCategorias.setBackground(Color.decode("#38b6ff"));
+            crearCategorias.setSize(300, 30);
+            crearCategorias.setLocation(350, 20);
+            crearCategorias.setFocusPainted(false);
+            crearCategorias.setForeground(Color.white);
+            crearCategorias.setBorderPainted(false);
+            crearCategorias.setFont(new Font("Tahoma", Font.BOLD, 18));
+
+            JPanel panelCat = new JPanel();
+            panelCat.setOpaque(true);
+            panelCat.setLayout(null);
+            panelCat.setBackground(Color.LIGHT_GRAY);
+            panelCat.setBounds(panelCatX, panelCatY, 826, 232);
+            panelactual.add(panelCat);
+
+            JTextArea sedanLujo = new JTextArea();
+            sedanLujo.setForeground(Color.BLACK);
+            sedanLujo.setOpaque(false);
+            sedanLujo.setEditable(false);
+            sedanLujo.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+            sedanLujo.setFont(new Font("Tahoma", Font.BOLD, 18));
+            sedanLujo.setText(datosTabla[i][3]);
+            sedanLujo.setBounds(268, 54, 291, 115);
+            sedanLujo.setLineWrap(true);
+            panelCat.add(sedanLujo);
+
+            JButton btnEliminar = new JButton("Eliminar");
+            btnEliminar.setForeground(Color.WHITE);
+            btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
+            btnEliminar.setFocusPainted(false);
+            btnEliminar.setBorderPainted(false);
+            btnEliminar.setBackground(Color.decode("#BF0000"));
+            btnEliminar.setBounds(585, 131, 226, 53);
+            panelCat.add(btnEliminar);
+
+            JButton consultarCat = new JButton("Consultar");
+            consultarCat.setFocusPainted(false);
+            consultarCat.setForeground(Color.WHITE);
+            consultarCat.setFont(new Font("Tahoma", Font.BOLD, 16));
+            consultarCat.setBorderPainted(false);
+            consultarCat.setBackground(Color.BLACK);
+            consultarCat.setBounds(585, 41, 226, 55);
+            panelCat.add(consultarCat);
+
+            JLabel nombCat = new JLabel(datosTabla[i][2]);
+            nombCat.setForeground(Color.BLACK);
+            nombCat.setHorizontalAlignment(SwingConstants.CENTER);
+            nombCat.setFont(new Font("Tahoma", Font.BOLD, 17));
+            nombCat.setBounds(56, 175, 166, 30);
+            panelCat.add(nombCat);
+
+            JLabel imgCat = new JLabel("");
+            imgCat.setIcon(new ImageIcon(datosTabla[i][1]));
+            imgCat.setBounds(32, 29, 226, 140);
+            panelCat.add(imgCat);
+
+            JButton atras = new JButton("");
+            atras.setBorderPainted(false);
+            atras.setContentAreaFilled(false);
+            atras.setIcon(new ImageIcon("src/img/botonRegresarIcon.png"));
+            atras.setBounds(409, 620, 66, 56);
+
+
+            JButton sig = new JButton("");
+            sig.setContentAreaFilled(false);
+            sig.setBorderPainted(false);
+            sig.setIcon(new ImageIcon("src/img/botonRegresarIconder.png"));
+            sig.setBounds(500, 620, 66, 56);
+
+            categoriasPanel.add(crearCategorias);
+
+            if (a+1<= categorias.size()-1){
+                categoriasPanel.add(sig);
+            }
+
+            sig.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    remove(categorias.get(a));
+                    a++;
+                    add(categorias.get(a));
+
+
+                    if (a+1<= categorias.size()-1){
+                        categorias.get(a).add(sig);
+                    }
+
+                    categorias.get(a).add(atras);
+
+
+
+                    categorias.get(a).add(crearCategorias);
+
+                    repaint();
+                    revalidate();
+                }
+            });
+
+            atras.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    remove(categorias.get(a));
+                    a--;
+                    add(categorias.get(a));
+
+                    categorias.get(a).add(sig);
+
+                    if (a+ categorias.size()-1>= categorias.size()){
+                        categorias.get(a).add(atras);
+                    }
+                    categorias.get(a).add(crearCategorias);
+
+                    repaint();
+                    revalidate();
+                }
+            });
+
+
+            int finalI = i;
+            consultarCat.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    anterior = actual;
+                    actual = "consultarCategorias";
+                    System.out.println(nombCat.getText());
+
+                    descripcionCategoria=sedanLujo.getText();
+                    nombreCategoria=nombCat.getText();
+                    rutaCategoria=imgCat.getText();
+                    id_categoria=datosTabla[finalI][0];
+
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+
+                }
+            });
+
+
+
+            crearCategorias.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    actual = "crearCategorias";
+                    try {
+                        remove(categorias.get(a));
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+                }
+            });
+
+
+            if (panelCatY == 75) {
+                panelCatY += 314;
+
+            } else {
+                panelCatY = 75;
+            }
+
+
+            b++;
+
+        }
+
+
+
+        repaint();
+        revalidate();
+
         JPanel vehiculosPanel = new JPanel();
         vehiculosPanel.setSize(1000, 800);
         vehiculosPanel.setLocation(0, 0);
@@ -713,9 +924,9 @@ public class Ventana extends JFrame {
         crearVehiculos.setBackground(Color.decode("#38b6ff"));
         crearVehiculos.setSize(300,30);
         crearVehiculos.setLocation(350,20);
-        //crearVehiculos.setFocusPainted(false);
+        crearVehiculos.setFocusPainted(false);
         crearVehiculos.setForeground(Color.white);
-        //crearVehiculos.setBorderPainted(false);
+        crearVehiculos.setBorderPainted(false);
         crearVehiculos.setFont(new Font("Tahoma", Font.BOLD, 18));
         vehiculosPanel.add(crearVehiculos);
 
@@ -736,7 +947,6 @@ public class Ventana extends JFrame {
         fondoCarr.add(btnEliminar);
 
         JButton consultarCarr = new JButton("Consultar");
-
         consultarCarr.setFocusPainted(false);
         consultarCarr.setForeground(Color.WHITE);
         consultarCarr.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -3087,6 +3297,14 @@ public class Ventana extends JFrame {
     public JPanel categorias() {
         anterior = "home";
 
+        categorias.clear();
+
+        panelCatY = 75;
+        a = 0;
+        b = 0;
+        c = 0;
+
+        JPanel panelactual;
 
         JPanel categoriasPanel = new JPanel();
         categoriasPanel.setForeground(Color.BLACK);
@@ -3095,108 +3313,212 @@ public class Ventana extends JFrame {
         categoriasPanel.setLayout(null);
         categoriasPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JButton crearCategorias = new JButton("Crear categoría");
-        crearCategorias.setBackground(Color.decode("#38b6ff"));
-        crearCategorias.setSize(300,30);
-        crearCategorias.setLocation(350,20);
-        crearCategorias.setFocusPainted(false);
-        crearCategorias.setForeground(Color.white);
-        crearCategorias.setBorderPainted(false);
-        crearCategorias.setFont(new Font("Tahoma", Font.BOLD, 18));
-        categoriasPanel.add(crearCategorias);
+        panelactual = categoriasPanel;
+        categorias.add(categoriasPanel);
+
+
+        String[][] datosTabla = SQL.seleccionar_datosString("SELECT * FROM categorias", "categorias");
+
+        int numCategorias = SQL.contarFilasTabla("categorias");
 
 
 
-        JPanel panelCat = new JPanel();
-        panelCat.setOpaque(true);
-        panelCat.setLayout(null);
-        panelCat.setBackground(Color.LIGHT_GRAY);
-        panelCat.setBounds(panelCatX, panelCatY, 826, 232);
-        categoriasPanel.add(panelCat);
+        for (int i = 0; i < numCategorias; i++) {
 
+            if (b == 2) {
 
-     //   panelY+=314;
+                JPanel categoriasPanel2 = new JPanel();
+                categoriasPanel2.setForeground(Color.BLACK);
+                categoriasPanel2.setSize(1000, 800);
+                categoriasPanel2.setLocation(0, 80);
+                categoriasPanel2.setLayout(null);
+                categoriasPanel2.setBackground(Color.decode("#FFFFFF"));
+                categorias.add(categoriasPanel2);
+                c++;
+                panelactual = categorias.get(c);
 
-
-
-        JTextArea sedanLujo = new JTextArea();
-        sedanLujo.setForeground(Color.BLACK);
-        sedanLujo.setOpaque(false);
-        sedanLujo.setEditable(false);
-        sedanLujo.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        sedanLujo.setFont(new Font("Tahoma", Font.BOLD, 18));
-        sedanLujo.setText("Esta categoría incluye vehículos elegantes y cómodos, ideales para clientes que buscan un viaje sofisticado y de alto nivel");
-        sedanLujo.setBounds(268, 54, 291, 115);
-        sedanLujo.setLineWrap(true);
-        panelCat.add(sedanLujo);
-
-
-
-        JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.setForeground(Color.WHITE);
-        btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnEliminar.setFocusPainted(false);
-        btnEliminar.setBorderPainted(false);
-        btnEliminar.setBackground(Color.decode("#BF0000"));
-        btnEliminar.setBounds(585, 131, 226, 53);
-        panelCat.add(btnEliminar);
-
-        JButton consultarCat = new JButton("Consultar");
-
-        consultarCat.setFocusPainted(false);
-        consultarCat.setForeground(Color.WHITE);
-        consultarCat.setFont(new Font("Tahoma", Font.BOLD, 16));
-        consultarCat.setBorderPainted(false);
-        consultarCat.setBackground(Color.BLACK);
-        consultarCat.setBounds(585, 41, 226, 55);
-        panelCat.add(consultarCat);
-
-        JLabel nombCat = new JLabel("Sedanes de lujo");
-        nombCat.setForeground(Color.BLACK);
-        nombCat.setHorizontalAlignment(SwingConstants.CENTER);
-        nombCat.setFont(new Font("Tahoma", Font.BOLD, 17));
-        nombCat.setBounds(56, 175, 166, 30);
-        panelCat.add(nombCat);
-
-        JLabel imgCat = new JLabel("");
-        imgCat.setIcon(new ImageIcon("src/img/image 12.png"));
-        imgCat.setBounds(32, 29, 226, 140);
-        panelCat.add(imgCat);
-
-        consultarCat.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual ="consultarCategorias";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-
-                revalidate();
-                repaint();
-
+                b = 0;
             }
-        });
+
+            JButton crearCategorias = new JButton("Crear categoría");
+            crearCategorias.setBackground(Color.decode("#38b6ff"));
+            crearCategorias.setSize(300, 30);
+            crearCategorias.setLocation(350, 20);
+            crearCategorias.setFocusPainted(false);
+            crearCategorias.setForeground(Color.white);
+            crearCategorias.setBorderPainted(false);
+            crearCategorias.setFont(new Font("Tahoma", Font.BOLD, 18));
+
+            JPanel panelCat = new JPanel();
+            panelCat.setOpaque(true);
+            panelCat.setLayout(null);
+            panelCat.setBackground(Color.LIGHT_GRAY);
+            panelCat.setBounds(panelCatX, panelCatY, 826, 232);
+            panelactual.add(panelCat);
+
+            JTextArea sedanLujo = new JTextArea();
+            sedanLujo.setForeground(Color.BLACK);
+            sedanLujo.setOpaque(false);
+            sedanLujo.setEditable(false);
+            sedanLujo.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+            sedanLujo.setFont(new Font("Tahoma", Font.BOLD, 18));
+            sedanLujo.setText(datosTabla[i][3]);
+            sedanLujo.setBounds(268, 54, 291, 115);
+            sedanLujo.setLineWrap(true);
+            panelCat.add(sedanLujo);
+
+            JButton btnEliminar = new JButton("Eliminar");
+            btnEliminar.setForeground(Color.WHITE);
+            btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
+            btnEliminar.setFocusPainted(false);
+            btnEliminar.setBorderPainted(false);
+            btnEliminar.setBackground(Color.decode("#BF0000"));
+            btnEliminar.setBounds(585, 131, 226, 53);
+            panelCat.add(btnEliminar);
+
+            JButton consultarCat = new JButton("Consultar");
+            consultarCat.setFocusPainted(false);
+            consultarCat.setForeground(Color.WHITE);
+            consultarCat.setFont(new Font("Tahoma", Font.BOLD, 16));
+            consultarCat.setBorderPainted(false);
+            consultarCat.setBackground(Color.BLACK);
+            consultarCat.setBounds(585, 41, 226, 55);
+            panelCat.add(consultarCat);
+
+            JLabel nombCat = new JLabel(datosTabla[i][2]);
+            nombCat.setForeground(Color.BLACK);
+            nombCat.setHorizontalAlignment(SwingConstants.CENTER);
+            nombCat.setFont(new Font("Tahoma", Font.BOLD, 17));
+            nombCat.setBounds(56, 175, 166, 30);
+            panelCat.add(nombCat);
+
+            JLabel imgCat = new JLabel("");
+            imgCat.setIcon(new ImageIcon(datosTabla[i][1]));
+            imgCat.setBounds(32, 29, 226, 140);
+            panelCat.add(imgCat);
+
+            JButton atras = new JButton("");
+            atras.setBorderPainted(false);
+            atras.setContentAreaFilled(false);
+            atras.setIcon(new ImageIcon("src/img/botonRegresarIcon.png"));
+            atras.setBounds(409, 620, 66, 56);
 
 
-        crearCategorias.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            JButton sig = new JButton("");
+            sig.setContentAreaFilled(false);
+            sig.setBorderPainted(false);
+            sig.setIcon(new ImageIcon("src/img/botonRegresarIconder.png"));
+            sig.setBounds(500, 620, 66, 56);
 
-                anterior = actual;
-                actual ="crearCategorias";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            categoriasPanel.add(crearCategorias);
 
-                revalidate();
-                repaint();
+            if (a+1<= categorias.size()-1){
+                categoriasPanel.add(sig);
             }
-        });
 
+            sig.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    remove(categorias.get(a));
+                    a++;
+                    add(categorias.get(a));
+
+
+                    if (a+1<= categorias.size()-1){
+                        categorias.get(a).add(sig);
+                    }
+
+                    categorias.get(a).add(atras);
+
+
+
+                    categorias.get(a).add(crearCategorias);
+
+                    repaint();
+                    revalidate();
+                }
+            });
+
+            atras.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    remove(categorias.get(a));
+                    a--;
+                    add(categorias.get(a));
+
+                    categorias.get(a).add(sig);
+
+                    if (a+ categorias.size()-1>= categorias.size()){
+                        categorias.get(a).add(atras);
+                    }
+                    categorias.get(a).add(crearCategorias);
+
+                    repaint();
+                    revalidate();
+                }
+            });
+
+
+            int finalI = i;
+            consultarCat.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    anterior = actual;
+                    actual = "consultarCategorias";
+                    System.out.println(nombCat.getText());
+
+                    descripcionCategoria=sedanLujo.getText();
+                    nombreCategoria=nombCat.getText();
+                    rutaCategoria=imgCat.getText();
+                    id_categoria=datosTabla[finalI][0];
+
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+
+                }
+            });
+
+
+
+            crearCategorias.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    actual = "crearCategorias";
+                    try {
+                        remove(categorias.get(a));
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+                }
+            });
+
+
+            if (panelCatY == 75) {
+                panelCatY += 314;
+
+            } else {
+                panelCatY = 75;
+            }
+
+
+            b++;
+
+        }
+
+
+
+        repaint();
+        revalidate();
 
         return categoriasPanel;
     }
@@ -3221,14 +3543,19 @@ public class Ventana extends JFrame {
         cuadroEditCat.setBounds(632, 24, 307, 597);
         crearCategoria.add(cuadroEditCat);
 
-        JButton imgConsultarCat = new JButton("");
-        imgConsultarCat.setBorderPainted(false);
-        imgConsultarCat.setContentAreaFilled(false);
-        imgConsultarCat.setFocusPainted(false);
-        imgConsultarCat.setHorizontalAlignment(SwingConstants.CENTER);
-        imgConsultarCat.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        imgConsultarCat.setBounds(18, 349, 271, 92);
+
+        JLabel rutaImg = new JLabel("Ruta de imagen");
+        rutaImg.setFont(new Font("Tahoma", Font.BOLD, 14));
+        rutaImg.setBounds(36, 354, 154, 23);
+        cuadroEditCat.add(rutaImg);
+
+        JTextField imgConsultarCat = new JTextField("");
+        imgConsultarCat.setBorder(null);
+        imgConsultarCat.setBackground(SystemColor.menu);
+        imgConsultarCat.setBounds(36, 380, 236, 29);
         cuadroEditCat.add(imgConsultarCat);
+
+
 
         JTextArea camDescCat = new JTextArea("");
         camDescCat.setBorder(null);
@@ -3236,6 +3563,8 @@ public class Ventana extends JFrame {
         camDescCat.setBackground(SystemColor.menu);
         camDescCat.setBounds(36, 125, 236, 219);
         cuadroEditCat.add(camDescCat);
+
+
 
         JTextField cambNomCat = new JTextField("");
         cambNomCat.setBorder(null);
@@ -3267,14 +3596,14 @@ public class Ventana extends JFrame {
         imgActCat.setBounds(68, 134, 449, 269);
         crearCategoria.add(imgActCat);
 
-        JButton editBotCat = new JButton("Crear categoría");
-        editBotCat.setForeground(Color.WHITE);
-        editBotCat.setFont(new Font("Tahoma", Font.BOLD, 16));
-        editBotCat.setFocusPainted(false);
-        editBotCat.setBorderPainted(false);
-        editBotCat.setBackground(Color.decode("#38B6FF"));
-        editBotCat.setBounds(26, 520, 260, 53);
-        cuadroEditCat.add(editBotCat);
+        JButton crearCatBot = new JButton("Crear categoría");
+        crearCatBot.setForeground(Color.WHITE);
+        crearCatBot.setFont(new Font("Tahoma", Font.BOLD, 16));
+        crearCatBot.setFocusPainted(false);
+        crearCatBot.setBorderPainted(false);
+        crearCatBot.setBackground(Color.decode("#38B6FF"));
+        crearCatBot.setBounds(26, 520, 260, 53);
+        cuadroEditCat.add(crearCatBot);
 
         JButton btnVisualizarCambios = new JButton("Visualizar cambios");
         btnVisualizarCambios.setForeground(Color.WHITE);
@@ -3302,6 +3631,36 @@ public class Ventana extends JFrame {
         crearCategoria.add(fondoDesc);
 
 
+        btnVisualizarCambios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                descActCat.setText(camDescCat.getText());
+                nombreActCat.setText(cambNomCat.getText());
+                imgActCat.setIcon(new ImageIcon(imgConsultarCat.getText()));
+            }
+        });
+        crearCatBot.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String descripcionBase=camDescCat.getText();
+                String nombremarcaBase=cambNomCat.getText();
+                String imgbase = imgConsultarCat.getText();
+                String[]datosmarcaBase={imgbase,nombremarcaBase,descripcionBase};
+
+
+                try {
+                    FuncionesSQL.insertar_a_tabla(datosmarcaBase,"categorias");
+                    JOptionPane.showMessageDialog(null,"Categoria creada correctamente","Categoria creada",JOptionPane.INFORMATION_MESSAGE);
+                    actual = "categorias";
+                    limpiarVentana();
+
+                    repaint();
+                    revalidate();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
         return crearCategoria;
     }
@@ -3322,13 +3681,15 @@ public class Ventana extends JFrame {
         cuadroEditCat.setBounds(632, 24, 307, 597);
         consultarCat.add(cuadroEditCat);
 
-        JButton imgConsultarCat = new JButton("");
-        imgConsultarCat.setBorderPainted(false);
-        imgConsultarCat.setContentAreaFilled(false);
-        imgConsultarCat.setFocusPainted(false);
-        imgConsultarCat.setHorizontalAlignment(SwingConstants.CENTER);
-        imgConsultarCat.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        imgConsultarCat.setBounds(17, 408, 271, 92);
+        JLabel rutaImg = new JLabel("Ruta de imagen");
+        rutaImg.setFont(new Font("Tahoma", Font.BOLD, 14));
+        rutaImg.setBounds(36, 380, 154, 23);
+        cuadroEditCat.add(rutaImg);
+
+        JTextField imgConsultarCat = new JTextField("");
+        imgConsultarCat.setBorder(null);
+        imgConsultarCat.setBackground(SystemColor.menu);
+        imgConsultarCat.setBounds(36, 406, 236, 29);
         cuadroEditCat.add(imgConsultarCat);
 
         JTextArea camDescCat = new JTextArea("");
@@ -3355,7 +3716,7 @@ public class Ventana extends JFrame {
         cuadroEditCat.add(nomActCat);
 
         JTextArea descActCat = new JTextArea();
-        descActCat.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
+        descActCat.setText(descripcionCategoria);
         descActCat.setOpaque(false);
         descActCat.setLineWrap(true);
         descActCat.setForeground(Color.BLACK);
@@ -3365,7 +3726,7 @@ public class Ventana extends JFrame {
 
         JLabel imgActCat = new JLabel("");
         imgActCat.setHorizontalAlignment(SwingConstants.CENTER);
-        imgActCat.setIcon(new ImageIcon("src/img/image 15.png"));
+        imgActCat.setIcon(new ImageIcon(rutaCategoria));
         imgActCat.setBounds(68, 134, 449, 269);
         consultarCat.add(imgActCat);
 
@@ -3380,7 +3741,7 @@ public class Ventana extends JFrame {
 
 
 
-        JLabel nombreActCat = new JLabel("Sedanes de lujo");
+        JLabel nombreActCat = new JLabel(nombreCategoria);
         nombreActCat.setFont(new Font("Tahoma", Font.BOLD, 25));
         nombreActCat.setHorizontalAlignment(SwingConstants.CENTER);
         nombreActCat.setBounds(170, 24, 282, 58);
@@ -3395,12 +3756,41 @@ public class Ventana extends JFrame {
         consultarCat.add(fondoDesc);
 
 
+        editBotCat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombreCambio=cambNomCat.getText();
+                String descCambio=camDescCat.getText();
+                String rutaCambio = imgConsultarCat.getText();
+                String id_cate= id_categoria;
+                String[] datosaTabla = {rutaCambio,nombreCambio,descCambio};
+                FuncionesSQL.actualizar_tabla_completa(datosaTabla,"categorias","id_categorias", Integer.parseInt(id_cate));
+                JOptionPane.showMessageDialog(null,"Categoría editada correctamente","Editado",JOptionPane.INFORMATION_MESSAGE);
+                actual="categorias";
+
+                try {
+                    limpiarVentana();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
         return consultarCat;
     }
 
     public JPanel marcas() {
         anterior = "home";
+
+
+        marcasPaneles.clear();
+
+        panelCatY = 75;
+        a = 0;
+        b = 0;
+        c = 0;
+
+        JPanel panelactual;
 
         JPanel marcasPanel = new JPanel();
         marcasPanel.setForeground(Color.BLACK);
@@ -3409,97 +3799,207 @@ public class Ventana extends JFrame {
         marcasPanel.setLayout(null);
         marcasPanel.setBackground(Color.decode("#FFFFFF"));
 
-        JButton crearMarcas = new JButton("Crear marca");
-        crearMarcas.setBackground(Color.decode("#38b6ff"));
-        crearMarcas.setSize(300,30);
-        crearMarcas.setLocation(350,20);
-        crearMarcas.setFocusPainted(false);
-        crearMarcas.setForeground(Color.white);
-        crearMarcas.setBorderPainted(false);
-        crearMarcas.setFont(new Font("Tahoma", Font.BOLD, 18));
-        marcasPanel.add(crearMarcas);
+        panelactual = marcasPanel;
+        marcasPaneles.add(marcasPanel);
 
 
-        JPanel panelMarc = new JPanel();
-        panelMarc.setOpaque(true);
-        panelMarc.setLayout(null);
-        panelMarc.setBackground(Color.LIGHT_GRAY);
-        panelMarc.setBounds(panelMarcX, panelMarcY, 826, 232);
-        marcasPanel.add(panelMarc);
+        String[][] datosTabla = SQL.seleccionar_datosString("SELECT * FROM marcas", "marcas");
 
-
-    //    panelY+=314;
-
-
-        JTextArea BMW = new JTextArea();
-        BMW.setForeground(Color.BLACK);
-        BMW.setOpaque(false);
-        BMW.setEditable(false);
-        BMW.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        BMW.setFont(new Font("Tahoma", Font.BOLD, 18));
-        BMW.setText("BMW es una marca de automóviles de prestigio que se destaca por su rendimiento y estilo. Sus vehículos combinan la deportividad con el lujo y la elegancia");
-        BMW.setBounds(268, 54, 291, 130);
-        BMW.setLineWrap(true);
-        panelMarc.add(BMW);
-
-
-        JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.setForeground(Color.WHITE);
-        btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
-        btnEliminar.setFocusPainted(false);
-        btnEliminar.setBorderPainted(false);
-        btnEliminar.setBackground(Color.decode("#BF0000"));
-        btnEliminar.setBounds(585, 131, 226, 53);
-        panelMarc.add(btnEliminar);
-
-        JButton consultarMarc = new JButton("Consultar");
-        consultarMarc.setFocusPainted(false);
-        consultarMarc.setForeground(Color.WHITE);
-        consultarMarc.setFont(new Font("Tahoma", Font.BOLD, 16));
-        consultarMarc.setBorderPainted(false);
-        consultarMarc.setBackground(Color.BLACK);
-        consultarMarc.setBounds(585, 41, 226, 55);
-        panelMarc.add(consultarMarc);
+        int numMarcas = SQL.contarFilasTabla("marcas");
 
 
 
-        JLabel imgMarc = new JLabel("");
-        imgMarc.setHorizontalAlignment(SwingConstants.CENTER);
-        imgMarc.setIcon(new ImageIcon("src/img/13.png"));
-        imgMarc.setBounds(32, 32, 226, 140);
-        panelMarc.add(imgMarc);
+        for (int i = 0; i < numMarcas; i++) {
 
-        consultarMarc.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual ="consultarMarcas";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            if (b == 2) {
 
-                revalidate();
-                repaint();
+                JPanel marcasPanel2 = new JPanel();
+                marcasPanel2.setForeground(Color.BLACK);
+                marcasPanel2.setSize(1000, 800);
+                marcasPanel2.setLocation(0, 80);
+                marcasPanel2.setLayout(null);
+                marcasPanel2.setBackground(Color.decode("#FFFFFF"));
+                marcasPaneles.add(marcasPanel2);
+                c++;
+                panelactual = marcasPaneles.get(c);
 
+                b = 0;
             }
-        });
-        crearMarcas.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                anterior = actual;
-                actual ="crearMarcas";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+            JButton crearMarcas = new JButton("Crear marca");
+            crearMarcas.setBackground(Color.decode("#38b6ff"));
+            crearMarcas.setSize(300, 30);
+            crearMarcas.setLocation(350, 20);
+            crearMarcas.setFocusPainted(false);
+            crearMarcas.setForeground(Color.white);
+            crearMarcas.setBorderPainted(false);
+            crearMarcas.setFont(new Font("Tahoma", Font.BOLD, 18));
 
-                revalidate();
-                repaint();
+            JPanel panelMarc = new JPanel();
+            panelMarc.setOpaque(true);
+            panelMarc.setLayout(null);
+            panelMarc.setBackground(Color.LIGHT_GRAY);
+            panelMarc.setBounds(panelCatX, panelCatY, 826, 232);
+            panelactual.add(panelMarc);
+
+            JTextArea descMarc = new JTextArea();
+            descMarc.setForeground(Color.BLACK);
+            descMarc.setOpaque(false);
+            descMarc.setEditable(false);
+            descMarc.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+            descMarc.setFont(new Font("Tahoma", Font.BOLD, 18));
+            descMarc.setText(datosTabla[i][3]);
+            descMarc.setBounds(268, 44, 291, 130);
+            descMarc.setLineWrap(true);
+            panelMarc.add(descMarc);
+
+            JButton btnEliminar = new JButton("Eliminar");
+            btnEliminar.setForeground(Color.WHITE);
+            btnEliminar.setFont(new Font("Tahoma", Font.BOLD, 16));
+            btnEliminar.setFocusPainted(false);
+            btnEliminar.setBorderPainted(false);
+            btnEliminar.setBackground(Color.decode("#BF0000"));
+            btnEliminar.setBounds(585, 131, 226, 53);
+            panelMarc.add(btnEliminar);
+
+            JButton consultarMarc = new JButton("Consultar");
+            consultarMarc.setFocusPainted(false);
+            consultarMarc.setForeground(Color.WHITE);
+            consultarMarc.setFont(new Font("Tahoma", Font.BOLD, 16));
+            consultarMarc.setBorderPainted(false);
+            consultarMarc.setBackground(Color.BLACK);
+            consultarMarc.setBounds(585, 41, 226, 55);
+            panelMarc.add(consultarMarc);
+
+
+            JLabel imgMarc = new JLabel("");
+            imgMarc.setIcon(new ImageIcon(datosTabla[i][1]));
+            imgMarc.setBounds(32, 29, 226, 140);
+            panelMarc.add(imgMarc);
+
+            JButton atras = new JButton("");
+            atras.setBorderPainted(false);
+            atras.setContentAreaFilled(false);
+            atras.setIcon(new ImageIcon("src/img/botonRegresarIcon.png"));
+            atras.setBounds(409, 620, 66, 56);
+
+
+            JButton sig = new JButton("");
+            sig.setContentAreaFilled(false);
+            sig.setBorderPainted(false);
+            sig.setIcon(new ImageIcon("src/img/botonRegresarIconder.png"));
+            sig.setBounds(500, 620, 66, 56);
+
+            marcasPanel.add(crearMarcas);
+
+            if (a+1<= marcasPaneles.size()-1){
+                marcasPanel.add(sig);
             }
-        });
+
+            sig.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    remove(marcasPaneles.get(a));
+                    a++;
+                    add(marcasPaneles.get(a));
+
+
+                    if (a+1<= marcasPaneles.size()-1){
+                        marcasPaneles.get(a).add(sig);
+                    }
+
+                    marcasPaneles.get(a).add(atras);
+
+
+
+                    marcasPaneles.get(a).add(crearMarcas);
+
+                    repaint();
+                    revalidate();
+                }
+            });
+
+            atras.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    remove(marcasPaneles.get(a));
+                    a--;
+                    add(marcasPaneles.get(a));
+
+                    marcasPaneles.get(a).add(sig);
+
+                    if (a+ marcasPaneles.size()-1>= marcasPaneles.size()){
+                        marcasPaneles.get(a).add(atras);
+                    }
+                    marcasPaneles.get(a).add(crearMarcas);
+
+                    repaint();
+                    revalidate();
+                }
+            });
+
+
+            int finalI = i;
+            int finalI1 = i;
+            consultarMarc.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    anterior = actual;
+                    actual = "consultarMarcas";
+
+
+                    descripcionMarca=descMarc.getText();
+                    nombreMarca=datosTabla[finalI1][2];
+                    rutaMarca=imgMarc.getText();
+                    id_marca=datosTabla[finalI][0];
+
+                    try {
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+
+                }
+            });
+
+
+
+            crearMarcas.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    actual = "crearMarcas";
+                    try {
+                        remove(marcasPaneles.get(a));
+                        limpiarVentana();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    revalidate();
+                    repaint();
+                }
+            });
+
+
+            if (panelCatY == 75) {
+                panelCatY += 314;
+
+            } else {
+                panelCatY = 75;
+            }
+
+
+            b++;
+
+        }
+
+
+
+        repaint();
+        revalidate();
 
         return marcasPanel;
     }
@@ -3523,13 +4023,15 @@ public class Ventana extends JFrame {
         cuadroEditMarc.setBounds(632, 24, 307, 597);
         crearMarca.add(cuadroEditMarc);
 
-        JButton imgConsultarMarc = new JButton("");
-        imgConsultarMarc.setBorderPainted(false);
-        imgConsultarMarc.setContentAreaFilled(false);
-        imgConsultarMarc.setFocusPainted(false);
-        imgConsultarMarc.setHorizontalAlignment(SwingConstants.CENTER);
-        imgConsultarMarc.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        imgConsultarMarc.setBounds(15, 346, 271, 92);
+        JLabel rutaImg = new JLabel("Ruta de imagen");
+        rutaImg.setFont(new Font("Tahoma", Font.BOLD, 14));
+        rutaImg.setBounds(36, 354, 154, 23);
+        cuadroEditMarc.add(rutaImg);
+
+        JTextField imgConsultarMarc = new JTextField("");
+        imgConsultarMarc.setBorder(null);
+        imgConsultarMarc.setBackground(SystemColor.menu);
+        imgConsultarMarc.setBounds(36, 380, 236, 29);
         cuadroEditMarc.add(imgConsultarMarc);
 
         JTextArea camDescMarc = new JTextArea("");
@@ -3588,7 +4090,6 @@ public class Ventana extends JFrame {
         btnVisualizarCambios.setBounds(25, 458, 260, 53);
         cuadroEditMarc.add(btnVisualizarCambios);
 
-
         JLabel nombreActMarc = new JLabel("");
         nombreActMarc.setFont(new Font("Tahoma", Font.BOLD, 25));
         nombreActMarc.setHorizontalAlignment(SwingConstants.CENTER);
@@ -3603,21 +4104,32 @@ public class Ventana extends JFrame {
         fondoDesc.setBounds(35, 460, 517, 154);
         crearMarca.add(fondoDesc);
 
+        btnVisualizarCambios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                descActMarc.setText(camDescMarc.getText());
+                nombreActMarc.setText(cambNomMarc.getText());
+                imgActMarc.setIcon(new ImageIcon(imgConsultarMarc.getText()));
+            }
+        });
+
         crearMarcaBot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String descripcionBase=camDescMarc.getText();
                 String nombremarcaBase=cambNomMarc.getText();
+                String imgbase = imgConsultarMarc.getText();
 
-
-                System.out.println(camDescMarc.getText());
-                System.out.println(cambNomMarc.getText());
-                String imgbase = "src/img/13.png";
                 String[]datosmarcaBase={imgbase,nombremarcaBase,descripcionBase};
-
 
                 try {
                     FuncionesSQL.insertar_a_tabla(datosmarcaBase,"marcas");
+                    JOptionPane.showMessageDialog(null,"Marc creada correctamente","Marca creada",JOptionPane.INFORMATION_MESSAGE);
+                    actual = "marcas";
+                    limpiarVentana();
+
+                    repaint();
+                    revalidate();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -3628,6 +4140,7 @@ public class Ventana extends JFrame {
     }
     public JPanel consultarMarcas() {
         anterior = "marcas";
+
 
         JPanel consultarMarcas = new JPanel();
         consultarMarcas.setForeground(Color.BLACK);
@@ -3643,13 +4156,15 @@ public class Ventana extends JFrame {
         cuadroEditMarc.setBounds(632, 24, 307, 597);
         consultarMarcas.add(cuadroEditMarc);
 
-        JButton imgConsultarMarc = new JButton("");
-        imgConsultarMarc.setBorderPainted(false);
-        imgConsultarMarc.setContentAreaFilled(false);
-        imgConsultarMarc.setFocusPainted(false);
-        imgConsultarMarc.setHorizontalAlignment(SwingConstants.CENTER);
-        imgConsultarMarc.setIcon(new ImageIcon("src/img/Group 56 (1).png"));
-        imgConsultarMarc.setBounds(17, 408, 271, 92);
+        JLabel rutaImg = new JLabel("Ruta de imagen");
+        rutaImg.setFont(new Font("Tahoma", Font.BOLD, 14));
+        rutaImg.setBounds(36, 380, 154, 23);
+        cuadroEditMarc.add(rutaImg);
+
+        JTextField imgConsultarMarc = new JTextField("");
+        imgConsultarMarc.setBorder(null);
+        imgConsultarMarc.setBackground(SystemColor.menu);
+        imgConsultarMarc.setBounds(36, 406, 236, 29);
         cuadroEditMarc.add(imgConsultarMarc);
 
         JTextArea camDescMarc = new JTextArea("");
@@ -3676,7 +4191,7 @@ public class Ventana extends JFrame {
         cuadroEditMarc.add(nomActMarc);
 
         JTextArea descActMarc = new JTextArea();
-        descActMarc.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
+        descActMarc.setText(descripcionMarca);
         descActMarc.setOpaque(false);
         descActMarc.setLineWrap(true);
         descActMarc.setForeground(Color.BLACK);
@@ -3686,7 +4201,7 @@ public class Ventana extends JFrame {
 
         JLabel imgActMarc = new JLabel("");
         imgActMarc.setHorizontalAlignment(SwingConstants.CENTER);
-        imgActMarc.setIcon(new ImageIcon("src/img/bmwlogo.png"));
+        imgActMarc.setIcon(new ImageIcon(rutaMarca));
         imgActMarc.setBounds(65, 90, 449, 300);
         consultarMarcas.add(imgActMarc);
 
@@ -3700,7 +4215,7 @@ public class Ventana extends JFrame {
         cuadroEditMarc.add(editBotMarc);
 
 
-        JLabel nombreActMarc = new JLabel("BMW");
+        JLabel nombreActMarc = new JLabel(nombreMarca);
         nombreActMarc.setFont(new Font("Tahoma", Font.BOLD, 25));
         nombreActMarc.setHorizontalAlignment(SwingConstants.CENTER);
         nombreActMarc.setBounds(154, 24, 282, 58);
@@ -3713,6 +4228,26 @@ public class Ventana extends JFrame {
         fondoDesc.setBackground(SystemColor.controlShadow);
         fondoDesc.setBounds(35, 460, 517, 154);
         consultarMarcas.add(fondoDesc);
+
+        editBotMarc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombreCambio=nombreActMarc.getText();
+                String descCambio=descActMarc.getText();
+                String rutaCambio = imgActMarc.getText();
+                String id_marc= id_marca;
+                String[] datosaTabla = {rutaCambio,nombreCambio,descCambio};
+                FuncionesSQL.actualizar_tabla_completa(datosaTabla,"marcas","id_marcas", Integer.parseInt(id_marc));
+                JOptionPane.showMessageDialog(null,"Marca editada correctamente","Editado",JOptionPane.INFORMATION_MESSAGE);
+                actual="marcas";
+
+                try {
+                    limpiarVentana();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
 
         return consultarMarcas;

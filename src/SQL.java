@@ -28,7 +28,30 @@ public class SQL {
         }
         return new Object[0][];
     }
+    public static String[][] seleccionar_datosString(String consulta, String tabla){
+        try (Connection conexion = dbConnect.getConnection()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(consulta);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            int k = 0;
+            int rowsCount = contarFilasTabla(tabla);
+
+            String[][] datos = new String[rowsCount][columnCount];
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    datos[k][i - 1] = resultSet.getString(i);
+                }
+                k++;
+            }
+            return datos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new String[0][];
+    }
     public static String[] seleccionar_columna(String consulta){
         try (Connection conexion = dbConnect.getConnection()) {
             ArrayList<String> datos_seleccionados = new ArrayList<String>();
@@ -116,12 +139,13 @@ public class SQL {
             PreparedStatement ps = null;
             String columnas_de_insercion[] = nombres_de_columnas(tabla_nombre);
             try{
-                String query = "INSERT IGNORE INTO `"+tabla_nombre+"` ("+columnas_de_insercion[0]+") VALUES ("+columnas_de_insercion[1]+");";
+                String query = "INSERT IGNORE INTO "+tabla_nombre+" ("+columnas_de_insercion[0]+") VALUES ("+columnas_de_insercion[1]+");";
                 ps = conexion.prepareStatement(query);
                 ps.setString(1, null);
                 int pos = 0;
-                for (int i = 2; i<=datos_a_insertar.length; i++){
-                    ps.setString(i,datos_a_insertar[pos++]);
+                for (int i = 1; i<=datos_a_insertar.length; i++){
+                    ps.setString(i+1,datos_a_insertar[pos]);
+                    pos+=1;
                 }
                 ps.executeUpdate();
             }catch (Exception e){
@@ -129,6 +153,7 @@ public class SQL {
             }
         }
     }
+
 
     public static void editar_tabla(String datos_a_actualizar[], String nombre_tabla ,String columnas_a_modificar, String discriminador, int id) {
         try (Connection conexion = dbConnect.getConnection()) {
@@ -157,6 +182,7 @@ public class SQL {
             e.printStackTrace();
         }
     }
+
     public static void eliminar_registro(String tabla_nombre, String discriminador ,int id) {
         try (Connection conexion = dbConnect.getConnection()) {
             String consulta = "DELETE FROM "+tabla_nombre+" WHERE "+discriminador+" = ?";
