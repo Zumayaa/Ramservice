@@ -2893,41 +2893,46 @@ public class Ventana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String numero_de_tarjeta = numTarjetaTF.getText();
                 String cvv = cvvTF.getText();
+                int indice = id_cliente_con_nombre_CB.getSelectedIndex();
 
                 if(fechaInicioTF.getText().equals("") && fechaDeDevolucionTF.getText().equals("") &&
                         numTarjetaTF.getText().equals("") && fechaCadTF.getText().equals("") &&
-                        cvvTF.getText().equals("") ){
+                        cvvTF.getText().equals("")){
                     JOptionPane.showMessageDialog(null, "Datos vacíos", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    if(numero_de_tarjeta.length()<16){
-                        JOptionPane.showMessageDialog(null, "Números insuficientes en la tarjeta", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    if(indice == -1){
+                        JOptionPane.showMessageDialog(null, "Selecciona un usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }else{
-                        if(cvv.length()<3){
-                            JOptionPane.showMessageDialog(null, "Números insuficientes CVV", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        if(numero_de_tarjeta.length()<16){
+                            JOptionPane.showMessageDialog(null, "Números insuficientes en la tarjeta", "ERROR", JOptionPane.ERROR_MESSAGE);
                         }else{
-                            if(fechaInicioTF.getText().equals("")){
-                                JOptionPane.showMessageDialog(null, "Fecha de inicio vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            if(cvv.length()<3){
+                                JOptionPane.showMessageDialog(null, "Números insuficientes CVV", "ERROR", JOptionPane.ERROR_MESSAGE);
                             }else{
-                                if(fechaDeDevolucionTF.getText().equals("")){
-                                    JOptionPane.showMessageDialog(null, "Fecha de devolución vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                if(fechaInicioTF.getText().equals("")){
+                                    JOptionPane.showMessageDialog(null, "Fecha de inicio vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
                                 }else{
-                                    if(numTarjetaTF.getText().equals("")){
-                                        JOptionPane.showMessageDialog(null, "Número de tarjeta vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                    if(fechaDeDevolucionTF.getText().equals("")){
+                                        JOptionPane.showMessageDialog(null, "Fecha de devolución vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
                                     }else{
-                                        if(fechaCadTF.getText().equals("")){
-                                            JOptionPane.showMessageDialog(null, "Fecha de caducidad vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                        if(numTarjetaTF.getText().equals("")){
+                                            JOptionPane.showMessageDialog(null, "Número de tarjeta vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
                                         }else{
-                                            if(cvvTF.getText().equals("")){
-                                                JOptionPane.showMessageDialog(null, "CVV vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                            if(fechaCadTF.getText().equals("")){
+                                                JOptionPane.showMessageDialog(null, "Fecha de caducidad vacía", "ERROR", JOptionPane.ERROR_MESSAGE);
                                             }else{
-                                                int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
-                                                double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
-                                                int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
-                                                String costo_total = String.valueOf(costo_auto*dias);
-                                                if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
-                                                    costoEstimadoVisualLbl.setText(costo_total+ " Pesos MXN");
+                                                if(cvvTF.getText().equals("")){
+                                                    JOptionPane.showMessageDialog(null, "CVV vacío", "ERROR", JOptionPane.ERROR_MESSAGE);
                                                 }else{
-                                                    JOptionPane.showMessageDialog(null, "Las fechas son incorrectas", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                                    int id_auto = Integer.parseInt(ids_autos[carros_id_con_nombre_CB.getSelectedIndex()]);
+                                                    double costo_auto = Double.parseDouble(Autos_Service.obtener_celda("SELECT costo FROM autos WHERE id_de_auto = " + id_auto));
+                                                    int dias = Fechas.getDias_De_Renta(fechaInicioTF.getText(), fechaDeDevolucionTF.getText());
+                                                    String costo_total = String.valueOf(costo_auto*dias);
+                                                    if (costo_auto*dias > 0 && Fechas.verificarLegalidadDeFechas(fechaInicioTF.getText(), fechaDeDevolucionTF.getText(), "RENTAR")){
+                                                        costoEstimadoVisualLbl.setText(costo_total+ " Pesos MXN");
+                                                    }else{
+                                                        JOptionPane.showMessageDialog(null, "Las fechas son incorrectas", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                                    }
                                                 }
                                             }
                                         }
