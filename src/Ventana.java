@@ -56,6 +56,8 @@ public class Ventana extends JFrame {
     private String nombre_cliente;
     private String email_cliente;
     private String telefono_cliente;
+    private String admin_name = "admin";
+    private String admin_pass = "admin";
     JPanel menuSuperiorPanel = new JPanel();
 
     ImageIcon logoEmpresa = new ImageIcon("src/img/company.png");
@@ -514,16 +516,26 @@ public class Ventana extends JFrame {
         loginBTN.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                anterior = actual;
-                actual = "home";
-                try {
-                    limpiarVentana();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                char[] pass = password.getPassword();
+                String textPass = new String(pass);
+                if(correo.getText().equals("") && textPass.equals("")){
+                    JOptionPane.showMessageDialog(null, "Datos vacíos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    if(!correo.getText().equals("admin") || !textPass.equals("admin")){
+                        JOptionPane.showMessageDialog(null, "Uno o más datos incorrectos", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        anterior = actual;
+                        actual = "home";
+                        try {
+                            limpiarVentana();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
 
-                repaint();
-                revalidate();
+                        repaint();
+                        revalidate();
+                    }
+                }
             }
         });
 
@@ -1475,7 +1487,7 @@ public class Ventana extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int indice = idClientesCB.getSelectedIndex();
                 if(indice == -1){
-                    JOptionPane.showMessageDialog(null, "No hay clientes para consultar", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No hay clientes para consultar", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }else{
                     id_cliente_a_consultar = Integer.parseInt(id_cliente[idClientesCB.getSelectedIndex()]);
                     String [] datos = Clientes_Service.obtener_fila("SELECT * FROM clientes WHERE id_de_cliente = " + id_cliente_a_consultar);
