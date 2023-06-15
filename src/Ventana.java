@@ -1627,6 +1627,24 @@ public class Ventana extends JFrame {
         nombresTF.setLocation(x,y);
         nombresTF.setSize(200,30);
         crearClientesPNL.add(nombresTF);
+        nombresTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (!Character.isLetter(e.getKeyChar()) && !(e.getKeyChar() == KeyEvent.VK_SPACE) && !(e.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel ApellidosLbl = new JLabel("Apellidos");
@@ -1640,7 +1658,24 @@ public class Ventana extends JFrame {
         apellidosTF.setLocation(x,y);
         apellidosTF.setSize(200,30);
         crearClientesPNL.add(apellidosTF);
+        apellidosTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (!Character.isLetter(e.getKeyChar()) && !(e.getKeyChar() == KeyEvent.VK_SPACE) && !(e.getKeyChar() == KeyEvent.VK_BACK_SPACE)) {
+                    e.consume();
+                }
+            }
 
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel telefonoLbl = new JLabel("Teléfono");
@@ -1654,6 +1689,32 @@ public class Ventana extends JFrame {
         telefonoTF.setLocation(x,y);
         telefonoTF.setSize(200,30);
         crearClientesPNL.add(telefonoTF);
+        telefonoTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(telefonoTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel correoLbl = new JLabel("Correo electronico");
@@ -1687,6 +1748,32 @@ public class Ventana extends JFrame {
         numTarjetaTF.setLocation(x,y);
         numTarjetaTF.setSize(200,30);
         crearClientesPNL.add(numTarjetaTF);
+        numTarjetaTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(numTarjetaTF.getText().length() >= 16)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         y += 50;
         JLabel fechaCadLbl = new JLabel("Fecha de caducidad");
@@ -1699,6 +1786,32 @@ public class Ventana extends JFrame {
         //fechaCadTF.setBorder(roundedBorder);
         fechaCadTF.setLocation(x,y);
         fechaCadTF.setSize(200,30);
+        fechaCadTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(fechaCadTF.getText().length() >= 10)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         fechaCadTF.setDocument(new Fechas.NumericDocument());
             AbstractDocument documentoFiltroInicio = (AbstractDocument) fechaCadTF.getDocument();
@@ -1721,6 +1834,32 @@ public class Ventana extends JFrame {
         cvvTF.setLocation(x,y);
         cvvTF.setSize(100,30);
         crearClientesPNL.add(cvvTF);
+        cvvTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(cvvTF.getText().length() >= 3)
+                {
+                    e.consume();
+                }
+                int key = e.getKeyChar();
+                boolean numeros = key >= 48 && key <= 57;
+
+                if (!numeros)
+                {
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
 
         JButton cancelarBtn = new JButton();
